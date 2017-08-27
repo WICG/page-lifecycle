@@ -30,8 +30,7 @@ DISCARDED | Not Visible | System has discarded background tab to reclaim memory.
 ### End-of-life scenarios
 There are 3 high level scenarios for “end-of-life”.
 #### 1. System Interventions
-The system stops CPU usage and moves the app to STOPPED state, or the system discards the app (reclaims memory) and moves the app to DISCARDED state. 
-Handling this is in-scope for this proposal.
+The system stops CPU usage and moves the app to STOPPED state, or the system discards the app (reclaims memory) and moves the app to DISCARDED state.  Handling this is in-scope for this proposal.\
 For detailed Scenarios and Requirements, see the [list here](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.rsruvllnv993).
 #### 2. User Exit
 The user may close the tab (foreground or background) or navigate away OR on mobile, swipe the app away from task switcher. The user may background the app by minimizing the window OR on mobile by going to the homescreen and task switcher.\
