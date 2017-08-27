@@ -1,4 +1,4 @@
-# A lifecycle for the Web
+# A Lifecycle for the Web
 ## Background
 For detailed motivation see [this doc](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#).
 
@@ -12,3 +12,4 @@ For a platform to support application lifecycle, it needs to both provide develo
 The web ecosystem lacks a clear lifecycle. This proposal attempts to define what the lifecycle of a web page is and then add some extensions to enable formalizing new lifecycle states in a developer friendly way. For example, we want to suspend CPU in background tabs in some cases, similar to how some browsers do so with in-memory back-forward caches (aka bfcache).
 
 Whereas mobile platforms have rich service-bound APIs that allow apps to deliver their experience when backgrounded, most of the web platform's capabilities are tab-coupled. Audio for instance only works when the tab is alive, so when a tab is killed in the background that plays audio, there is no way to keep that tab playing sound. A [list of background use-cases is here](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.5kyzj3e4880y). In an ideal world, web apps would be able to deliver the experience they want to their users, without having to rely on their page always being resident and running on the machine.
+
