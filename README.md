@@ -36,11 +36,11 @@ The system stops CPU usage and moves the app to STOPPED state, or the system dis
 For detailed Scenarios and Requirements, see the [list here](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.rsruvllnv993).
 #### 2. User Exit
 The user may close the tab (foreground or background) or navigate away OR on mobile, swipe the app away from task switcher. The user may background the app by minimizing the window OR on mobile by going to the homescreen and task switcher.\
-*NOTE:* Handling user exit scenarios is out-of-scope for this proposal. We assume no changes there from today, although we try to be be consistent with existing handlers when reusing them.\
+**NOTE:** Handling user exit scenarios is out-of-scope for this proposal. We assume no changes there from today, although we try to be be consistent with existing handlers when reusing them.\
 For categories of work that happen in end-of-life see the [list of End-of-life use-cases here](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.qftifuoc2315).
 #### 3. Unexpected Termination
 Apps can get killed in scenarios where it is not possible to deliver a callback, such as OOM crashes, OS kills the process under memory pressure, crashes or hangs due to browser bugs, device runs out of battery etc. Therefore it is possible for apps to transition from any state to TERMINATED without any callback being fired.\
-*NOTE:* Improvements to handling unexpected termination is out-of-scope for this proposal.
+**NOTE:** Improvements to handling unexpected termination is out-of-scope for this proposal.
 
 ## Proposal
 ![Lifecycle Callbacks](https://github.com/spanicker/web-lifecycle/blob/master/LifecycleCallbacks.png)
@@ -54,7 +54,7 @@ We propose the following changes:
 * `unload` is fired to signal STOPPED -> DISCARDED. `StopReason` here is `discarded`. This will enable the app to persist transient view state (eg. user’s position in a dynamic list, progress in a game) prior to tab discarding so it can be restored if user revisits the tab; or do necessary final teardown such as releasing lock in Google Docs & Gmail.
 * `pageshow` is fired to signal DISCARDED -> ACTIVE. This will be used to restore state persisted in `unload` above, when the user revisits a discarded tab. `PreviousState` here is `discarded`.\
 
-*NOTE:* We have chosen to reuse existing callbacks (pagehide, pageshow, unload) vs. adding new callbacks. While this will cause some compat issues, it has the advantage of not adding further complexity to the platform, easier for browsers to implement (faster time to ship) and consequently better story for adoption and long term interop. For details [see here](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.9tbw6aj3tl04).
+**NOTE:** We have chosen to reuse existing callbacks (pagehide, pageshow, unload) vs. adding new callbacks. While this will cause some compat issues, it has the advantage of not adding further complexity to the platform, easier for browsers to implement (faster time to ship) and consequently better story for adoption and long term interop. For details [see here](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.9tbw6aj3tl04).
 
 ### API sketch
 ```
@@ -129,7 +129,7 @@ To accomplish this, certain restrictions are needed in these callbacks, ideally:
 * upper limit on allowed CPU time
 * restrictions on network eg. disallow network except sendBeacon / Fetch keep-alive
 
-*NOTE:* Reusing existing callbacks makes it hard to impose these restrictions, however we are exploring what is possible here.
+**NOTE:** Reusing existing callbacks makes it hard to impose these restrictions, however we are exploring what is possible here.
 
 Separately, it is useful for apps to be able to do legitimate async work in these callbacks such as writing to IndexedDB. However this does not work in unload handler today. We are exploring support for [ExtendableEvent.waitUntil](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil) API to do async work eg. IndexedDB writes.
 
