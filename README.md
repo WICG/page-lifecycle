@@ -1,5 +1,5 @@
 # A Lifecycle for the Web
-## Background
+## Motivation
 For detailed motivation see [this doc](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#).
 
 With large numbers of web apps (and tabs) running, critical resources such as memory, CPU, battery, network etc easily get oversubscribed, leading to a bad end user experience.
@@ -26,4 +26,19 @@ Lifecycle State | Visibility | Developer Expectation | System Interventions
 --------------- | ---------- | --------------------- | --------------------
 STOPPED | Not Visible | Hand off for background work and stop execution. | CPU suspension for battery saving: stop CPU after N minutes based on resource constraints
 DISCARDED | Not Visible | System has discarded background tab to reclaim memory. If user revisits tab, this will reload the tab. | Tab discarding for memory saving: fully unloaded, no memory consumption.
+
+### End-of-life scenarios
+There are 3 high level scenarios for “end-of-life”.
+#### 1. System Interventions
+The system stops CPU usage and moves the app to STOPPED state, or the system discards the app (reclaims memory) and moves the app to DISCARDED state. 
+Handling this is in-scope for this proposal.
+For detailed Scenarios and Requirements, see the [list here](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.rsruvllnv993).
+#### 2. User Exit
+The user may close the tab (foreground or background) or navigate away OR on mobile, swipe the app away from task switcher. The user may background the app by minimizing the window OR on mobile by going to the homescreen and task switcher.\
+*NOTE:* Handling user exit scenarios is out-of-scope for this proposal. We assume no changes there from today, although we try to be be consistent with existing handlers when reusing them.
+For categories of work that happen in end-of-life see the [list of End-of-life use-cases here](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.qftifuoc2315).
+#### 3. Unexpected Termination
+Apps can get killed in scenarios where it is not possible to deliver a callback, such as OOM crashes, OS kills the process under memory pressure, crashes or hangs due to browser bugs, device runs out of battery etc. Therefore it is possible for apps to transition from any state to TERMINATED without any callback being fired.\
+*NOTE:* Improvements to handling unexpected termination is out-of-scope for this proposal.
+
 
