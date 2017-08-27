@@ -8,7 +8,9 @@ Application lifecycle is a key way that modern OS' manage resources. On Android,
 On the web, we’ve tackled this with interventions on behalf of end users and built one-off features eg. reactive tab-discarding in extreme memory pressure - which can break websites. 
 While this is okay in the short term, in the long term it is important to incorporate first class support in the web platform, create the right incentive structure for web developers, and allow the system to proactively reallocate resources and avoid getting into extreme resource situations.
 
-For a platform to support application lifecycle, it needs to both provide developers with signals about transitions between the lifecycle states, AND provide lifecycle-compatible APIs that allow key capabilities to work even when the app is backgrounded or stopped.
+For a platform to support application lifecycle, it needs to both:
+* provide developers with signals about transitions between the lifecycle states
+* provide lifecycle-compatible APIs that allow key capabilities to work even when the app is backgrounded or stopped.
 
 The web ecosystem lacks a clear lifecycle. This proposal attempts to define what the lifecycle of a web page is and add necessary extensions to enable supporting two important system interventions necessary for resource re-allocation:
 * Tab discarding for memory saving
