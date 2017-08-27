@@ -5,7 +5,7 @@ For detailed motivation see [this doc](https://docs.google.com/document/d/1UuS6f
 With large numbers of web apps (and tabs) running, critical resources such as memory, CPU, battery, network etc easily get oversubscribed, leading to a bad end user experience.
 Application lifecycle is a key way that modern OS' manage resources. On Android, iOS and also more recent Windows versions, apps can be started and stopped at will by the platform. This lets the platform streamline and re-allocate resources where they best benefit the user.
 
-On the web, we’ve tackled this with interventions on behalf of end users and built one-off features eg. reactive tab-discarding in extreme memory pressure - which can break websites. 
+On the web, we’ve tackled this with one-off features eg. reactive tab-discarding in extreme memory pressure - which can break websites.
 While this is okay in the short term, in the long term it is important to incorporate first class support in the web platform, create the right incentive structure for web developers, and allow the system to proactively reallocate resources and avoid getting into extreme resource situations.
 
 For a platform to support application lifecycle, it needs to both:
