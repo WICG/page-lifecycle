@@ -54,6 +54,58 @@ We propose the following changes:
 
 *NOTE:* We have chosen to reuse existing callbacks (pagehide, pageshow, unload) vs. adding new callbacks. While this will cause some compat issues, it has the advantage of not adding further complexity to the platform, easier for browsers to implement (faster time to ship) and consequently better story for adoption and long term interop. For details [see here](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.9tbw6aj3tl04).
 
+### API sketch
+```
+enum StopReason { "discarded", "stopped", "userexit", “navigation”... };
+```
+Handle BACKGROUNDED -> STOPPED
+```
+function handlePageHide(e) {
+   // feature detect
+   if (e.stopReason) { ...
+   // Handle transition to STOPPED
+   if (e.stopReason == “stopped”) {
+     // handle state transition BACKGROUNDED -> STOPPED
+}
+window.addEventListener("pagehide", handlePageHide);
+```
+Handle STOPPED -> DISCARDED
+```
+function handleUnload(e) {
+   // feature detect
+   if (e.stopReason) { ...
+   if (e.stopReason == “discarded”) {
+     // handle state transition STOPPED -> DISCARDED
+}
+window.addEventListener("unload", handleUnload);
+```
+Handle STOPPED -> ACTIVE or DISCARDED -> ACTIVE
+```
+enum PreviousState { "stopped", “discarded” };
 
+function handlePageShow(e) {
+   // feature detect
+   if (e.previousState) { ...
+   // Handle transition
+   if (e.previousState == “stopped”) {
+     // handle state transition STOPPED -> ACTIVE
+   } else if (e.previousState == “discarded”) {
+     // handle state transition DISCARDED -> ACTIVE
+   }
+}
+window.addEventListener("pageshow", handlePageShow);
+```
+### Callbacks in State Transition Scenarios
+* A. System stops (CPU suspension) background tab; user revisits\
+[BACKGROUNDED] -------------> `onpagehide` (`StopReason: “stopped”`) [STOPPED]\
+--(user revisit)----> `onpageshow` (`PreviousState: “stopped”`) [ACTIVE]
 
+* B. System discards stopped tab; user revisits\
+(previously called `onpagehide` (`StopReason: “stopped”`) ----> [STOPPED]\
+----(tab discard)----> `onunload` (`StopReason: “discarded”`) [DISCARDED]\
+--(user revisit)----> [LOADING] -> `onpageshow` (`PreviousState: “discarded”`) [ACTIVE]
 
+* C. System discards background tab; user revisits\
+[BACKGROUNDED] ---(tab discard)------>\
+`onpagehide` (`StopReason: “stopped”`) [STOPPED], `onunload` (`StopReason: “discarded”`) [DISCARDED]\
+--(user revisit)----> [LOADING] -> `onpageshow` (`PreviousState: “discarded”`) [ACTIVE]
