@@ -109,3 +109,17 @@ window.addEventListener("pageshow", handlePageShow);
 [BACKGROUNDED] ---(tab discard)------>\
 `onpagehide` (`StopReason: “stopped”`) [STOPPED], `onunload` (`StopReason: “discarded”`) [DISCARDED]\
 --(user revisit)----> [LOADING] -> `onpageshow` (`PreviousState: “discarded”`) [ACTIVE]
+
+State Transition | Lifecycle Callback | Trigger | Expected Developer Action
+---------------- | ------------------ | ------- | -------------------------
+ACTIVE -> BACKGROUNDED | onpagevisibilitychange: hidden (already exists) | Desktop: tab is in background, or window is fully hidden; Mobile: user clicks on task switcher or homescreen | stop UI work; persist app state; report to analytics
+BACKGROUNDED -> ACTIVE | `onpagevisibilitychange`: `visible` (already exists) | User revisits background tab | undo what was done above; report to analytics
+BACKGROUNDED -> STOPPED | `pagehide`: (`StopReason: stopped`) OR (`StopReason: navigate`) for bfcache | System initiated CPU suspension; OR user navigate with bfcache | report to analytics; teardown, release resources; hand off for background work and stop execution.
+STOPPED -> ACTIVE | `pageshow`: (`PreviousState: stopped`) | user revisits STOPPED tab or navigates back (bfcache) | undo what was done above; report to analytics
+STOPPED -> DISCARDED | `unload`: (`StopReason: discarded`) | System initiated tab-discard | save transient UI state; teardown, eg. release lock
+DISCARDED -> ACTIVE | `pageshow`: (`PreviousState: discarded`) | user revisits tab after system tab discard | restore transient UI state
+
+
+
+
+
