@@ -13,3 +13,10 @@ The web ecosystem lacks a clear lifecycle. This proposal attempts to define what
 
 Whereas mobile platforms have rich service-bound APIs that allow apps to deliver their experience when backgrounded, most of the web platform's capabilities are tab-coupled. Audio for instance only works when the tab is alive, so when a tab is killed in the background that plays audio, there is no way to keep that tab playing sound. A [list of background use-cases is here](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.5kyzj3e4880y). In an ideal world, web apps would be able to deliver the experience they want to their users, without having to rely on their page always being resident and running on the machine.
 
+### Lifecycle States
+![Lifecycle States](https://github.com/spanicker/web-lifecycle/blob/master/LifecycleStates.png)
+
+For details on the app lifecycle states and definitions see [this doc](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.edtdhepwctwy).
+This proposal aims to formalize states for STOPPED and DISCARDED, and expose necessary web APIs to support two important system interventions necessary for resource re-allocation:
+Tab discarding for memory saving - this puts the app in DISCARDED state.
+CPU stopping for battery saving - this puts the app in STOPPED state.
