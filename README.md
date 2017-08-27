@@ -18,5 +18,12 @@ Whereas mobile platforms have rich service-bound APIs that allow apps to deliver
 
 For details on the app lifecycle states and definitions see [this doc](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.edtdhepwctwy).
 This proposal aims to formalize states for STOPPED and DISCARDED, and expose necessary web APIs to support two important system interventions necessary for resource re-allocation:
-Tab discarding for memory saving - this puts the app in DISCARDED state.
-CPU stopping for battery saving - this puts the app in STOPPED state.
+* Tab discarding for memory saving - this puts the app in DISCARDED state.
+* CPU stopping for battery saving - this puts the app in STOPPED state.
+
+
+Lifecycle State | Visibility | Developer Expectation | System Interventions
+--------------- | ---------- | --------------------- | --------------------
+STOPPED | Not Visible | Hand off for background work and stop execution. | CPU suspension for battery saving: stop CPU after N minutes based on resource constraints
+DISCARDED | Not Visible | System has discarded background tab to reclaim memory. If user revisits tab, this will reload the tab. | Tab discarding for memory saving: fully unloaded, no memory consumption.
+
