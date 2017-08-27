@@ -135,5 +135,7 @@ Separately, it is useful for apps to be able to do legitimate async work in thes
 
 ### Handling Background Work
 It is critical that legitimate background work continues even when the app is STOPPED or DISCARDED. For a [list of use-cases, see this doc](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.5kyzj3e4880y).
+
 When rolling out these interventions (tab discarding and CPU suspension) initially apps that do legitimate work in background will be opted out. Then over time, as first class APIs become available for each type of background work, the respective opt-out will be phased out.
+
 Service workers will play a major role in doing work on behalf of the app in background, and support system interventions for STOPPED, DISCARDED states. For details [see here](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.qfd2n2ui4iei).
