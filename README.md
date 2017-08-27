@@ -119,7 +119,19 @@ STOPPED -> ACTIVE | `pageshow`: (`PreviousState: stopped`) | user revisits STOPP
 STOPPED -> DISCARDED | `unload`: (`StopReason: discarded`) | System initiated tab-discard | save transient UI state; teardown, eg. release lock
 DISCARDED -> ACTIVE | `pageshow`: (`PreviousState: discarded`) | user revisits tab after system tab discard | restore transient UI state
 
+### Restrictions and Capabilities in proposed callbacks
+If excessive work is performed in the callbacks fired on system interventions (STOPPED and DISCARDED), there is a cost to this in terms of resource consumption i.e. CPU, network.
+We need to strike a balance between enabling the system to move the app to STOPPED and DISCARDED states for conserving resources AND enabling the app to take action without consuming excessive resources in these callbacks.
+To accomplish this, certain restrictions are needed in these callbacks, ideally:
+* upper time limit in the callback i.e. allowed wall time eg. 30s
+* upper limit on allowed CPU time
+* restrictions on network eg. disallow network except sendBeacon / Fetch keep-alive
 
+*NOTE:* Reusing existing callbacks makes it hard to impose these restrictions, however we are exploring what is possible here.
 
+Separately, it is useful for apps to be able to do legitimate async work in these callbacks such as writing to IndexedDB. However this does not work in unload handler today. We are exploring support for [ExtendableEvent.waitUntil](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil) API to do async work eg. IndexedDB writes.
 
-
+### Handling Background Work
+It is critical that legitimate background work continues even when the app is STOPPED or DISCARDED. For a [list of use-cases, see this doc](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.5kyzj3e4880y).
+When rolling out these interventions (tab discarding and CPU suspension) initially apps that do legitimate work in background will be opted out. Then over time, as first class APIs become available for each type of background work, the respective opt-out will be phased out.
+Service workers will play a major role in doing work on behalf of the app in background, and support system interventions for STOPPED, DISCARDED states. For details [see here](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.qfd2n2ui4iei).
