@@ -21,8 +21,8 @@ Whereas mobile platforms have rich service-bound APIs that allow apps to deliver
 ### Lifecycle States
 ![Lifecycle States](https://github.com/spanicker/web-lifecycle/blob/master/LifecycleStates.png)
 
-For details on the app lifecycle states and definitions see [this doc](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.edtdhepwctwy).
-For more detail on bfcache usage [see here](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.79h8apoh4g7g).
+For details on the app lifecycle states and definitions see [this doc](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.edtdhepwctwy).\
+For more detail on bfcache usage [see here](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.79h8apoh4g7g).\
 This proposal formalizes states for STOPPED and DISCARDED.
 
 Lifecycle State | Visibility | Developer Expectation | System Interventions
