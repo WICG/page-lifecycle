@@ -131,7 +131,7 @@ DISCARDED -> ACTIVE | `pageshow`: (`PreviousState: discarded`) | user revisits t
 If excessive work is performed in the callbacks fired on system interventions (STOPPED and DISCARDED), there is a cost to this in terms of resource consumption i.e. CPU, network.
 We need to strike a balance between enabling the system to move the app to STOPPED and DISCARDED states for conserving resources AND enabling the app to take action without consuming excessive resources in these callbacks.
 To accomplish this, certain restrictions are needed in these callbacks, ideally:
-- upper time limit in the callback i.e. allowed wall time eg. 30s
+- upper time limit in the callback i.e. allowed wall time eg. 5s
 - upper limit on allowed CPU time
 - restrictions on network eg. disallow network except sendBeacon / Fetch keep-alive
 
