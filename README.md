@@ -51,12 +51,12 @@ We propose the following changes:
 * A `previousState` attribute will be added to event for `pageshow`; it will return `PreviousState` enum to indicate the preceding lifecycle state such as DISCARDED or STOPPED.
 * `pagehide` is fired to signal BACKGROUNDED -> STOPPED. `StopReason` here is `stopped`.
 * `pageshow` is fired to signal STOPPED -> ACTIVE. This will be used to undo what was done in `pagehide` above. `PreviousState` here is `stopped`.
-* `pageshow` is fired to signal DISCARDED -> ACTIVE. This will be used to restore state persisted in `unload` above, when the user revisits a discarded tab. `PreviousState` here is `discarded`.\
+* `pageshow` is fired to signal DISCARDED -> ACTIVE. This will be used to restore view state persisted in `pagehide` above, when the user revisits a discarded tab. `PreviousState` here is `discarded`.\
 * before moving app to DISCARDED the `beforeunload` handler will run and if it returns string (i.e. needs to show modal dialog) then the tab discard will be omitted.
 
 ### Reusing existing callbacks vs. Adding new callbacks
 We have chosen to reuse existing callbacks (pagehide, pageshow) vs. adding new callbacks. While this will cause some compat issues (eg. affects analytics reporting), it has the advantage of not adding complexity to the platform, easier for browsers to implement (faster time to ship) and consequently better story for adoption and long term interop. 
-Reusing unload has significant trade-offs, for instance this makes it harder to impose restrictions, and support new capabilities.
+Reusing existing callbacks has significant trade-offs, for instance this makes it harder to impose restrictions, and support new capabilities.
 For details on tradeoffs, see [this section in master doc](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.9tbw6aj3tl04).
 
 ### API sketch
@@ -126,9 +126,9 @@ To accomplish this, certain restrictions are needed in these callbacks, ideally:
 - upper limit on allowed CPU time
 - Maybe restrictions on network eg. disallow network except sendBeacon / Fetch keep-alive
 
-**NOTE:** Reusing existing callbacks makes it hard to impose these restrictions as it would cause inconsistency with unload in user exit scenarios; however we are exploring what is possible here.
+**NOTE:** Reusing existing callbacks makes it hard to impose these restrictions as it would cause inconsistency with pagehide / unload in user exit scenarios; however we are exploring what is possible here.
 
-Separately, it is useful for apps to be able to do legitimate async work in these callbacks such as writing to IndexedDB. However this does not reliably work in pagehide / unload handler today. We are exploring support for [ExtendableEvent.waitUntil](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil) API to do async work eg. IndexedDB writes. It is harder to support this in unload handler as unload is called in user exit scenarios such as navigation which can be synchronous.
+Separately, it is useful for apps to be able to do legitimate async work in these callbacks such as writing to IndexedDB. However this does not reliably work in pagehide / unload handler today. We are exploring support for [ExtendableEvent.waitUntil](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil) API to do async work eg. IndexedDB writes.
 
 ### Further Reading
 For details on the following topics see the Master Doc:
