@@ -33,7 +33,7 @@ DISCARDED | Not Visible | System has discarded background tab to reclaim memory.
 ### End-of-life scenarios
 There are 3 high level scenarios for “end-of-life”.
 #### 1. System Interventions
-TThe system moves the app to STOPPED state and stops CPU usage, or the system moves the app to DISCARDED state and discards the app to reclaim memory. Handling this is in-scope for this proposal.\
+The system moves the app to STOPPED state and stops CPU usage, or the system moves the app to DISCARDED state and discards the app to reclaim memory. Handling this is in-scope for this proposal.\
 For detailed Scenarios and Requirements, see the [list here](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.rsruvllnv993).
 #### 2. User Exit
 The user may close the tab (foreground or background) or navigate away OR on mobile, swipe the app away from task switcher. The user may background the app by minimizing the window OR on mobile by going to the homescreen and task switcher.\
@@ -43,10 +43,10 @@ For categories of work that happen in end-of-life see the [list of End-of-life u
 Apps can get killed in scenarios where it is not possible to deliver a callback, such as OOM crashes, OS kills the process under memory pressure, crashes or hangs due to browser bugs, device runs out of battery etc. Therefore it is possible for apps to transition from any state to TERMINATED without any callback being fired.\
 **NOTE:** Improvements to handling unexpected termination is out-of-scope for this proposal.
 
-## Proposal
+## Proposal (MVP)
 ![Lifecycle Callbacks](https://github.com/spanicker/web-lifecycle/blob/master/LifecycleCallbacks.png)
 
-We propose the following changes:
+We propose the following changes for the MVP:
 * A `stopReason` attribute will be added to events for `pagehide`; it will return `StopReason` enum to indicate why the event fired. 
 * A `previousState` attribute will be added to event for `pageshow`; it will return `PreviousState` enum to indicate the preceding lifecycle state such as DISCARDED or STOPPED.
 * `pagehide` is fired to signal BACKGROUNDED -> STOPPED. `StopReason` here is `stopped`.
@@ -113,9 +113,9 @@ State Transition | Lifecycle Callback | Trigger | Expected Developer Action
 ---------------- | ------------------ | ------- | -------------------------
 ACTIVE -> BACKGROUNDED | onpagevisibilitychange: hidden (already exists) | Desktop: tab is in background, or window is fully hidden; Mobile: user clicks on task switcher or homescreen | stop UI work; persist app state; report to analytics
 BACKGROUNDED -> ACTIVE | `onpagevisibilitychange`: `visible` (already exists) | User revisits background tab | undo what was done above; report to analytics
-BACKGROUNDED -> STOPPED | `pagehide`: (`StopReason: stopped`) OR (`StopReason: navigate`) for bfcache | System initiated CPU suspension; OR user navigate with bfcache | report to analytics; teardown, release resources; hand off for background work and stop execution.
+BACKGROUNDED -> STOPPED | `pagehide`: (`StopReason: stopped`) OR (`StopReason: navigate`) for bfcache | System initiated CPU suspension; OR user navigate with bfcache | report to analytics; teardown, release resources; hand off for background work and stop execution. Save transient UI state in case app is moved to DISCARDED.
 STOPPED -> ACTIVE | `pageshow`: (`PreviousState: stopped`) | user revisits STOPPED tab or navigates back (bfcache) | undo what was done above; report to analytics
-STOPPED -> DISCARDED | <no callback>: (`StopReason: discarded`) | System initiated tab-discard | save transient UI state; teardown, eg. release lock
+STOPPED -> DISCARDED | (no callback) | System initiated tab-discard | (no advance warning here)
 DISCARDED -> ACTIVE | `pageshow`: (`PreviousState: discarded`) | user revisits tab after system tab discard | restore transient UI state
 
 ### Restrictions and Capabilities in proposed callbacks
