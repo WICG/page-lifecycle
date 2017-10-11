@@ -47,16 +47,15 @@ Apps can get killed in scenarios where it is not possible to deliver a callback,
 ![Lifecycle Callbacks](https://github.com/spanicker/web-lifecycle/blob/master/LifecycleCallbacks.png)
 
 We propose the following changes:
-* A `stopReason` attribute will be added to events for `pagehide` and `unload`; it will return `StopReason` enum to indicate why the event fired. 
+* A `stopReason` attribute will be added to events for `pagehide`; it will return `StopReason` enum to indicate why the event fired. 
 * A `previousState` attribute will be added to event for `pageshow`; it will return `PreviousState` enum to indicate the preceding lifecycle state such as DISCARDED or STOPPED.
 * `pagehide` is fired to signal BACKGROUNDED -> STOPPED. `StopReason` here is `stopped`.
 * `pageshow` is fired to signal STOPPED -> ACTIVE. This will be used to undo what was done in `pagehide` above. `PreviousState` here is `stopped`.
-* `unload` is fired to signal STOPPED -> DISCARDED. `StopReason` here is `discarded`. This will enable the app to persist transient view state (eg. user’s position in a dynamic list, progress in a game) prior to tab discarding so it can be restored if user revisits the tab; or do necessary final teardown such as releasing lock in Google Docs & Gmail.
 * `pageshow` is fired to signal DISCARDED -> ACTIVE. This will be used to restore state persisted in `unload` above, when the user revisits a discarded tab. `PreviousState` here is `discarded`.\
 * before moving app to DISCARDED the `beforeunload` handler will run and if it returns string (i.e. needs to show modal dialog) then the tab discard will be omitted.
 
 ### Reusing existing callbacks vs. Adding new callbacks
-We have chosen to reuse existing callbacks (pagehide, pageshow, unload) vs. adding new callbacks. While this will cause some compat issues (eg. affects analytics reporting), it has the advantage of not adding complexity to the platform, easier for browsers to implement (faster time to ship) and consequently better story for adoption and long term interop. 
+We have chosen to reuse existing callbacks (pagehide, pageshow) vs. adding new callbacks. While this will cause some compat issues (eg. affects analytics reporting), it has the advantage of not adding complexity to the platform, easier for browsers to implement (faster time to ship) and consequently better story for adoption and long term interop. 
 Reusing unload has significant trade-offs, for instance this makes it harder to impose restrictions, and support new capabilities.
 For details on tradeoffs, see [this section in master doc](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.9tbw6aj3tl04).
 
@@ -77,16 +76,8 @@ function handlePageHide(e) {
 }
 window.addEventListener("pagehide", handlePageHide);
 ```
-Handle STOPPED -> DISCARDED
-```
-function handleUnload(e) {
-   // feature detect
-   if (e.stopReason) { ...
-   if (e.stopReason == “discarded”) {
-     // handle state transition STOPPED -> DISCARDED
-}
-window.addEventListener("unload", handleUnload);
-```
+NOTE: subsequently the app may get discarded, without firing another callback.
+
 Handle STOPPED -> ACTIVE or DISCARDED -> ACTIVE
 ```
 enum PreviousState { "stopped", “discarded” };
@@ -110,12 +101,12 @@ window.addEventListener("pageshow", handlePageShow);
 
 * B. System discards stopped tab; user revisits\
 (previously called `onpagehide` (`StopReason: “stopped”`) ----> [STOPPED]\
-----(tab discard)----> `onunload` (`StopReason: “discarded”`) [DISCARDED]\
+----(tab discard)----> <no callback here> [DISCARDED]\
 --(user revisit)----> [LOADING] -> `onpageshow` (`PreviousState: “discarded”`) [ACTIVE]
 
 * C. System discards background tab; user revisits\
 [BACKGROUNDED] ---(tab discard)------>\
-`onpagehide` (`StopReason: “stopped”`) [STOPPED], `onunload` (`StopReason: “discarded”`) [DISCARDED]\
+`onpagehide` (`StopReason: “stopped”`) [STOPPED] ---(system tab discard)---> [DISCARDED]\
 --(user revisit)----> [LOADING] -> `onpageshow` (`PreviousState: “discarded”`) [ACTIVE]
 
 State Transition | Lifecycle Callback | Trigger | Expected Developer Action
@@ -124,20 +115,20 @@ ACTIVE -> BACKGROUNDED | onpagevisibilitychange: hidden (already exists) | Deskt
 BACKGROUNDED -> ACTIVE | `onpagevisibilitychange`: `visible` (already exists) | User revisits background tab | undo what was done above; report to analytics
 BACKGROUNDED -> STOPPED | `pagehide`: (`StopReason: stopped`) OR (`StopReason: navigate`) for bfcache | System initiated CPU suspension; OR user navigate with bfcache | report to analytics; teardown, release resources; hand off for background work and stop execution.
 STOPPED -> ACTIVE | `pageshow`: (`PreviousState: stopped`) | user revisits STOPPED tab or navigates back (bfcache) | undo what was done above; report to analytics
-STOPPED -> DISCARDED | `unload`: (`StopReason: discarded`) | System initiated tab-discard | save transient UI state; teardown, eg. release lock
+STOPPED -> DISCARDED | <no callback>: (`StopReason: discarded`) | System initiated tab-discard | save transient UI state; teardown, eg. release lock
 DISCARDED -> ACTIVE | `pageshow`: (`PreviousState: discarded`) | user revisits tab after system tab discard | restore transient UI state
 
 ### Restrictions and Capabilities in proposed callbacks
-If excessive work is performed in the callbacks fired on system interventions (STOPPED and DISCARDED), there is a cost to this in terms of resource consumption i.e. CPU, network.
-We need to strike a balance between enabling the system to move the app to STOPPED and DISCARDED states for conserving resources AND enabling the app to take action without consuming excessive resources in these callbacks.
+If excessive work is performed in the `pagehide` callback fired on STOPPED, there is a cost to this in terms of resource consumption i.e. CPU, network.
+We need to strike a balance between enabling the system to move the app to STOPPED for conserving resources AND enabling the app to take action without consuming excessive resources in these callbacks.
 To accomplish this, certain restrictions are needed in these callbacks, ideally:
 - upper time limit in the callback i.e. allowed wall time eg. 5s
 - upper limit on allowed CPU time
-- restrictions on network eg. disallow network except sendBeacon / Fetch keep-alive
+- Maybe restrictions on network eg. disallow network except sendBeacon / Fetch keep-alive
 
 **NOTE:** Reusing existing callbacks makes it hard to impose these restrictions as it would cause inconsistency with unload in user exit scenarios; however we are exploring what is possible here.
 
-Separately, it is useful for apps to be able to do legitimate async work in these callbacks such as writing to IndexedDB. However this does not work in unload handler today. We are exploring support for [ExtendableEvent.waitUntil](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil) API to do async work eg. IndexedDB writes. It is harder to support this in unload handler as unload is called in user exit scenarios such as navigation which can be synchronous.
+Separately, it is useful for apps to be able to do legitimate async work in these callbacks such as writing to IndexedDB. However this does not reliably work in pagehide / unload handler today. We are exploring support for [ExtendableEvent.waitUntil](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil) API to do async work eg. IndexedDB writes. It is harder to support this in unload handler as unload is called in user exit scenarios such as navigation which can be synchronous.
 
 ### Further Reading
 For details on the following topics see the Master Doc:
