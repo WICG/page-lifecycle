@@ -47,12 +47,12 @@ Apps can get killed in scenarios where it is not possible to deliver a callback,
 ![Lifecycle Callbacks](https://github.com/spanicker/web-lifecycle/blob/master/LifecycleCallbacks.png)
 
 We propose the following changes for the MVP:
-* A `stopReason` attribute will be added to events for `pagehide`; it will return `StopReason` enum to indicate why the event fired. 
-* A `previousState` attribute will be added to event for `pageshow`; it will return `PreviousState` enum to indicate the preceding lifecycle state such as DISCARDED or STOPPED.
-* `pagehide` is fired to signal BACKGROUNDED -> STOPPED. `StopReason` here is `stopped`.
-* `pageshow` is fired to signal STOPPED -> ACTIVE. This will be used to undo what was done in `pagehide` above. `PreviousState` here is `stopped`.
-* `pageshow` is fired to signal DISCARDED -> ACTIVE. This will be used to restore view state persisted in `pagehide` above, when the user revisits a discarded tab. `PreviousState` here is `discarded`.\
-* before moving app to DISCARDED the `beforeunload` handler will run and if it returns string (i.e. needs to show modal dialog) then the tab discard will be omitted.
+* A `reason` attribute will be added to events for `pagehide` and `pageshow`; it will return an enum to indicate why the event fired, eg. due to transition to / from STOPPED, DISCARDED etc. 
+* `pagehide` is fired to signal BACKGROUNDED -> STOPPED. `reason` here is `stopped`.
+* `pageshow` is fired to signal STOPPED -> ACTIVE. This will be used to undo what was done in `pagehide` above. `reason` here is `stopped`.
+* `pageshow` is fired to signal DISCARDED -> ACTIVE. This will be used to restore view state persisted in `pagehide` above, when the user revisits a discarded tab. `reason` here is `discarded`.\
+
+Suggestion for implementers: before moving app to DISCARDED it is recommended to run `beforeunload` handler and if it returns string (i.e. needs to show modal dialog) then the tab discard should be omitted, to prevent risk of data loss.
 
 ### Reusing existing callbacks vs. Adding new callbacks
 We have chosen to reuse existing callbacks (pagehide, pageshow) vs. adding new callbacks. While this will cause some compat issues (eg. affects analytics reporting), it has the advantage of not adding complexity to the platform, easier for browsers to implement (faster time to ship) and consequently better story for adoption and long term interop. 
@@ -62,16 +62,21 @@ For details on tradeoffs, see [this section in master doc](https://docs.google.c
 ### API sketch
 **NOTE:** `persisted` attribute on pagehide indicates whether bfcache was involved.
 ```
-enum StopReason { "discarded", "stopped", "userexit", “navigation”... };
+enum TransitionReason { "discarded", "stopped", ... };
+
+interface PageTransitionEvent : Event {
+    ...
+    readonly attribute TransitionReason reason;
+}
 ```
 
 Handle BACKGROUNDED -> STOPPED
 ```
 function handlePageHide(e) {
    // feature detect
-   if (e.stopReason) { ...
+   if (e.reason) { ...
    // Handle transition to STOPPED
-   if (e.stopReason == “stopped”) {
+   if (e.reason == “stopped”) {
      // handle state transition BACKGROUNDED -> STOPPED
 }
 window.addEventListener("pagehide", handlePageHide);
@@ -80,15 +85,14 @@ NOTE: subsequently the app may get discarded, without firing another callback.
 
 Handle STOPPED -> ACTIVE or DISCARDED -> ACTIVE
 ```
-enum PreviousState { "stopped", “discarded” };
 
 function handlePageShow(e) {
    // feature detect
-   if (e.previousState) { ...
+   if (e.reason) { ...
    // Handle transition
-   if (e.previousState == “stopped”) {
+   if (e.reason == “stopped”) {
      // handle state transition STOPPED -> ACTIVE
-   } else if (e.previousState == “discarded”) {
+   } else if (e.reason == “discarded”) {
      // handle state transition DISCARDED -> ACTIVE
    }
 }
@@ -96,27 +100,27 @@ window.addEventListener("pageshow", handlePageShow);
 ```
 ### Callbacks in State Transition Scenarios
 * A. System stops (CPU suspension) background tab; user revisits\
-[BACKGROUNDED] -------------> `onpagehide` (`StopReason: “stopped”`) [STOPPED]\
---(user revisit)----> `onpageshow` (`PreviousState: “stopped”`) [ACTIVE]
+[BACKGROUNDED] -------------> `onpagehide` (`reason: “stopped”`) [STOPPED]\
+--(user revisit)----> `onpageshow` (`reason: “stopped”`) [ACTIVE]
 
 * B. System discards stopped tab; user revisits\
-(previously called `onpagehide` (`StopReason: “stopped”`) ----> [STOPPED]\
+(previously called `onpagehide` (`reason: “stopped”`) ----> [STOPPED]\
 ----(tab discard)----> <no callback here> [DISCARDED]\
---(user revisit)----> [LOADING] -> `onpageshow` (`PreviousState: “discarded”`) [ACTIVE]
+--(user revisit)----> [LOADING] -> `onpageshow` (`reason: “discarded”`) [ACTIVE]
 
 * C. System discards background tab; user revisits\
 [BACKGROUNDED] ---(tab discard)------>\
-`onpagehide` (`StopReason: “stopped”`) [STOPPED] ---(system tab discard)---> [DISCARDED]\
---(user revisit)----> [LOADING] -> `onpageshow` (`PreviousState: “discarded”`) [ACTIVE]
+`onpagehide` (`reason: “stopped”`) [STOPPED] ---(system tab discard)---> [DISCARDED]\
+--(user revisit)----> [LOADING] -> `onpageshow` (`reason: “discarded”`) [ACTIVE]
 
 State Transition | Lifecycle Callback | Trigger | Expected Developer Action
 ---------------- | ------------------ | ------- | -------------------------
 ACTIVE -> BACKGROUNDED | onpagevisibilitychange: hidden (already exists) | Desktop: tab is in background, or window is fully hidden; Mobile: user clicks on task switcher or homescreen | stop UI work; persist app state; report to analytics
 BACKGROUNDED -> ACTIVE | `onpagevisibilitychange`: `visible` (already exists) | User revisits background tab | undo what was done above; report to analytics
-BACKGROUNDED -> STOPPED | `pagehide`: (`StopReason: stopped`) OR (`StopReason: navigate`) for bfcache | System initiated CPU suspension; OR user navigate with bfcache | report to analytics; teardown, release resources; hand off for background work and stop execution. Save transient UI state in case app is moved to DISCARDED.
-STOPPED -> ACTIVE | `pageshow`: (`PreviousState: stopped`) | user revisits STOPPED tab or navigates back (bfcache) | undo what was done above; report to analytics
+BACKGROUNDED -> STOPPED | `pagehide`: (`reason: stopped`) OR (`reason: navigate`) for bfcache | System initiated CPU suspension; OR user navigate with bfcache | report to analytics; teardown, release resources; hand off for background work and stop execution. Save transient UI state in case app is moved to DISCARDED.
+STOPPED -> ACTIVE | `pageshow`: (`reason: stopped`) | user revisits STOPPED tab or navigates back (bfcache) | undo what was done above; report to analytics
 STOPPED -> DISCARDED | (no callback) | System initiated tab-discard | (no advance warning here)
-DISCARDED -> ACTIVE | `pageshow`: (`PreviousState: discarded`) | user revisits tab after system tab discard | restore transient UI state
+DISCARDED -> ACTIVE | `pageshow`: (`reason: discarded`) | user revisits tab after system tab discard | restore transient UI state
 
 ### Restrictions and Capabilities in proposed callbacks
 If excessive work is performed in the `pagehide` callback fired on STOPPED, there is a cost to this in terms of resource consumption i.e. CPU, network.
