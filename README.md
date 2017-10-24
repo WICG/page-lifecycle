@@ -48,7 +48,7 @@ Apps can get killed in scenarios where it is not possible to deliver a callback,
 
 We propose the following changes for the MVP:
 * A `reason` attribute will be added to events for `pagehide` and `pageshow`; it will return an enum to indicate why the event fired, eg. due to transition to / from STOPPED, DISCARDED etc. 
-* `pagehide` is fired to signal BACKGROUNDED -> STOPPED. `reason` here is `stopped`.
+* `pagehide` is fired to signal HIDDEN -> STOPPED. `reason` here is `stopped`.
 * `pageshow` is fired to signal STOPPED -> ACTIVE. This will be used to undo what was done in `pagehide` above. `reason` here is `stopped`.
 * `pageshow` is fired to signal DISCARDED -> ACTIVE. This will be used to restore view state persisted in `pagehide` above, when the user revisits a discarded tab. `reason` here is `discarded`.\
 
@@ -70,14 +70,14 @@ interface PageTransitionEvent : Event {
 }
 ```
 
-Handle BACKGROUNDED -> STOPPED
+Handle HIDDEN -> STOPPED
 ```
 function handlePageHide(e) {
    // feature detect
    if (e.reason) { ...
    // Handle transition to STOPPED
    if (e.reason == “stopped”) {
-     // handle state transition BACKGROUNDED -> STOPPED
+     // handle state transition HIDDEN -> STOPPED
 }
 window.addEventListener("pagehide", handlePageHide);
 ```
@@ -100,7 +100,7 @@ window.addEventListener("pageshow", handlePageShow);
 ```
 ### Callbacks in State Transition Scenarios
 * A. System stops (CPU suspension) background tab; user revisits\
-[BACKGROUNDED] -------------> `onpagehide` (`reason: “stopped”`) [STOPPED]\
+[HIDDEN] -------------> `onpagehide` (`reason: “stopped”`) [STOPPED]\
 --(user revisit)----> `onpageshow` (`reason: “stopped”`) [ACTIVE]
 
 * B. System discards stopped tab; user revisits\
@@ -109,15 +109,15 @@ window.addEventListener("pageshow", handlePageShow);
 --(user revisit)----> [LOADING] -> `onpageshow` (`reason: “discarded”`) [ACTIVE]
 
 * C. System discards background tab; user revisits\
-[BACKGROUNDED] ---(tab discard)------>\
+[HIDDEN] ---(tab discard)------>\
 `onpagehide` (`reason: “stopped”`) [STOPPED] ---(system tab discard)---> [DISCARDED]\
 --(user revisit)----> [LOADING] -> `onpageshow` (`reason: “discarded”`) [ACTIVE]
 
 State Transition | Lifecycle Callback | Trigger | Expected Developer Action
 ---------------- | ------------------ | ------- | -------------------------
-ACTIVE -> BACKGROUNDED | onpagevisibilitychange: hidden (already exists) | Desktop: tab is in background, or window is fully hidden; Mobile: user clicks on task switcher or homescreen | stop UI work; persist app state; report to analytics
-BACKGROUNDED -> ACTIVE | `onpagevisibilitychange`: `visible` (already exists) | User revisits background tab | undo what was done above; report to analytics
-BACKGROUNDED -> STOPPED | `pagehide`: (`reason: stopped`) OR (`reason: navigate`) for bfcache | System initiated CPU suspension; OR user navigate with bfcache | report to analytics; teardown, release resources; hand off for background work and stop execution. Save transient UI state in case app is moved to DISCARDED.
+ACTIVE -> HIDDEN | onpagevisibilitychange: hidden (already exists) | Desktop: tab is in background, or window is fully hidden; Mobile: user clicks on task switcher or homescreen | stop UI work; persist app state; report to analytics
+HIDDEN -> ACTIVE | `onpagevisibilitychange`: `visible` (already exists) | User revisits background tab | undo what was done above; report to analytics
+HIDDEN -> STOPPED | `pagehide`: (`reason: stopped`) OR (`reason: navigate`) for bfcache | System initiated CPU suspension; OR user navigate with bfcache | report to analytics; teardown, release resources; hand off for background work and stop execution. Save transient UI state in case app is moved to DISCARDED.
 STOPPED -> ACTIVE | `pageshow`: (`reason: stopped`) | user revisits STOPPED tab or navigates back (bfcache) | undo what was done above; report to analytics
 STOPPED -> DISCARDED | (no callback) | System initiated tab-discard | (no advance warning here)
 DISCARDED -> ACTIVE | `pageshow`: (`reason: discarded`) | user revisits tab after system tab discard | restore transient UI state
