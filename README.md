@@ -134,6 +134,30 @@ To accomplish this, certain restrictions are needed in these callbacks, ideally:
 
 Separately, it is useful for apps to be able to do legitimate async work in these callbacks such as writing to IndexedDB. However this does not reliably work in pagehide / unload handler today. We are exploring support for [ExtendableEvent.waitUntil](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil) API to do async work eg. IndexedDB writes.
 
+### Guarantess on end-of-life callbacks
+Should there be a guaranteed callback that fires in end-of-life scenarios?
+On user exit, the browser should guarantee that one callback will fire and finish, before the app is torn down. 
+However, there is no “guaranteed” callback at the (very) time of system exit.
+This is consistent with mobile platforms (Android and iOS):
+- in Android [onPause](https://developer.android.com/reference/android/app/Activity.html#onPause()) is the guaranteed callback for user exit, an Activity will always transition to onPause before it is eligible to be destroyed.
+- on iOS, the equivalent is [willResignActive](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622950-applicationwillresignactive)
+- On Android and iOS the system kills background apps that were previously stopped, so corresponding callbacks have already fired beforehand (eg. onPause, onStop on Android), and there is no callback just before system kill.
+
+**What should be the “guaranteed” callback for the Web?**
+We should align with the mobile model (Android and iOS) on the web. For this we need to ensure the following:
+1. on user exit: only one callback is guaranteed to fire and complete
+2. on system exit: above callback should have already fired, yet another callback is not guaranteed to fire (guarantee is simply not possible in many cases)
+
+For #1, ideally all apps will transition through PASSIVE state before they can be killed and potentially we could, in the future, introduce a new callback here -- that is guaranteed.
+In practice though, there is already a callback that is (almost) guaranteed - this is pagevisibility -- although there are bugs in browsers, causing it to not fire in some cases.
+For instance on mobile web, if the user goes to the homescreen OR task-switcher and then swipes away, then pagevisibility=hidden will fire (on homescreen, task-switcher) no other callback is fired on swipe (unload, pagehide etc).
+So there is probably not a compelling reason to create another “guaranteed” callback, at the moment.
+
+While unload callback is widely used, it is fundamentally unreliable, for instance it does not fire in above case of task-switcher followed by user swipe. There are currently no plans to make unload more reliable. (The long term vision is to replace it with declarative APIs for desktop)
+
+For #2, STOPPED callback is not guaranteed on user exit scenarios.
+On system exit scenarios, typically STOPPED (and pagevisibility=hidden for sure) would have already fired previously BUT there is no guarantee that STOPPED callback *must* have fired.
+
 ### Further Reading
 For details on the following topics see the Master Doc:
 * [Persisting Transient View State](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.9u8nhnl3oez)
