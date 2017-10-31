@@ -153,7 +153,7 @@ We should align with the mobile model (Android and iOS) on the web. For this we 
 For #1, ideally all apps will transition through PASSIVE state before they can be killed and potentially we could, in the future, introduce a new callback here -- that is guaranteed.
 In practice though, there is already a callback that is (almost) guaranteed - this is pagevisibility (although there are bugs in browsers, causing it to not fire in some cases).
 For instance on mobile web, if the user goes to the homescreen OR task-switcher and then swipes away, then pagevisibility=hidden will fire (on homescreen, task-switcher) no other callback is fired on swipe (unload, pagehide etc).
-So there is probably not a compelling reason to create another “guaranteed” callback, at the moment.
+Adding callback for transition to PASSIVE is not urgent, and will be considered in the future.
 
 While unload callback is widely used, it is fundamentally unreliable, for instance it does not fire on mobile if user goes to task-switcher and then swipes. There are currently no plans to make unload more reliable. (The long term vision is to replace it with declarative APIs for desktop)
 
