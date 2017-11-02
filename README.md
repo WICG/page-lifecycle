@@ -65,27 +65,50 @@ We propose the following changes:
 Suggestion for implementers: before moving app to DISCARDED it is recommended to run `beforeunload` handler and if it returns string (i.e. needs to show modal dialog) then the tab discard should be omitted, to prevent risk of data loss.
 
 ### Reusing existing callbacks vs. Adding new callbacks
-TODO
+A previous version of this proposal reused pagehide / pageshow callbacks.
+With the requirement that visible and occluded (ACTIVE & PASSIVR) frames can be stopped (not just HIDDEN frames), the cons really outweighed the pros of reusing. For detailed pros and cons see [here](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.5l9dky87m2l0)
 
 ### API sketch
-**NOTE:** `persisted` attribute on pagehide indicates whether bfcache was involved.
 ```
-TODO
+// Indicate what is stopped exactly: 
+// a. partial frame tree starting with current frame
+// b. partial frame tree starting with an ancestor frame
+// c. entire page in background
+// d. ...
+enum FrameLevel { ... };
+
+interface StopEvent : Event {
+    readonly attribute FrameLevel frameLevel; 
+}
+
+interface RestartEvent : Event {
+ readonly attribute FrameLevel frameLevel; 
+}
 ```
 
-Handle HIDDEN -> STOPPED
+Handle transition to STOPPED
 ```
-function handleOnStop(e) {
-     // handle state transition HIDDEN -> STOPPED
+function handleStopped(e) {
+   // Handle transition to STOPPED
 }
-window.addEventListener("stop", handleOnStop);
+window.addEventListener("stop", handleStop);
+
+OR
+window.onstop = function() { … }
 ```
 NOTE: subsequently the app may get discarded, without firing another callback.
 
-Handle STOPPED -> ACTIVE or DISCARDED -> ACTIVE
+Handle transition out of STOPPED
 ```
-TODO
+function handleRestart(e) {
+    // handle state transition STOPPED -> ACTIVE
+}
+window.addEventListener("restart", handleRestart);
+
+OR
+window.onrestart = function() { … }
 ```
+
 ### Callbacks in State Transition Scenarios
 * A. System stops (CPU suspension) background tab; user revisits\
 [HIDDEN] -------------> `onstop` [STOPPED]\
