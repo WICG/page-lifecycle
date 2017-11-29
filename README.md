@@ -58,8 +58,8 @@ It is not possible to have a guaranteed callback execute in most of these scenar
 
 We propose the following changes:
 
-* `onstop` is fired to signal transition to STOPPED.
-* `onsrestart` is fired to signal transition out of STOPPED. This will be used to undo what was done in `onstop` above. 
+* `onfreeze` is fired to signal transition to STOPPED.
+* `onresume` is fired to signal transition out of STOPPED. This will be used to undo what was done in `onfreeze` above. 
 * On DISCARDED -> ACTIVE, an attribute called `wasDiscarded` is added to the Document. This will be used to restore view state , when the user revisits a discarded tab.
 
 Suggestion for implementers: before moving app to DISCARDED it is recommended to run `beforeunload` handler and if it returns string (i.e. needs to show modal dialog) then the tab discard should be omitted, to prevent risk of data loss.
@@ -77,64 +77,64 @@ With the requirement that visible and occluded (ACTIVE & PASSIVR) frames can be 
 // d. ...
 enum FrameLevel { ... };
 
-interface StopEvent : Event {
+interface FreezeEvent : Event {
     readonly attribute FrameLevel frameLevel; 
 }
 
-interface RestartEvent : Event {
+interface ResumeEvent : Event {
  readonly attribute FrameLevel frameLevel; 
 }
 ```
 
 Handle transition to STOPPED
 ```
-function handleStopped(e) {
+function handleFreeze(e) {
    // Handle transition to STOPPED
 }
-window.addEventListener("stop", handleStop);
+window.addEventListener("freeze", handleFreeze);
 
 OR
-window.onstop = function() { … }
+window.onfreeze = function() { … }
 ```
 NOTE: subsequently the app may get discarded, without firing another callback.
 
 Handle transition out of STOPPED
 ```
-function handleRestart(e) {
+function handleResume(e) {
     // handle state transition STOPPED -> ACTIVE
 }
-window.addEventListener("restart", handleRestart);
+window.addEventListener("resume", handleResume);
 
 OR
-window.onrestart = function() { … }
+window.onresume = function() { … }
 ```
 
 ### Callbacks in State Transition Scenarios
 * A. System stops (CPU suspension) background tab; user revisits\
-[HIDDEN] -------------> `onstop` [STOPPED]\
---(user revisit)----> `onrestart` [ACTIVE]
+[HIDDEN] -------------> `onfreeze` [STOPPED]\
+--(user revisit)----> `onresume` [ACTIVE]
 
 * B. System discards stopped tab; user revisits\
-(previously called `onstop`----> [STOPPED]\
+(previously called `onfreeze`----> [STOPPED]\
 ----(tab discard)----> <no callback here> [DISCARDED]\
 --(user revisit)----> [LOADING] -> (`Document::wasDiscarded` is set) [ACTIVE]
 
 * C. System discards background tab; user revisits\
 [HIDDEN] ---(tab discard)------>\
-`onstop` [STOPPED] ---(system tab discard)---> [DISCARDED]\
+`onfreeze` [STOPPED] ---(system tab discard)---> [DISCARDED]\
 --(user revisit)----> [LOADING] -> (`Document::wasDiscarded` is set) [ACTIVE]
 
 State Transition | Lifecycle Callback | Trigger | Expected Developer Action
 ---------------- | ------------------ | ------- | -------------------------
 ACTIVE -> HIDDEN | `onpagevisibilitychange: hidden` (already exists) | Desktop: tab is in background, or window is fully hidden; Mobile: user clicks on task switcher or homescreen | stop UI work; persist app state; report to analytics
 HIDDEN -> ACTIVE | `onpagevisibilitychange`: `visible` (already exists) | User revisits background tab | undo what was done above; report to analytics
-HIDDEN -> STOPPED | `onstop` | System initiated CPU suspension; OR user navigate with bfcache | report to analytics; teardown, release resources; hand off for background work and stop execution. Save transient UI state in case app is moved to DISCARDED.
-STOPPED -> ACTIVE | `onrestart` | user revisits STOPPED tab or navigates back (bfcache) | undo what was done above; report to analytics
+HIDDEN -> STOPPED | `onfreeze` | System initiated CPU suspension; OR user navigate with bfcache | report to analytics; teardown, release resources; hand off for background work and stop execution. Save transient UI state in case app is moved to DISCARDED.
+STOPPED -> ACTIVE | `onresume` | user revisits STOPPED tab or navigates back (bfcache) | undo what was done above; report to analytics
 STOPPED -> DISCARDED | (no callback) | System initiated tab-discard | (no advance warning here)
 DISCARDED -> ACTIVE | (`Document::wasDiscarded` is set) | user revisits tab after system tab discard | restore transient UI state
 
 ### Restrictions and Capabilities in proposed callbacks
-If excessive work is performed in the `onstop` callback fired on STOPPED, there is a cost to this in terms of resource consumption i.e. CPU, network.
+If excessive work is performed in the `onfreeze` callback fired on STOPPED, there is a cost to this in terms of resource consumption i.e. CPU, network.
 We need to strike a balance between enabling the system to move the app to STOPPED for conserving resources AND enabling the app to take action without consuming excessive resources in these callbacks.
 To accomplish this, certain restrictions are needed in these callbacks, ideally:
 - upper time limit in the callback i.e. allowed wall time eg. 5s
