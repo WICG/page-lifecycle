@@ -136,12 +136,10 @@ DISCARDED -> ACTIVE | (`Document::wasDiscarded` is set) | user revisits tab afte
 ### Restrictions and Capabilities in proposed callbacks
 If excessive work is performed in the `onfreeze` callback fired on STOPPED, there is a cost to this in terms of resource consumption i.e. CPU, network.
 We need to strike a balance between enabling the system to move the app to STOPPED for conserving resources AND enabling the app to take action without consuming excessive resources in these callbacks.
-To accomplish this, certain restrictions are needed in these callbacks, ideally:
-- upper time limit in the callback i.e. allowed wall time eg. 5s
-- upper limit on allowed CPU time
-- Maybe restrictions on network eg. disallow network except sendBeacon / Fetch keep-alive
-
-Separately, it is useful for apps to be able to do legitimate async work in these callbacks such as writing to IndexedDB. We are exploring support for [ExtendableEvent.waitUntil](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil) API to do async work eg. IndexedDB writes.
+To accomplish this, the following will apply to the callback:
+- Sync XHR will be disallowed.
+- upper time limit in the callback i.e. allowed wall time eg. 500ms. If the time limit is exceeded, the page will be discarded (instead of being STOPPED)
+- The callback may need more time, for instance, to do legitimate async work such as writing to IndexedDB. We will support [ExtendableEvent.waitUntil](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil) API to do async work eg. IndexedDB writes.
 
 ### Guarantess for end-of-life callbacks
 
@@ -164,8 +162,7 @@ On system exit scenarios, typically STOPPED callback (and pagevisibility=hidden 
 ### Further Reading
 For details on the following topics see the Master Doc:
 * [Persisting Transient View State](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.9u8nhnl3oez)
-* [Handling of Web Workers]
-(https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.gam3mhyangg4)
+* [Handling of Web Workers](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.gam3mhyangg4)
 * [Handling Background Work and role of Service Worker](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.w3vi1ouug35y)
 * [Alternatives Considered](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.ubo7g7vcr9ri)
 
