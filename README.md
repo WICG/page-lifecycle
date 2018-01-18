@@ -23,24 +23,24 @@ Whereas mobile platforms have rich service-bound APIs that allow apps to deliver
 
 For details on the app lifecycle states and definitions see [this doc](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.edtdhepwctwy).\
 
-This proposal formalizes states for STOPPED and DISCARDED.
+This proposal formalizes states for FROZEN and DISCARDED.
 - Lifecycle states apply to frames: both toplevel and nested.
-- When a background tab is transitioned to STOPPED, the entire frame tree will be consistently moved to STOPPED
-- It is possible for an ACTIVE or PASSIVE tab to have some frames in ACTIVE and other frames in STOPPED state.
+- When a background tab is transitioned to FROZEN, the entire frame tree will be consistently moved to FROZEN
+- It is possible for an ACTIVE or PASSIVE tab to have some frames in ACTIVE and other frames in FROZEN state.
 
 Lifecycle State | Visibility | Developer Expectation | System Interventions
 --------------- | ---------- | --------------------- | --------------------
-STOPPED | Typically HIDDEN frames will be STOPPED. It is possible for visible frames to be STOPPED | Hand off for background work and stop execution. Teardown and release resources. Report to analytics | CPU suspension: stop CPU after N minutes based on resource constraints
-DISCARDED | Typically STOPPED frames will be moved to DISCARDED. It is possible for PASSIVE frames to be DISCARDED | System has discarded background tab to reclaim memory. If user revisits tab, this will reload the tab. | Tab discarding for memory saving: fully unloaded, no memory consumption.
+FROZEN | Typically HIDDEN frames will be FROZEN. It is possible for visible frames to be FROZEN | Hand off for background work and stop execution. Teardown and release resources. Report to analytics | CPU suspension: stop CPU after N minutes based on resource constraints
+DISCARDED | Typically FROZEN frames will be moved to DISCARDED. It is possible for PASSIVE frames to be DISCARDED | System has discarded background tab to reclaim memory. If user revisits tab, this will reload the tab. | Tab discarding for memory saving: fully unloaded, no memory consumption.
 
 ### End-of-life scenarios
 There are 3 high level scenarios for “end-of-life”.
 #### 1. System Exit (Interventions)
-The system moves the app to STOPPED state and stops CPU usage, or the system moves the app to DISCARDED state and discards the app to reclaim memory. Handling this is in-scope for this proposal.\
+The system moves the app to FROZEN state and stops CPU usage, or the system moves the app to DISCARDED state and discards the app to reclaim memory. Handling this is in-scope for this proposal.\
 For detailed Scenarios and Requirements, see the [list here](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.rsruvllnv993).
 
 On system exit, there is no guaranteed callback at the (very) time of system exit. This is consistent with mobile platforms (Android and iOS): in Android onPause is the guaranteed callback for user exit, on iOS the equivalent is willResignActive.
-On Android and iOS the system kills background apps that were previously stopped; corresponding callbacks have already fired and there is no callback before system kill.
+On Android and iOS the system kills background apps that were previously stopped / frozen; corresponding callbacks have already fired and there is no callback before system kill.
 
 #### 2. User Exit
 The user may close the tab (foreground or background) or navigate away OR on mobile, swipe the app away from task switcher. The user may background the app by minimizing the window OR on mobile by going to the homescreen and task switcher.\
@@ -58,19 +58,19 @@ It is not possible to have a guaranteed callback execute in most of these scenar
 
 We propose the following changes:
 
-* `onfreeze` is fired to signal transition to STOPPED.
-* `onresume` is fired to signal transition out of STOPPED. This will be used to undo what was done in `onfreeze` above. 
+* `onfreeze` is fired to signal transition to FROZEN.
+* `onresume` is fired to signal transition out of FROZEN. This will be used to undo what was done in `onfreeze` above. 
 * On DISCARDED -> ACTIVE, an attribute called `wasDiscarded` is added to the Document. This will be used to restore view state , when the user revisits a discarded tab.
 
 Suggestion for implementers: before moving app to DISCARDED it is recommended to run `beforeunload` handler and if it returns string (i.e. needs to show modal dialog) then the tab discard should be omitted, to prevent risk of data loss.
 
 ### Reusing existing callbacks vs. Adding new callbacks
 A previous version of this proposal reused pagehide / pageshow callbacks.
-With the requirement that visible and occluded (ACTIVE & PASSIVR) frames can be stopped (not just HIDDEN frames), the cons really outweighed the pros of reusing. For detailed pros and cons see [here](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.5l9dky87m2l0)
+With the requirement that visible and occluded (ACTIVE & PASSIVR) frames can be FROZEN (not just HIDDEN frames), the cons really outweighed the pros of reusing. For detailed pros and cons see [here](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.5l9dky87m2l0)
 
 ### API sketch
 ```
-// Indicate what is stopped exactly: 
+// Indicate what is frozen exactly: 
 // a. partial frame tree starting with current frame
 // b. partial frame tree starting with an ancestor frame
 // c. entire page in background
@@ -86,10 +86,10 @@ interface ResumeEvent : Event {
 }
 ```
 
-Handle transition to STOPPED
+Handle transition to FROZEN
 ```
 function handleFreeze(e) {
-   // Handle transition to STOPPED
+   // Handle transition to FROZEN
 }
 window.addEventListener("freeze", handleFreeze);
 
@@ -98,10 +98,10 @@ window.onfreeze = function() { … }
 ```
 NOTE: subsequently the app may get discarded, without firing another callback.
 
-Handle transition out of STOPPED
+Handle transition out of FROZEN
 ```
 function handleResume(e) {
-    // handle state transition STOPPED -> ACTIVE
+    // handle state transition FROZEN -> ACTIVE
 }
 window.addEventListener("resume", handleResume);
 
@@ -111,34 +111,34 @@ window.onresume = function() { … }
 
 ### Callbacks in State Transition Scenarios
 * A. System stops (CPU suspension) background tab; user revisits\
-[HIDDEN] -------------> `onfreeze` [STOPPED]\
+[HIDDEN] -------------> `onfreeze` [FROZEN]\
 --(user revisit)----> `onresume` [ACTIVE]
 
-* B. System discards stopped tab; user revisits\
-(previously called `onfreeze`----> [STOPPED]\
+* B. System discards frozen tab; user revisits\
+(previously called `onfreeze`----> [FROZEN]\
 ----(tab discard)----> <no callback here> [DISCARDED]\
 --(user revisit)----> [LOADING] -> (`Document::wasDiscarded` is set) [ACTIVE]
 
 * C. System discards background tab; user revisits\
 [HIDDEN] ---(tab discard)------>\
-`onfreeze` [STOPPED] ---(system tab discard)---> [DISCARDED]\
+`onfreeze` [FROZEN] ---(system tab discard)---> [DISCARDED]\
 --(user revisit)----> [LOADING] -> (`Document::wasDiscarded` is set) [ACTIVE]
 
 State Transition | Lifecycle Callback | Trigger | Expected Developer Action
 ---------------- | ------------------ | ------- | -------------------------
 ACTIVE -> HIDDEN | `onpagevisibilitychange: hidden` (already exists) | Desktop: tab is in background, or window is fully hidden; Mobile: user clicks on task switcher or homescreen | stop UI work; persist app state; report to analytics
 HIDDEN -> ACTIVE | `onpagevisibilitychange`: `visible` (already exists) | User revisits background tab | undo what was done above; report to analytics
-HIDDEN -> STOPPED | `onfreeze` | System initiated CPU suspension; OR user navigate with bfcache | report to analytics; teardown, release resources; hand off for background work and stop execution. Save transient UI state in case app is moved to DISCARDED.
-STOPPED -> ACTIVE | `onresume` | user revisits STOPPED tab or navigates back (bfcache) | undo what was done above; report to analytics
-STOPPED -> DISCARDED | (no callback) | System initiated tab-discard | (no advance warning here)
+HIDDEN -> FROZEN | `onfreeze` | System initiated CPU suspension; OR user navigate with bfcache | report to analytics; teardown, release resources; hand off for background work and stop execution. Save transient UI state in case app is moved to DISCARDED.
+FROZEN -> ACTIVE | `onresume` | user revisits FROZEN tab or navigates back (bfcache) | undo what was done above; report to analytics
+FROZEN -> DISCARDED | (no callback) | System initiated tab-discard | (no advance warning here)
 DISCARDED -> ACTIVE | (`Document::wasDiscarded` is set) | user revisits tab after system tab discard | restore transient UI state
 
 ### Restrictions and Capabilities in proposed callbacks
-If excessive work is performed in the `onfreeze` callback fired on STOPPED, there is a cost to this in terms of resource consumption i.e. CPU, network.
-We need to strike a balance between enabling the system to move the app to STOPPED for conserving resources AND enabling the app to take action without consuming excessive resources in these callbacks.
+If excessive work is performed in the `onfreeze` callback fired on FROZEN, there is a cost to this in terms of resource consumption i.e. CPU, network.
+We need to strike a balance between enabling the system to move the app to FROZEN for conserving resources AND enabling the app to take action without consuming excessive resources in these callbacks.
 To accomplish this, the following will apply to the callback:
 - Sync XHR will be disallowed.
-- upper time limit in the callback i.e. allowed wall time eg. 500ms. If the time limit is exceeded, the page will be discarded (instead of being STOPPED)
+- upper time limit in the callback i.e. allowed wall time eg. 500ms. If the time limit is exceeded, the page will be discarded (instead of being FROZEN)
 - The callback may need more time, for instance, to do legitimate async work such as writing to IndexedDB. We will support [ExtendableEvent.waitUntil](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil) API to do async work eg. IndexedDB writes.
 
 ### Guarantess for end-of-life callbacks
@@ -156,8 +156,8 @@ Adding callback for transition to PASSIVE is not urgent, and will be considered 
 
 While unload callback is widely used, it is fundamentally unreliable, for instance it does not fire on mobile if user goes to task-switcher and then swipes. There are currently no plans to make unload more reliable. (The long term vision is to replace it with declarative APIs for desktop)
 
-For #2, callback for STOPPED state is not guaranteed on user exit scenarios.
-On system exit scenarios, typically STOPPED callback (and pagevisibility=hidden for sure) would have already fired previously BUT there is no guarantee that STOPPED callback *must* have fired.
+For #2, callback for FROZEN state is not guaranteed on user exit scenarios.
+On system exit scenarios, typically FROZEN callback (and pagevisibility=hidden for sure) would have already fired previously BUT there is no guarantee that FROZEN callback *must* have fired.
 
 ### Further Reading
 For details on the following topics see the Master Doc:
