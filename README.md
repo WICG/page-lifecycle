@@ -69,23 +69,6 @@ A previous version of this proposal reused pagehide / pageshow callbacks.
 With the requirement that visible and occluded (ACTIVE & PASSIVR) frames can be FROZEN (not just HIDDEN frames), the cons really outweighed the pros of reusing. For detailed pros and cons see [here](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.5l9dky87m2l0)
 
 ### API sketch
-```
-// Indicate what is frozen exactly: 
-// a. partial frame tree starting with current frame
-// b. partial frame tree starting with an ancestor frame
-// c. entire page in background
-// d. ...
-enum FrameLevel { ... };
-
-interface FreezeEvent : Event {
-    readonly attribute FrameLevel frameLevel; 
-}
-
-interface ResumeEvent : Event {
- readonly attribute FrameLevel frameLevel; 
-}
-```
-
 Handle transition to FROZEN
 ```
 function handleFreeze(e) {
@@ -107,6 +90,19 @@ window.addEventListener("resume", handleResume);
 
 OR
 window.onresume = function() { … }
+```
+In the future, if frame-level freezing (i.e. freeze specific frames within a page) is pursued, then the API could be enhanced to indicate which frame tree is frozen.
+```
+// Indicate what is frozen exactly: 
+// a. partial frame tree starting with current frame
+// b. partial frame tree starting with an ancestor frame
+// c. entire page in background
+// d. ...
+enum FrameLevel { ... };
+
+interface FreezeEvent : Event {
+    readonly attribute FrameLevel frameLevel; 
+}
 ```
 
 ### Callbacks in State Transition Scenarios
