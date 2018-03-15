@@ -150,14 +150,14 @@ We should align with the mobile model (Android and iOS) on the web. For this we 
 2. on system exit: above callback should have already fired, yet another callback is not guaranteed to fire (guarantee is simply not possible in many cases)
 
 For #1, ideally all apps will transition through PASSIVE state before they can be killed and potentially we could, in the future, introduce a new callback here -- that is guaranteed.
-In practice though, there is already a callback that is (almost) guaranteed - this is pagevisibility (although there are bugs in browsers, causing it to not fire in some cases).
-For instance on mobile web, if the user goes to the homescreen OR task-switcher and then swipes away, then pagevisibility=hidden will fire (on homescreen, task-switcher) no other callback is fired on swipe (unload, pagehide etc).
+In practice though, there is already a callback that is (almost) guaranteed - this is onvisibilitychange (although there are bugs in browsers, causing it to not fire in some cases).
+For instance on mobile web, if the user goes to the homescreen OR task-switcher and then swipes away, then onvisibilitychange (with visibilityState being set to hidden) will fire (on homescreen, task-switcher) no other callback is fired on swipe (unload, pagehide etc).
 Adding callback for transition to PASSIVE is not urgent, and will be considered in the future.
 
 While unload callback is widely used, it is fundamentally unreliable, for instance it does not fire on mobile if user goes to task-switcher and then swipes. There are currently no plans to make unload more reliable. (The long term vision is to replace it with declarative APIs for desktop)
 
 For #2, callback for FROZEN state is not guaranteed on user exit scenarios.
-On system exit scenarios, typically FROZEN callback (and pagevisibility=hidden for sure) would have already fired previously BUT there is no guarantee that FROZEN callback *must* have fired.
+On system exit scenarios, typically FROZEN callback (at least onvisibilitychange for sure) would have already fired previously BUT there is no guarantee that FROZEN callback *must* have fired.
 
 ### Further Reading
 For details on the following topics see the Master Doc:
