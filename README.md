@@ -126,8 +126,8 @@ window.onresume = function() { … }
 
 State Transition | Lifecycle Callback | Trigger | Expected Developer Action
 ---------------- | ------------------ | ------- | -------------------------
-ACTIVE -> HIDDEN | `onpagevisibilitychange: hidden` (already exists) | Desktop: tab is in background, or window is fully hidden; Mobile: user clicks on task switcher or homescreen | stop UI work; persist app state; report to analytics
-HIDDEN -> ACTIVE | `onpagevisibilitychange`: `visible` (already exists) | User revisits background tab | undo what was done above; report to analytics
+ACTIVE -> HIDDEN | `onvisibilitychange (hidden)` (already exists) | Desktop: tab is in background, or window is fully hidden; Mobile: user clicks on task switcher or homescreen | stop UI work; persist app state; report to analytics
+HIDDEN -> ACTIVE | `onvisibilitychange (visible)` (already exists) | User revisits background tab | undo what was done above; report to analytics
 HIDDEN -> FROZEN | `onfreeze` | System initiated CPU suspension; OR user navigate with bfcache | report to analytics; teardown, release resources; hand off for background work and stop execution. Save transient UI state in case app is moved to DISCARDED.
 FROZEN -> ACTIVE | `onresume` | user revisits FROZEN tab or navigates back (bfcache) | undo what was done above; report to analytics
 FROZEN -> DISCARDED | (no callback) | System initiated tab-discard | (no advance warning here)
