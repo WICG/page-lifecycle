@@ -67,7 +67,7 @@ Suggestion for implementers: before moving app to DISCARDED it is recommended to
 
 ### Reusing existing callbacks vs. Adding new callbacks
 A previous version of this proposal reused pagehide / pageshow callbacks.
-With the requirement that visible and occluded (ACTIVE & PASSIVR) frames can be FROZEN (not just HIDDEN frames), the cons really outweighed the pros of reusing. For detailed pros and cons see [here](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.5l9dky87m2l0)
+With the requirement that visible and occluded (ACTIVE & PASSIVE) frames can be FROZEN (not just HIDDEN frames), the cons really outweighed the pros of reusing. For detailed pros and cons see [here](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.5l9dky87m2l0).
 
 ### API sketch
 Handle transition to FROZEN
