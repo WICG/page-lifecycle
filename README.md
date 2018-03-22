@@ -61,6 +61,7 @@ We propose the following changes:
 * `onfreeze` is fired to signal transition to FROZEN.
 * `onresume` is fired to signal transition out of FROZEN. This will be used to undo what was done in `onfreeze` above. 
 * On DISCARDED -> ACTIVE, an attribute called `wasDiscarded` is added to the Document. This will be used to restore view state , when the user revisits a discarded tab.
+* `onfreeze` is also fired before transition to BFCACHE (before `pagehide` is fired) and `onresume` is also fired on transition out of BFCACHE (after `pageshow` is fired).
 
 Suggestion for implementers: before moving app to DISCARDED it is recommended to run `beforeunload` handler and if it returns string (i.e. needs to show modal dialog) then the tab discard should be omitted, to prevent risk of data loss.
 
