@@ -62,6 +62,7 @@ We propose the following changes:
 * `onresume` is fired to signal transition out of FROZEN. This will be used to undo what was done in `onfreeze` above. 
 * On DISCARDED -> ACTIVE, an attribute called `wasDiscarded` is added to the Document. This will be used to restore view state , when the user revisits a discarded tab.
 * `onfreeze` is also fired before transition to BFCACHE (before `pagehide` is fired) and `onresume` is also fired on transition out of BFCACHE (after `pageshow` is fired).
+* `onfreeze` and `onresume` inherit from [ExtendableEvent](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent) and support waitUntil semantics.
 
 Suggestion for implementers: before moving app to DISCARDED it is recommended to run `beforeunload` handler and if it returns string (i.e. needs to show modal dialog) then the tab discard should be omitted, to prevent risk of data loss.
 
@@ -72,6 +73,8 @@ With the requirement that visible and occluded (ACTIVE & PASSIVE) frames can be 
 ### API sketch
 Handle transition to FROZEN
 ```
+interface FreezeEvent : ExtendableEvent {}
+
 function handleFreeze(e) {
    // Handle transition to FROZEN
 }
@@ -101,7 +104,7 @@ In the future, if frame-level freezing (i.e. freeze specific frames within a pag
 // d. ...
 enum FrameLevel { ... };
 
-interface FreezeEvent : Event {
+interface FreezeEvent : ExtendableEvent {
     readonly attribute FrameLevel frameLevel; 
 }
 ```
