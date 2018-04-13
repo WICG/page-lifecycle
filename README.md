@@ -153,7 +153,7 @@ For #1, ideally all apps will transition through PASSIVE state before they can b
 In practice though, there is already a callback that is (somewhat) guaranteed - this is onvisibilitychange (although there are bugs in browsers, causing it to not fire in some cases).
 For instance on mobile web, if the user goes to the homescreen OR task-switcher and then swipes away, then onvisibilitychange (with visibilityState being set to hidden) will fire (on homescreen, task-switcher) no other callback is fired on swipe (unload, pagehide etc).
 
-NOTE: On Android onvisibilitychange is called from the onStop method of Activity lifecycle which is NOT guaranteed to fire. If we added a callback for transition to PASSIVE (in the future), then it could be called from onPause method of Activity lifecycle and which is guaranteed to fire. Therefore adding a callback for PASSIVE state would be helpful for Android. 
+**NOTE**: On Android onvisibilitychange is called from the onStop method of Activity lifecycle which is NOT guaranteed to fire. If we added a callback for transition to PASSIVE (in the future), then it could be called from onPause method of Activity lifecycle - which is guaranteed to fire. Therefore adding a callback for PASSIVE state would be helpful for Android.
 
 While unload callback is widely used, it is fundamentally unreliable, for instance it does not fire on mobile if user goes to task-switcher and then swipes. There are currently no plans to make unload more reliable. (The long term vision is to replace it with declarative APIs for desktop)
 
