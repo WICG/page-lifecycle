@@ -150,7 +150,7 @@ We should align with the mobile model (Android and iOS) on the web. For this we 
 2. on system exit: above callback should have already fired, yet another callback is not guaranteed to fire (guarantee is simply not possible in many cases)
 
 For #1, ideally all apps will transition through PASSIVE state before they can be killed and potentially we could, in the future, introduce a new callback here -- that is guaranteed.
-In practice though, there is already a callback that is (somewhat) guaranteed - this is onvisibilitychange (although there are bugs in browsers, causing it to not fire in some cases).
+In practice though, there is already a callback that is "somewhat guaranteed" - this is onvisibilitychange (there are bugs in browsers, causing it to not fire in some cases, and it is not really guaranteed on mobile).
 For instance on mobile web, if the user goes to the homescreen OR task-switcher and then swipes away, then onvisibilitychange (with visibilityState being set to hidden) will fire (on homescreen, task-switcher) no other callback is fired on swipe (unload, pagehide etc).
 
 **NOTE**: On Android onvisibilitychange is called from the onStop method of Activity lifecycle which is NOT guaranteed to fire. If we added a callback for transition to PASSIVE (in the future), then it could be called from onPause method of Activity lifecycle - which is guaranteed to fire. Therefore adding a callback for PASSIVE state would be helpful for Android.
