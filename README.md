@@ -21,17 +21,17 @@ Whereas mobile platforms have rich service-bound APIs that allow apps to deliver
 ### Lifecycle States
 ![Lifecycle States](https://github.com/spanicker/web-lifecycle/blob/master/LifecycleStates.png)
 
-For details on the app lifecycle states and definitions see [this doc](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.edtdhepwctwy).\
+For details on the app lifecycle states and definitions see [this doc](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.edtdhepwctwy).
 
 This proposal formalizes states for FROZEN and DISCARDED.
-- Lifecycle states apply to frames: both toplevel and nested.
-- When a background tab is transitioned to FROZEN, the entire frame tree will be consistently moved to FROZEN
-- It is possible for an ACTIVE or PASSIVE tab to have some frames in ACTIVE and other frames in FROZEN state.
 
 Lifecycle State | Visibility | Developer Expectation | System Interventions
 --------------- | ---------- | --------------------- | --------------------
 FROZEN | Typically HIDDEN frames will be FROZEN. It is possible for visible frames to be FROZEN | Hand off for background work and stop execution. Teardown and release resources. Report to analytics | CPU suspension: stop CPU after N minutes based on resource constraints
 DISCARDED | Typically FROZEN frames will be moved to DISCARDED. It is possible for PASSIVE frames to be DISCARDED | System has discarded background tab to reclaim memory. If user revisits tab, this will reload the tab. | Tab discarding for memory saving: fully unloaded, no memory consumption.
+
+- Lifecycle states apply to frames: both toplevel and nested.
+- When a background tab is transitioned to FROZEN, the entire frame tree will be consistently moved to FROZEN
 
 ### End-of-life scenarios
 There are 3 high level scenarios for “end-of-life”.
