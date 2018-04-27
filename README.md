@@ -70,6 +70,17 @@ Suggestion for implementers: before moving app to DISCARDED it is recommended to
 A previous version of this proposal reused pagehide / pageshow callbacks.
 With the requirement that visible and occluded (ACTIVE & PASSIVE) frames can be FROZEN (not just HIDDEN frames), the cons really outweighed the pros of reusing. For detailed pros and cons see [here](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.5l9dky87m2l0).
 
+### Why adding new callbacks at all?
+Why cannot web apps simply use existing callbacks to deal with FROZEN and DISCARDED states?
+The callbacks are necessary for several reasons:
+* Teardown and setup of expensive resources such as IDB and Web Locks
+* Apps that often have multiple tabs open, such as Google Docs, need to coordinate app state across these tabs. Such apps rely on getting a callback before the page goes away, eg. Google Docs needs to release their (custom) lock.
+* Final communication to the server
+* Analytics
+* Testing
+* Platform predictability, transparency
+For details see [this section of detailed doc](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.s64wegvpugn9).
+
 ### API sketch
 Handle transition to FROZEN
 ```
