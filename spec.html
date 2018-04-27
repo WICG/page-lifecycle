@@ -254,7 +254,7 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
    <header>
     <p data-fill-with="logo"><a href="https://www.w3.org/"><img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"></a> </p>
     <h1 class="p-name no-ref" id="title">Web Lifecycle 1</h1>
-    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2018-04-24">24 April 2018</time></span></h2>
+    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2018-04-27">27 April 2018</time></span></h2>
    </header>
    <div data-fill-with="spec-metadata">
     <dl>
@@ -365,11 +365,11 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
    <p>This spec formalizes two new lifecycle states to support the above:</p>
    <ul>
     <li data-md="">
-     <p><dfn data-dfn-type="dfn" data-export="" id="frozen">FROZEN<a class="self-link" href="#frozen"></a></dfn>: lifecycle state for CPU suspension. Normally HIDDEN pages will be FROZEN to conserve resources.</p>
+     <p>FROZEN: lifecycle state for CPU suspension. Normally HIDDEN pages will be FROZEN to conserve resources.</p>
     <li data-md="">
-     <p><dfn data-dfn-type="dfn" data-export="" id="discarded">DISCARDED<a class="self-link" href="#discarded"></a></dfn>: lifecycle state for tab discarding. Normally FROZEN frames will be moved to DISCARDED to conserve resources.</p>
+     <p>DISCARDED: lifecycle state for tab discarding. Normally FROZEN frames will be moved to DISCARDED to conserve resources.</p>
    </ul>
-   <p>TODO: Insert diagram</p>
+   <p>TODO(panicker): Insert diagram</p>
    <h2 class="heading settled" data-level="3" id="sec-api"><span class="secno">3. </span><span class="content">API</span><a class="self-link" href="#sec-api"></a></h2>
    <p>Web Lifecycle involves the following additions:</p>
 <pre class="idl highlight def"><span class="kt">partial</span> <span class="kt">interface</span> <a class="nv idl-code" data-link-type="interface" href="https://html.spec.whatwg.org/multipage/dom.html#document" id="ref-for-document">Document</a> {
@@ -382,13 +382,13 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
    <p class="note" role="note"><span>NOTE:</span> In addition <a href="https://github.com/whatwg/html/issues/3378">clientId and discardedClientId</a> will be added to Window, to support restoring view state when user revisits a discarded page, causing a reload. We expect those to be used by code that reacts to these events.</p>
    <h3 class="heading settled" data-level="3.1" id="example"><span class="secno">3.1. </span><span class="content">Usage example</span><a class="self-link" href="#example"></a></h3>
    <p>Example of handling freeze and resume:</p>
-<pre class="example highlight" id="example-a7cfe447"><a class="self-link" href="#example-a7cfe447"></a>TODO<span class="o">:</span> Add code samples here<span class="p">.</span>
+<pre class="example highlight" id="example-0f21cf48"><a class="self-link" href="#example-0f21cf48"></a>TODO<span class="p">(</span>panicker<span class="p">)</span><span class="o">:</span> Add code sample here<span class="p">.</span>
 </pre>
    <p>Example of restoring view state after discard:</p>
-<pre class="example highlight" id="example-a7cfe447①"><a class="self-link" href="#example-a7cfe447①"></a>TODO<span class="o">:</span> Add code samples here<span class="p">.</span>
+<pre class="example highlight" id="example-0f21cf48①"><a class="self-link" href="#example-0f21cf48①"></a>TODO<span class="p">(</span>panicker<span class="p">)</span><span class="o">:</span> Add code sample here<span class="p">.</span>
 </pre>
    <p>Example to show how existing onvisibilitychange API works together with new Lifecycle APIs:</p>
-<pre class="example highlight" id="example-a7cfe447②"><a class="self-link" href="#example-a7cfe447②"></a>TODO<span class="o">:</span> Add code samples here<span class="p">.</span>
+<pre class="example highlight" id="example-0f21cf48②"><a class="self-link" href="#example-0f21cf48②"></a>TODO<span class="p">(</span>panicker<span class="p">)</span><span class="o">:</span> Add code sample here<span class="p">.</span>
 </pre>
    <h2 class="heading settled" data-level="4" id="sec-processing-model"><span class="secno">4. </span><span class="content">Processing model</span><a class="self-link" href="#sec-processing-model"></a></h2>
    <h3 class="heading settled" data-level="4.1" id="mod"><span class="secno">4.1. </span><span class="content">Modifications to HTML specifications</span><a class="self-link" href="#mod"></a></h3>
@@ -396,53 +396,53 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
    <p>Each task gets an associated <dfn data-dfn-for="task" data-dfn-type="dfn" data-noexport="" id="task-freezeable">freezeable<a class="self-link" href="#task-freezeable"></a></dfn> (bool) field</p>
    <h4 class="heading settled" data-level="4.1.2" id="html-task-source-dfn"><span class="secno">4.1.2. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/#task-source">task source</a></span><a class="self-link" href="#html-task-source-dfn"></a></h4>
    <p>Each task source is classified as <dfn data-dfn-for="task" data-dfn-type="dfn" data-noexport="" id="task-freezeable①">freezeable<a class="self-link" href="#task-freezeable①"></a></dfn> or <dfn data-dfn-for="task" data-dfn-type="dfn" data-noexport="" id="task-unfreezeable">unfreezeable<a class="self-link" href="#task-unfreezeable"></a></dfn>.</p>
-   <p>TODO(panicker): Add timers, loading as specific examples to task sources.</p>
+   <p>TODO(panicker): Add specific examples of task sources such as timers, loading.</p>
    <p>TODO(domenic): classify all existing task sources in the HTML spec; find out if other specs have defined any relevant task sources.</p>
    <h4 class="heading settled" data-level="4.1.3" id="html-bfcache-dfn"><span class="secno">4.1.3. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#unloading-documents">Unloading documents</a> and <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#history-traversal">History Traversal</a></span><a class="self-link" href="#html-bfcache-dfn"></a></h4>
-   <p>When documents move into and out of bfcache they will transition through FROZEN &amp; UNFROZEN state respectively.</p>
+   <p>When documents move into and out of bfcache they will transition through <a data-link-type="dfn" href="#frozen" id="ref-for-frozen">FROZEN</a> &amp; <a data-link-type="dfn" href="#unfrozen" id="ref-for-unfrozen">UNFROZEN</a> state respectively.</p>
    <ul>
     <li data-md="">
-     <p>In <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#unload-a-document">unload a document</a> algorithm, before Step #5 if the persisted attribute is true (moving to bfcache) run the <a href="#change-frozenness-document"></a>[Change Frozenness of document algorithm], passing in document and FROZEN state.</p>
+     <p>In <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#unload-a-document">unload a document</a> algorithm, before Step #5 if the persisted attribute is true (moving to bfcache) run the <a href="#change-frozenness-of-document" id="ref-for-change-frozenness-of-document">§4.2.2.2 Change frozenness of document</a>, passing in document and <code class="highlight">FROZEN</code>.</p>
     <li data-md="">
-     <p>In the <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#history-traversal">History traversal</a> algorithm, after Step #4.6.4 if the persisted attribute is true (moving out of bfcache) run the <a href="#change-frozenness-document"></a>[Change Frozenness of document algorithm], passing in document and UNFROZEN state.</p>
+     <p>In the <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#history-traversal">History traversal</a> algorithm, after Step #4.6.4 if the persisted attribute is true (moving out of bfcache) run the <a href="#change-frozenness-of-document" id="ref-for-change-frozenness-of-document①">§4.2.2.2 Change frozenness of document</a>, passing in document and <code class="highlight">UNFROZEN</code>.</p>
    </ul>
    <h4 class="heading settled" data-level="4.1.4" id="html-html-event-loop-processing-model"><span class="secno">4.1.4. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model">HTML Event Loop Processing Model</a></span><a class="self-link" href="#html-html-event-loop-processing-model"></a></h4>
    <p>Add to beginning of Step #8.1.4.2.1:</p>
-   <p>In the case of a a browsing context event loop if the Document of the task is in FROZEN state, then ignore freezeable tasks associated with such a Document.</p>
+   <p>In the case of a a browsing context event loop if the Document of the task is in <a data-link-type="dfn" href="#frozen" id="ref-for-frozen①">FROZEN</a> state, then ignore freezeable tasks associated with such a Document.</p>
    <h4 class="heading settled" data-level="4.1.5" id="html-discarding-browsing-context"><span class="secno">4.1.5. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">Discarding browsing context</a></span><a class="self-link" href="#html-discarding-browsing-context"></a></h4>
    <p>Rename <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">”Discarded” in HTML spec</a> to "Destroyed".</p>
    <h4 class="heading settled" data-level="4.1.6" id="html-modifications-to-navigate-a-browsing-context"><span class="secno">4.1.6. </span><span class="content">HTML: Modifications to <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#navigate">Navigate a browsing context</a></span><a class="self-link" href="#html-modifications-to-navigate-a-browsing-context"></a></h4>
     Before Step#1 add following: 
-   <p>If the browsing context was previously DISCARDED then “wasDiscarded” must be set to true on its active document and on all documents of its nested browsing contexts.</p>
+   <p>If the browsing context was previously <a data-link-type="dfn" href="#discarded" id="ref-for-discarded">DISCARDED</a> then <code class="highlight">wasDiscarded</code> must be set to true on its active document and on all documents of its nested browsing contexts.</p>
    <h3 class="heading settled" data-level="4.2" id="additions-to-web-lifecycle-spec"><span class="secno">4.2. </span><span class="content">Additions to Web Lifecycle spec</span><a class="self-link" href="#additions-to-web-lifecycle-spec"></a></h3>
    <h4 class="heading settled" data-dfn-type="dfn" data-level="4.2.1" data-lt="FROZENNESS state" data-noexport="" id="frozenness-state"><span class="secno">4.2.1. </span><span class="content">FROZENNESS state</span><a class="self-link" href="#frozenness-state"></a></h4>
     A document can be in one of the following FROZENNESS states: 
    <ul>
     <li data-md="">
-     <p>FROZEN: the document is frozen, any freezeable tasks associated with the document will not run</p>
+     <p><dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" id="frozen">FROZEN</dfn>: the document is frozen, any freezeable tasks associated with the document will not run</p>
     <li data-md="">
-     <p>UNFROZEN: the document is not frozen, tasks associated with the document will run as usual</p>
+     <p><dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" id="unfrozen">UNFROZEN</dfn>: the document is not frozen, tasks associated with the document will run as usual</p>
      <p class="note" role="note"><span>NOTE:</span> Per the <a href="#change-frozenness-of-a-top-level-document" id="ref-for-change-frozenness-of-a-top-level-document">§4.2.2.1 Change frozenness of a top-level document</a> algorithm, when the Document of the top level browsing context changes its FROZENNESS state then all documents of descendant browsing contexts will also change FROZENNESS to the same value (and be consistent with the Document of the top level browsing context).</p>
    </ul>
-   <p>The UA may choose to execute <a href="#change-frozenness-of-a-top-level-document" id="ref-for-change-frozenness-of-a-top-level-document①">§4.2.2.1 Change frozenness of a top-level document</a> with FROZEN in certain situations.
-For instance, if a browsing context is in the background or hidden, and a grace period has elapsed the UA could execute <a href="#change-frozenness-of-a-top-level-document" id="ref-for-change-frozenness-of-a-top-level-document②">§4.2.2.1 Change frozenness of a top-level document</a> with FROZEN to conserve resources and maintain the quality of the (foreground) user experience. 
+   <p>The UA may choose to execute <a href="#change-frozenness-of-a-top-level-document" id="ref-for-change-frozenness-of-a-top-level-document①">§4.2.2.1 Change frozenness of a top-level document</a> with <code class="highlight">FROZEN</code> in certain situations.
+For instance, if a browsing context is in the background or hidden, and a grace period has elapsed the UA could execute <a href="#change-frozenness-of-a-top-level-document" id="ref-for-change-frozenness-of-a-top-level-document②">§4.2.2.1 Change frozenness of a top-level document</a> with <code class="highlight">FROZEN</code> to conserve resources and maintain the quality of the (foreground) user experience. 
 Specific examples:</p>
    <ul>
     <li data-md="">
-     <p>In mobile Chrome, tabs that have been in background for (at least) 5 minutes, may be FROZEN, to conserve battery and data.</p>
+     <p>In mobile Chrome, tabs that have been in background for (at least) 5 minutes, may be <a data-link-type="dfn" href="#frozen" id="ref-for-frozen②">FROZEN</a>, to conserve battery and data.</p>
     <li data-md="">
-     <p>In desktop Chrome, background tabs that are not important to the user (not used in some time) may be DISCARDED, to conserve memory</p>
-     <p class="note" role="note"><span>NOTE:</span> background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not FROZEN or DISCARDED.</p>
+     <p>In desktop Chrome, background tabs that are not important to the user (not used in some time) may be <a data-link-type="dfn" href="#discarded" id="ref-for-discarded①">DISCARDED</a>, to conserve memory</p>
+     <p class="note" role="note"><span>NOTE:</span> background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not <a data-link-type="dfn" href="#frozen" id="ref-for-frozen③">FROZEN</a> or <a data-link-type="dfn" href="#discarded" id="ref-for-discarded②">DISCARDED</a>.</p>
    </ul>
-   <p>The UA will typically execute <a href="#change-frozenness-of-a-top-level-document" id="ref-for-change-frozenness-of-a-top-level-document③">§4.2.2.1 Change frozenness of a top-level document</a> with UNFROZEN when the user revisits that browsing context. In addition, the UA may choose to periodically execute <a href="#change-frozenness-of-a-top-level-document" id="ref-for-change-frozenness-of-a-top-level-document④">§4.2.2.1 Change frozenness of a top-level document</a> with UNFROZEN in the background, if plentiful resources are available.</p>
+   <p>The UA will typically execute <a href="#change-frozenness-of-a-top-level-document" id="ref-for-change-frozenness-of-a-top-level-document③">§4.2.2.1 Change frozenness of a top-level document</a> with <code class="highlight">UNFROZEN</code> when the user revisits that browsing context. In addition, the UA may choose to periodically execute <a href="#change-frozenness-of-a-top-level-document" id="ref-for-change-frozenness-of-a-top-level-document④">§4.2.2.1 Change frozenness of a top-level document</a> with <code class="highlight">UNFROZEN</code> in the background, if plentiful resources are available.</p>
    <h4 class="heading settled" data-dfn-type="dfn" data-level="4.2.2" data-lt="Reacting to FROZENNESS state changes" data-noexport="" id="reacting-to-frozenness-state-changes"><span class="secno">4.2.2. </span><span class="content">Reacting to FROZENNESS state changes</span><a class="self-link" href="#reacting-to-frozenness-state-changes"></a></h4>
    <h5 class="heading settled dfn-paneled" data-dfn-type="dfn" data-level="4.2.2.1" data-lt="Change frozenness of a top-level document" data-noexport="" id="change-frozenness-of-a-top-level-document"><span class="secno">4.2.2.1. </span><span class="content">Change frozenness of a top-level document</span></h5>
-    To change the frozenness of a top-level document passing in a document <var>doc</var> and FROZENNESS state <var>x</var> (one of "frozen", "unfrozen"): 
+    To change the frozenness of a top-level document passing in a document <var>doc</var> and FROZENNESS state <var>x</var> (one of <code class="highlight">frozen</code>, <code class="highlight">unfrozen</code>): 
    <ul>
     <li data-md="">
      <p class="assertion">Assert: <var>doc</var>’s browsing context is a top-level browsing context.</p>
     <li data-md="">
-     <p>Execute <a href="#change-frozenness-of-document" id="ref-for-change-frozenness-of-document">§4.2.2.2 Change frozenness of document</a> passing in <var>doc</var> and <var>x</var>.</p>
+     <p>Execute <a href="#change-frozenness-of-document" id="ref-for-change-frozenness-of-document②">§4.2.2.2 Change frozenness of document</a> passing in <var>doc</var> and <var>x</var>.</p>
     <li data-md="">
      <p>Let descendants be the <a href="https://html.spec.whatwg.org/#list-of-the-descendant-browsing-contexts">list of the descendant browsing contexts of document</a>.</p>
     <li data-md="">
@@ -451,17 +451,17 @@ Specific examples:</p>
       <li data-md="">
        <p>Let <var>d</var> be the active document of <var>b</var>.</p>
       <li data-md="">
-       <p>Execute <a href="#change-frozenness-of-document" id="ref-for-change-frozenness-of-document①">§4.2.2.2 Change frozenness of document</a> passing arguments <var>d</var> and <var>x</var>.</p>
+       <p>Execute <a href="#change-frozenness-of-document" id="ref-for-change-frozenness-of-document③">§4.2.2.2 Change frozenness of document</a> passing arguments <var>d</var> and <var>x</var>.</p>
      </ul>
    </ul>
    <h5 class="heading settled dfn-paneled" data-dfn-type="dfn" data-level="4.2.2.2" data-lt="Change frozenness of document" data-noexport="" id="change-frozenness-of-document"><span class="secno">4.2.2.2. </span><span class="content">Change frozenness of document</span></h5>
     To change the frozenness of a document given a document <var>doc</var> and FROZENNESS state <var>x</var>: 
    <ul>
     <li data-md="">
-     <p>If <var>x</var> is FROZEN:</p>
+     <p>If <var>x</var> is <code class="highlight">FROZEN</code>:</p>
      <ul>
       <li data-md="">
-       <p>Set <var>doc</var>’s FROZENNESS state to FROZEN.</p>
+       <p>Set <var>doc</var>’s FROZENNESS state to <code class="highlight">FROZEN</code>.</p>
       <li data-md="">
        <p>Fire an event named freeze at <var>doc</var>.</p>
      </ul>
@@ -471,14 +471,14 @@ Specific examples:</p>
       <li data-md="">
        <p>Fire an event named resume at <var>doc</var>.</p>
       <li data-md="">
-       <p>Set <var>doc</var>’s FROZENNESS state to UNFROZEN.</p>
+       <p>Set <var>doc</var>’s FROZENNESS state to <code class="highlight">UNFROZEN</code>.</p>
      </ul>
      <p class="note" role="note"><span>NOTE:</span> it is intentional that the ordering between event-firing and setting the state are different in the two cases above.</p>
    </ul>
    <h4 class="heading settled" data-dfn-type="dfn" data-level="4.2.3" data-lt="DISCARDED state" data-noexport="" id="discarded-state"><span class="secno">4.2.3. </span><span class="content">DISCARDED state</span><a class="self-link" href="#discarded-state"></a></h4>
-    When a browsing context is DISCARDED, it is <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">destroyed</a>, and all the Document objects for all the entries in the browsing context’s session history must be destroyed as well. 
-   <p>Browsing contexts -- that are in the background and have their documents in <a href="https://www.w3.org/TR/page-visibility-2/#visibility-states-and-the-visibilitystate-enum">VisibilityState hidden</a> -- can be DISCARDED, under resource pressure (eg. low memory).</p>
-   <p>When a top level browsing context (tab in the browser) is DISCARDED due to resource pressure (or unexpected events eg. process crash), and say later the user revisits the tab in the browser, then the Document of the new top level browsing context and documents of all its descendant browsing contexts will have <var>wasDiscarded</var> state set to true.</p>
+    <dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" id="discarded">DISCARDED</dfn> is a system intervention where UA chooses to <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">destroy the browsing context</a>, and consequently all the Document objects for all the entries in the browsing context’s session history are destroyed as well. This is typically done to reclaim system memory, when memory (and other resources) are running low. 
+   <p>Browsing contexts -- that are in the background and have their documents in <a href="https://www.w3.org/TR/page-visibility-2/#visibility-states-and-the-visibilitystate-enum">VisibilityState hidden</a> -- can be <a data-link-type="dfn" href="#discarded" id="ref-for-discarded③">DISCARDED</a>, under resource pressure (eg. low memory).</p>
+   <p>When a top level browsing context (tab in the browser) is <a data-link-type="dfn" href="#discarded" id="ref-for-discarded④">DISCARDED</a> due to resource pressure (or unexpected events eg. process crash), and say later the user revisits the tab in the browser, then the Document of the new top level browsing context and documents of all its descendant browsing contexts will have <code class="highlight">wasDiscarded</code> state set to true.</p>
    <h2 class="heading settled" data-level="5" id="acknowledgements"><span class="secno">5. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
    <p>Special thanks to Ojan Vafai, Philip Walton, Olli Petay, Todd Reifsteck for their technical input and suggestions that led to improvements to this specification.</p>
   </main>
@@ -488,7 +488,7 @@ Specific examples:</p>
   <ul class="index">
    <li><a href="#change-frozenness-of-a-top-level-document">Change frozenness of a top-level document</a><span>, in §4.2.2</span>
    <li><a href="#change-frozenness-of-document">Change frozenness of document</a><span>, in §4.2.2.1</span>
-   <li><a href="#discarded">DISCARDED</a><span>, in §2</span>
+   <li><a href="#discarded">DISCARDED</a><span>, in §4.2.3</span>
    <li><a href="#discarded-state">DISCARDED state</a><span>, in §4.2.2.2</span>
    <li>
     freezeable
@@ -496,12 +496,13 @@ Specific examples:</p>
      <li><a href="#task-freezeable">dfn for task</a><span>, in §4.1.1</span>
      <li><a href="#task-freezeable①">dfn for task</a><span>, in §4.1.2</span>
     </ul>
-   <li><a href="#frozen">FROZEN</a><span>, in §2</span>
+   <li><a href="#frozen">FROZEN</a><span>, in §4.2.1</span>
    <li><a href="#frozenness-state">FROZENNESS state</a><span>, in §4.2</span>
    <li><a href="#dom-document-onfreeze">onfreeze</a><span>, in §3</span>
    <li><a href="#dom-document-onresume">onresume</a><span>, in §3</span>
    <li><a href="#reacting-to-frozenness-state-changes">Reacting to FROZENNESS state changes</a><span>, in §4.2.1</span>
    <li><a href="#task-unfreezeable">unfreezeable</a><span>, in §4.1.2</span>
+   <li><a href="#unfrozen">UNFROZEN</a><span>, in §4.2.1</span>
    <li><a href="#dom-document-wasdiscarded">wasDiscarded</a><span>, in §3</span>
   </ul>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
@@ -534,6 +535,20 @@ Specific examples:</p>
 };
 
 </pre>
+  <aside class="dfn-panel" data-for="frozen">
+   <b><a href="#frozen">#frozen</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-frozen">4.1.3. HTML: Unloading documents and History Traversal</a>
+    <li><a href="#ref-for-frozen①">4.1.4. HTML: HTML Event Loop Processing Model</a>
+    <li><a href="#ref-for-frozen②">4.2.1. FROZENNESS state</a> <a href="#ref-for-frozen③">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="unfrozen">
+   <b><a href="#unfrozen">#unfrozen</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-unfrozen">4.1.3. HTML: Unloading documents and History Traversal</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="change-frozenness-of-a-top-level-document">
    <b><a href="#change-frozenness-of-a-top-level-document">#change-frozenness-of-a-top-level-document</a></b><b>Referenced in:</b>
    <ul>
@@ -543,7 +558,16 @@ Specific examples:</p>
   <aside class="dfn-panel" data-for="change-frozenness-of-document">
    <b><a href="#change-frozenness-of-document">#change-frozenness-of-document</a></b><b>Referenced in:</b>
    <ul>
+    <li><a href="#ref-for-change-frozenness-of-document">4.1.3. HTML: Unloading documents and History Traversal</a> <a href="#ref-for-change-frozenness-of-document">(2)</a>
     <li><a href="#ref-for-change-frozenness-of-document">4.2.2.1. Change frozenness of a top-level document</a> <a href="#ref-for-change-frozenness-of-document">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="discarded">
+   <b><a href="#discarded">#discarded</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-discarded">4.1.6. HTML: Modifications to Navigate a browsing context</a>
+    <li><a href="#ref-for-discarded①">4.2.1. FROZENNESS state</a> <a href="#ref-for-discarded②">(2)</a>
+    <li><a href="#ref-for-discarded③">4.2.3. DISCARDED state</a> <a href="#ref-for-discarded④">(2)</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */
