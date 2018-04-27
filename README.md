@@ -166,7 +166,7 @@ For details on the following topics see the Master Doc:
 * [Handling of Web Workers](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.gam3mhyangg4)
 * [Handling Background Work and role of Service Worker](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.w3vi1ouug35y)
 * [Alternative Considered: reusing existing callbacks](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.5l9dky87m2l0)
-* [Alternative Considered: no new callbacks
+* [Alternative Considered: no new callbacks]
 (https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.s64wegvpugn9)
 * [What is bfcache?](https://webkit.org/blog/427/webkit-page-cache-i-the-basics/)
 
