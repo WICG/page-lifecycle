@@ -75,13 +75,12 @@ Why cannot web apps simply use existing callbacks to deal with FROZEN and DISCAR
 The callbacks are necessary for several reasons:
 * Teardown and setup of expensive resources such as IDB and Web Locks
 * Many apps rely on unload handler and no further callbacks are fired after onfreeze if the page is discarded. onfreeze provides a final callback for this need.
-
     * Apps that often have multiple tabs open, such as Google Docs, need to coordinate app state across these tabs. Such apps rely on getting a callback before the page goes away, eg. Google Docs needs to release their (custom) lock.
     * Final communication to the server
-* Analytics
-* Testing story
-* Platform predictability and transparency in the face of freezing & discarding interventions becoming the norm.
-
+* Platform predictability and transparency in the face of freezing & discarding interventions becoming the norm. Specifically helping:
+    * Analytics
+    * Testing story
+    
 For details see [this section of detailed doc](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.s64wegvpugn9).
 
 ### API sketch
