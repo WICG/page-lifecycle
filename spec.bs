@@ -33,10 +33,10 @@ This spec defines what the lifecycle of a web page is and adds extensions to ena
     * Tab discarding (for memory saving)
 
 This spec formalizes two new lifecycle states to support the above:
-    * <dfn export>FROZEN</dfn>: lifecycle state for CPU suspension. Normally HIDDEN pages will be FROZEN to conserve resources.
-    * <dfn export>DISCARDED</dfn>: lifecycle state for tab discarding. Normally FROZEN frames will be moved to DISCARDED to conserve resources. 
+    * FROZEN: lifecycle state for CPU suspension. Normally HIDDEN pages will be FROZEN to conserve resources.
+    * DISCARDED: lifecycle state for tab discarding. Normally FROZEN frames will be moved to DISCARDED to conserve resources. 
 
-TODO: Insert diagram
+TODO(panicker): Insert diagram
 
 API {#sec-api}
 =======================================
@@ -60,19 +60,19 @@ Usage example {#example}
 
 Example of handling freeze and resume:
 <pre class="example highlight">
-    TODO: Add code samples here.
+    TODO(panicker): Add code sample here.
 
 </pre>
 
 Example of restoring view state after discard:
 <pre class="example highlight">
-    TODO: Add code samples here.
+    TODO(panicker): Add code sample here.
 
 </pre>
 
 Example to show how existing onvisibilitychange API works together with new Lifecycle APIs:
 <pre class="example highlight">
-    TODO: Add code samples here.
+    TODO(panicker): Add code sample here.
 
 </pre>
 
@@ -90,23 +90,23 @@ Each task gets an associated <dfn for="task">freezeable</dfn> (bool) field
 
 Each task source is classified as <dfn for="task">freezeable</dfn> or <dfn for="task">unfreezeable</dfn>.
 
-TODO(panicker): Add timers, loading as specific examples to task sources.
+TODO(panicker): Add specific examples of task sources such as timers, loading.
 
 TODO(domenic): classify all existing task sources in the HTML spec; find out if other specs have defined any relevant task sources.
 
 ### HTML: <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#unloading-documents">Unloading documents</a> and <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#history-traversal">History Traversal</a> ### {#html-bfcache-dfn}
 
-When documents move into and out of bfcache they will transition through FROZEN & UNFROZEN state respectively.
+When documents move into and out of bfcache they will transition through [=FROZEN=] & [=UNFROZEN=] state respectively.
 
-* In <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#unload-a-document">unload a document</a> algorithm, before Step #5 if the persisted attribute is true (moving to bfcache) run the [[#change-frozenness-document]][Change Frozenness of document algorithm], passing in document and FROZEN state.
-* In the <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#history-traversal">History traversal</a> algorithm, after Step #4.6.4 if the persisted attribute is true (moving out of bfcache) run the [[#change-frozenness-document]][Change Frozenness of document algorithm], passing in document and UNFROZEN state. 
+* In <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#unload-a-document">unload a document</a> algorithm, before Step #5 if the persisted attribute is true (moving to bfcache) run the [[#change-frozenness-of-document]], passing in document and <code>FROZEN</code>.
+* In the <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#history-traversal">History traversal</a> algorithm, after Step #4.6.4 if the persisted attribute is true (moving out of bfcache) run the [[#change-frozenness-of-document]], passing in document and <code>UNFROZEN</code>. 
 
 
 ### HTML: <a href="https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model">HTML Event Loop Processing Model</a>
 
 Add to beginning of Step #8.1.4.2.1:
 
-In the case of a a browsing context event loop if the Document of the task is in FROZEN state, then ignore freezeable tasks associated with such a Document.
+In the case of a a browsing context event loop if the Document of the task is in [=FROZEN=] state, then ignore freezeable tasks associated with such a Document.
 
 ### HTML: <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">Discarding browsing context</a>
 
@@ -115,7 +115,7 @@ Rename <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-brow
 ### HTML: Modifications to <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#navigate">Navigate a browsing context</a>
 Before Step#1 add following:
 
-If the browsing context was previously DISCARDED then “wasDiscarded” must be set to true on its active document and on all documents of its nested browsing contexts.
+If the browsing context was previously [=DISCARDED=] then <code>wasDiscarded</code> must be set to true on its active document and on all documents of its nested browsing contexts.
 
 
 Additions to Web Lifecycle spec
@@ -124,25 +124,25 @@ Additions to Web Lifecycle spec
 <h4 dfn>FROZENNESS state</h4>
 A document can be in one of the following FROZENNESS states:
 
-* FROZEN: the document is frozen, any freezeable tasks associated with the document will not run
-* UNFROZEN: the document is not frozen, tasks associated with the document will run as usual
+* <dfn export>FROZEN</dfn>: the document is frozen, any freezeable tasks associated with the document will not run
+* <dfn export>UNFROZEN</dfn>: the document is not frozen, tasks associated with the document will run as usual
 
     NOTE: Per the [[#change-frozenness-of-a-top-level-document]] algorithm, when the Document of the top level browsing context changes its FROZENNESS state then all documents of descendant browsing contexts will also change FROZENNESS to the same value (and be consistent with the Document of the top level browsing context).
 
-The UA may choose to execute [[#change-frozenness-of-a-top-level-document]] with FROZEN in certain situations.
-For instance, if a browsing context is in the background or hidden, and a grace period has elapsed the UA could execute [[#change-frozenness-of-a-top-level-document]] with FROZEN to conserve resources and maintain the quality of the (foreground) user experience. 
+The UA may choose to execute [[#change-frozenness-of-a-top-level-document]] with <code>FROZEN</code> in certain situations.
+For instance, if a browsing context is in the background or hidden, and a grace period has elapsed the UA could execute [[#change-frozenness-of-a-top-level-document]] with <code>FROZEN</code> to conserve resources and maintain the quality of the (foreground) user experience. 
 Specific examples:
 
-* In mobile Chrome, tabs that have been in background for (at least) 5 minutes, may be FROZEN, to conserve battery and data.
-* In desktop Chrome, background tabs that are not important to the user (not used in some time) may be DISCARDED, to conserve memory
+* In mobile Chrome, tabs that have been in background for (at least) 5 minutes, may be [=FROZEN=], to conserve battery and data.
+* In desktop Chrome, background tabs that are not important to the user (not used in some time) may be [=DISCARDED=], to conserve memory
 
-    NOTE: background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not FROZEN or DISCARDED.
+    NOTE: background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not [=FROZEN=] or [=DISCARDED=].
 
-The UA will typically execute [[#change-frozenness-of-a-top-level-document]] with UNFROZEN when the user revisits that browsing context. In addition, the UA may choose to periodically execute [[#change-frozenness-of-a-top-level-document]] with UNFROZEN in the background, if plentiful resources are available.
+The UA will typically execute [[#change-frozenness-of-a-top-level-document]] with <code>UNFROZEN</code> when the user revisits that browsing context. In addition, the UA may choose to periodically execute [[#change-frozenness-of-a-top-level-document]] with <code>UNFROZEN</code> in the background, if plentiful resources are available.
 
 <h4 dfn>Reacting to FROZENNESS state changes</h4>
 <h5 dfn>Change frozenness of a top-level document</h5>
-To change the frozenness of a top-level document passing in a document |doc| and FROZENNESS state |x| (one of "frozen", "unfrozen"):
+To change the frozenness of a top-level document passing in a document |doc| and FROZENNESS state |x| (one of <code>frozen</code>, <code>unfrozen</code>):
 
 * Assert: |doc|'s browsing context is a top-level browsing context.
 * Execute [[#change-frozenness-of-document]] passing in |doc| and |x|.
@@ -153,21 +153,21 @@ To change the frozenness of a top-level document passing in a document |doc| and
 
 <h5 dfn>Change frozenness of document</h5>
 To change the frozenness of a document given a document |doc| and FROZENNESS state |x|:
-* If |x| is FROZEN:
-    * Set |doc|'s FROZENNESS state to FROZEN.
+* If |x| is <code>FROZEN</code>:
+    * Set |doc|'s FROZENNESS state to <code>FROZEN</code>.
     * Fire an event named freeze at |doc|.
 * Otherwise:
     * Fire an event named resume at |doc|.
-    * Set |doc|'s FROZENNESS state to UNFROZEN.
+    * Set |doc|'s FROZENNESS state to <code>UNFROZEN</code>.
 
     NOTE: it is intentional that the ordering between event-firing and setting the state are different in the two cases above.
 
 <h4 dfn>DISCARDED state</h4>
-When a browsing context is DISCARDED, it is <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">destroyed</a>, and all the Document objects for all the entries in the browsing context's session history must be destroyed as well.
+<dfn export>DISCARDED</dfn> is a system intervention where UA chooses to <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">destroy the browsing context</a>, and consequently all the Document objects for all the entries in the browsing context's session history are destroyed as well. This is typically done to reclaim system memory, when memory (and other resources) are running low.
 
-Browsing contexts -- that are in the background and have their documents in <a href="https://www.w3.org/TR/page-visibility-2/#visibility-states-and-the-visibilitystate-enum">VisibilityState hidden</a> -- can be DISCARDED, under resource pressure (eg. low memory).
+Browsing contexts -- that are in the background and have their documents in <a href="https://www.w3.org/TR/page-visibility-2/#visibility-states-and-the-visibilitystate-enum">VisibilityState hidden</a> -- can be [=DISCARDED=], under resource pressure (eg. low memory).
 
-When a top level browsing context (tab in the browser) is DISCARDED due to resource pressure (or unexpected events eg. process crash), and say later the user revisits the tab in the browser, then the Document of the new top level browsing context and documents of all its descendant browsing contexts will have |wasDiscarded| state set to true.
+When a top level browsing context (tab in the browser) is [=DISCARDED=] due to resource pressure (or unexpected events eg. process crash), and say later the user revisits the tab in the browser, then the Document of the new top level browsing context and documents of all its descendant browsing contexts will have <code>wasDiscarded</code> state set to true.
 
 <!-- ============================================================ -->
 <h2 id=acknowledgements>Acknowledgements</h2>
