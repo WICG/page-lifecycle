@@ -97,11 +97,11 @@ Modifications to the HTML Standard {#mod}
 
 ### HTML: <a href="https://html.spec.whatwg.org/#concept-task">task definition</a> ### {#html-task-dfn}
 
-Each task gets an associated <dfn for="task">freezeable</dfn> boolean field.
+Each task gets an associated <dfn for="task">freezable</dfn> boolean field.
 
 ### HTML: <a href="https://html.spec.whatwg.org/#task-source">task source</a> ### {#html-task-source-dfn}
 
-Each task source is classified as <dfn for="task source">freezeable</dfn> or <dfn for="task source">unfreezeable</dfn>.
+Each task source is classified as <dfn for="task source">freezable</dfn> or <dfn for="task source">unfreezable</dfn>.
 
 TODO(panicker): Add specific examples of task sources such as timers, loading.
 
@@ -117,7 +117,7 @@ When documents move into and out of bfcache they will transition through [=FROZE
 
 ### HTML: <a href="https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model">HTML Event Loop Processing Model</a> ### {#html-event-loop}
 
-Step #1 currently ignores "tasks whose associated {{Document}}s are not [=fully active=]". Modify this clause to also ignore tasks whose associated {{Document}} is in the [=FROZEN=] state.
+Step #1 currently ignores "tasks whose associated {{Document}}s are not [=fully active=]". Modify this clause to also ignore [=task/freezable=] tasks whose associated {{Document}} is in the [=FROZEN=] state.
 
 ### HTML: <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">Discarding browsing context</a> ### {#html-discarding}
 
