@@ -6,7 +6,7 @@
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet" type="text/css">
   <meta content="Bikeshed version 076216f1c8559090fda8caf1898a1a19446622d1" name="generator">
-  <meta content="9b8ea656c51be39c87546f2facfac228bcc92cd6" name="document-revision">
+  <meta content="11a152fb72aaf4c0853a1cd94e8ed6edd7a773fa" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -395,9 +395,9 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
    <h2 class="heading settled" data-level="4" id="sec-processing-model"><span class="secno">4. </span><span class="content">Processing model</span><a class="self-link" href="#sec-processing-model"></a></h2>
    <h3 class="heading settled" data-level="4.1" id="mod"><span class="secno">4.1. </span><span class="content">Modifications to the HTML Standard</span><a class="self-link" href="#mod"></a></h3>
    <h4 class="heading settled" data-level="4.1.1" id="html-task-dfn"><span class="secno">4.1.1. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/#concept-task">task definition</a></span><a class="self-link" href="#html-task-dfn"></a></h4>
-   <p>Each task gets an associated <dfn data-dfn-for="task" data-dfn-type="dfn" data-noexport="" id="task-freezeable">freezeable<a class="self-link" href="#task-freezeable"></a></dfn> boolean field.</p>
+   <p>Each task gets an associated <dfn class="dfn-paneled" data-dfn-for="task" data-dfn-type="dfn" data-noexport="" id="task-freezable">freezable</dfn> boolean field.</p>
    <h4 class="heading settled" data-level="4.1.2" id="html-task-source-dfn"><span class="secno">4.1.2. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/#task-source">task source</a></span><a class="self-link" href="#html-task-source-dfn"></a></h4>
-   <p>Each task source is classified as <dfn data-dfn-for="task source" data-dfn-type="dfn" data-noexport="" id="task-source-freezeable">freezeable<a class="self-link" href="#task-source-freezeable"></a></dfn> or <dfn data-dfn-for="task source" data-dfn-type="dfn" data-noexport="" id="task-source-unfreezeable">unfreezeable<a class="self-link" href="#task-source-unfreezeable"></a></dfn>.</p>
+   <p>Each task source is classified as <dfn data-dfn-for="task source" data-dfn-type="dfn" data-noexport="" id="task-source-freezable">freezable<a class="self-link" href="#task-source-freezable"></a></dfn> or <dfn data-dfn-for="task source" data-dfn-type="dfn" data-noexport="" id="task-source-unfreezable">unfreezable<a class="self-link" href="#task-source-unfreezable"></a></dfn>.</p>
    <p>TODO(panicker): Add specific examples of task sources such as timers, loading.</p>
    <p>TODO(domenic): classify all existing task sources in the HTML spec; find out if other specs have defined any relevant task sources.</p>
    <h4 class="heading settled" data-level="4.1.3" id="html-bfcache-dfn"><span class="secno">4.1.3. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#unloading-documents">Unloading documents</a> and <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#history-traversal">History Traversal</a></span><a class="self-link" href="#html-bfcache-dfn"></a></h4>
@@ -409,7 +409,7 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
      <p>In the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#traverse-the-history" id="ref-for-traverse-the-history">traverse the history</a> algorithm, after Step #4.6.4, if the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#dom-pagetransitionevent-persisted" id="ref-for-dom-pagetransitionevent-persisted①">persisted</a></code> attribute is true (i.e. we are moving out of bfcache), run the <a href="#change-frozenness-of-document" id="ref-for-change-frozenness-of-document①">§4.2.2.2 Change frozenness of document</a> algorithm, passing in <var>document</var> and <code class="highlight">UNFROZEN</code>.</p>
    </ul>
    <h4 class="heading settled" data-level="4.1.4" id="html-event-loop"><span class="secno">4.1.4. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model">HTML Event Loop Processing Model</a></span><a class="self-link" href="#html-event-loop"></a></h4>
-   <p>Step #1 currently ignores "tasks whose associated <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document②">Document</a></code>s are not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#fully-active" id="ref-for-fully-active">fully active</a>". Modify this clause to also ignore tasks whose associated <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document③">Document</a></code> is in the <a data-link-type="dfn" href="#frozen" id="ref-for-frozen①">FROZEN</a> state.</p>
+   <p>Step #1 currently ignores "tasks whose associated <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document②">Document</a></code>s are not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#fully-active" id="ref-for-fully-active">fully active</a>". Modify this clause to also ignore <a data-link-type="dfn" href="#task-freezable" id="ref-for-task-freezable">freezable</a> tasks whose associated <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document③">Document</a></code> is in the <a data-link-type="dfn" href="#frozen" id="ref-for-frozen①">FROZEN</a> state.</p>
    <h4 class="heading settled" data-level="4.1.5" id="html-discarding"><span class="secno">4.1.5. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">Discarding browsing context</a></span><a class="self-link" href="#html-discarding"></a></h4>
    <p>Rename the "<a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">discard</a>" concept, for both browsing contexts and documents, to "destroy". This allows us to use the "discarded" terminology for the user-facing <code class="idl"><a data-link-type="idl" href="#dom-document-wasdiscarded" id="ref-for-dom-document-wasdiscarded">wasDiscarded</a></code> attribute.</p>
    <h4 class="heading settled" data-level="4.1.6" id="html-navigate"><span class="secno">4.1.6. </span><span class="content">HTML: Modifications to <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#navigate">Navigate a browsing context</a></span><a class="self-link" href="#html-navigate"></a></h4>
@@ -492,17 +492,17 @@ Specific examples:</p>
    <li><a href="#discarded">DISCARDED</a><span>, in §4.2.3</span>
    <li><a href="#discarded-state">DISCARDED state</a><span>, in §4.2.2.2</span>
    <li>
-    freezeable
+    freezable
     <ul>
-     <li><a href="#task-freezeable">dfn for task</a><span>, in §4.1.1</span>
-     <li><a href="#task-source-freezeable">dfn for task source</a><span>, in §4.1.2</span>
+     <li><a href="#task-freezable">dfn for task</a><span>, in §4.1.1</span>
+     <li><a href="#task-source-freezable">dfn for task source</a><span>, in §4.1.2</span>
     </ul>
    <li><a href="#frozen">FROZEN</a><span>, in §4.2.1</span>
    <li><a href="#frozenness-state">FROZENNESS state</a><span>, in §4.2</span>
    <li><a href="#dom-document-onfreeze">onfreeze</a><span>, in §3</span>
    <li><a href="#dom-document-onresume">onresume</a><span>, in §3</span>
    <li><a href="#reacting-to-frozenness-state-changes">Reacting to FROZENNESS state changes</a><span>, in §4.2.1</span>
-   <li><a href="#task-source-unfreezeable">unfreezeable</a><span>, in §4.1.2</span>
+   <li><a href="#task-source-unfreezable">unfreezable</a><span>, in §4.1.2</span>
    <li><a href="#unfrozen">UNFROZEN</a><span>, in §4.2.1</span>
    <li><a href="#dom-document-wasdiscarded">wasDiscarded</a><span>, in §3</span>
   </ul>
@@ -575,6 +575,12 @@ Specific examples:</p>
    <b><a href="#dom-document-onresume">#dom-document-onresume</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-document-onresume">3. API</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="task-freezable">
+   <b><a href="#task-freezable">#task-freezable</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-task-freezable">4.1.4. HTML: HTML Event Loop Processing Model</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="frozen">
