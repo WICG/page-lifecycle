@@ -62,7 +62,6 @@ We propose the following changes:
 * `onresume` is fired to signal transition out of FROZEN. This will be used to undo what was done in `onfreeze` above. 
 * On DISCARDED -> ACTIVE, an attribute called `wasDiscarded` is added to the Document. This will be used to restore view state , when the user revisits a discarded tab.
 * `onfreeze` is also fired before transition to BFCACHE (before `pagehide` is fired) and `onresume` is also fired on transition out of BFCACHE (after `pageshow` is fired).
-* `onfreeze` and `onresume` inherit from [ExtendableEvent](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent) and support waitUntil semantics.
 
 Suggestion for implementers: before moving app to DISCARDED it is recommended to run `beforeunload` handler and if it returns string (i.e. needs to show modal dialog) then the tab discard should be omitted, to prevent risk of data loss.
 
@@ -86,8 +85,6 @@ For details see [this section of detailed doc](https://docs.google.com/document/
 ### API sketch
 Handle transition to FROZEN
 ```
-interface FreezeEvent : ExtendableEvent {}
-
 function handleFreeze(e) {
    // Handle transition to FROZEN
 }
@@ -117,7 +114,7 @@ In the future, if frame-level freezing (i.e. freeze specific frames within a pag
 // d. ...
 enum FrameLevel { ... };
 
-interface FreezeEvent : ExtendableEvent {
+interface FreezeEvent {
     readonly attribute FrameLevel frameLevel; 
 }
 ```
@@ -150,9 +147,9 @@ DISCARDED -> ACTIVE | (`Document::wasDiscarded` is set) | user revisits tab afte
 If excessive work is performed in the `onfreeze` callback fired on FROZEN, there is a cost to this in terms of resource consumption i.e. CPU, network.
 We need to strike a balance between enabling the system to move the app to FROZEN for conserving resources AND enabling the app to take action without consuming excessive resources in these callbacks.
 To accomplish this, the following will apply to the callback:
-- Sync XHR will be disallowed.
-- upper time limit in the callback i.e. allowed wall time eg. 500ms. If the time limit is exceeded, the page will be discarded (instead of being FROZEN)
-- The callback may need more time, for instance, to do legitimate async work such as writing to IndexedDB. We will support [ExtendableEvent.waitUntil](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil) API to do async work eg. IndexedDB writes.
+- network activity will be disallowed, except for fetch keep-alive. This will allow final communication with server as well as meet needs of analytics.
+- upper time limit of 500ms will be imposed. If the time limit is exceeded, the page will be discarded (instead of being FROZEN)
+- legitimate async work like writing to IndexedDB will be supported. Current proposal for supporting this is here: https://github.com/w3c/IndexedDB/issues/234.
 
 ### Guarantess for end-of-life callbacks
 
