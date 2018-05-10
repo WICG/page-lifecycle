@@ -34,7 +34,7 @@ This spec defines what the lifecycle of a web page is and adds extensions to ena
 
 This spec formalizes two new lifecycle states to support the above:
     * FROZEN: lifecycle state for CPU suspension. Normally HIDDEN pages will be FROZEN to conserve resources.
-    * DISCARDED: lifecycle state for tab discarding. Normally FROZEN frames will be moved to DISCARDED to conserve resources. 
+    * <dfn export>Discarded</dfn>: lifecycle state for tab discarding. Normally FROZEN frames will be moved to Discarded to conserve resources. 
 
 TODO(panicker): Insert diagram
 
@@ -115,7 +115,7 @@ Rename <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-brow
 ### HTML: Modifications to <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#navigate">Navigate a browsing context</a>
 Before Step#1 add following:
 
-If the browsing context was previously [=DISCARDED=] then <code>wasDiscarded</code> must be set to true on its active document and on all documents of its nested browsing contexts.
+If the browsing context was previously [=Discarded=] then <code>wasDiscarded</code> must be set to true on its active document and on all documents of its nested browsing contexts.
 
 
 Additions to Web Lifecycle spec
@@ -161,12 +161,16 @@ To change the frozenness of a document given a document |doc| and FROZENNESS sta
 
     NOTE: it is intentional that the ordering between event-firing and setting the state are different in the two cases above.
 
-<h4 dfn>DISCARDED state</h4>
-<dfn export>DISCARDED</dfn> is a system intervention where UA chooses to <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">destroy the browsing context</a>, and consequently all the Document objects for all the entries in the browsing context's session history are destroyed as well. This is typically done to reclaim system memory, when memory (and other resources) are running low.
+<h4 dfn>Discarded state</h4>
+To <dfn export>discard</dfn> a browsing context, <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">destroy the browsing context</a>, and make note of the fact that the reason it was destroyed was because of discarding. Consequently all descendant browsing contexts are discarded as well. Document objects for all the entries in the browsing context's session history are destroyed.
 
-Browsing contexts -- that are in the background and have their documents in <a href="https://www.w3.org/TR/page-visibility-2/#visibility-states-and-the-visibilitystate-enum">VisibilityState hidden</a> -- can be [=DISCARDED=], under resource pressure (eg. low memory).
+    NOTE: Discard is typically done to reclaim system memory, when memory and other resources are running low. On the other hand destroying a browser context is the normal teardown due to user leaving the page etc. 
 
-When a top level browsing context (tab in the browser) is [=DISCARDED=] due to resource pressure (or unexpected events eg. process crash), and say later the user revisits the tab in the browser, then the Document of the new top level browsing context and documents of all its descendant browsing contexts will have <code>wasDiscarded</code> state set to true.
+Lifecycle state [=Discarded=] means that the [=discard=] algorithm was called on the Document's browsing context.
+
+Browsing contexts -- that are in the background and have their documents in <a href="https://www.w3.org/TR/page-visibility-2/#visibility-states-and-the-visibilitystate-enum">VisibilityState hidden</a> -- can be [=Discarded=], under resource pressure (eg. low memory).
+
+When a top level browsing context (tab in the browser) is [=Discarded=] due to resource pressure (or unexpected events eg. process crash), and say later the user revisits the tab in the browser, then the Document of the new top level browsing context and documents of all its descendant browsing contexts will have <code>wasDiscarded</code> state set to true.
 
 Specific example:
 
@@ -178,4 +182,4 @@ Specific example:
 <h2 id=acknowledgements>Acknowledgements</h2>
 <!-- ============================================================ -->
 
-Special thanks to Ojan Vafai, Philip Walton, Olli Petay, Todd Reifsteck for their technical input and suggestions that led to improvements to this specification.
+Special thanks to Ojan Vafai, Philip Walton, Fadi Meawad, Olli Petay, Todd Reifsteck for their technical input and suggestions that led to improvements to this specification.
