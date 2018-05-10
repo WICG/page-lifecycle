@@ -169,21 +169,19 @@ To <dfn export>discard</dfn> a browsing context, <a href="https://html.spec.what
 
 Lifecycle state [=Discarded=] means that the [=discard=] algorithm was called on the Document's browsing context.
 
-Browsing contexts -- that are in the background and have their documents in <a href="https://www.w3.org/TR/page-visibility-2/#visibility-states-and-the-visibilitystate-enum">VisibilityState hidden</a> -- can be [=Discarded=], under resource pressure (eg. low memory).
+Browsing contexts -- that are in the background and have their documents in <a href="https://www.w3.org/TR/page-visibility-2/#visibility-states-and-the-visibilitystate-enum">VisibilityState hidden</a> -- can be [=Discarded=], under resource pressure (eg. low memory). Specific example:
 
-When a top level browsing context (tab in the browser) is [=Discarded=] due to resource pressure (or unexpected events eg. process crash), and say later the user revisits the tab in the browser, then the Document of the new top level browsing context and documents of all its descendant browsing contexts will have <code>wasDiscarded</code> state set to true.
+* In desktop Chrome, background tabs that are not important to the user (not used in some time) may be [=DISCARDED=], to conserve memory
+
+    NOTE: background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not [=DISCARDED=].
+
+When a top level browsing context (tab in the browser) is [=Discarded=] due to resource pressure (or unexpected events eg. process crash), and later the user revisits the tab in the browser, then the {{Document}}'s [=Document/discarded=] boolean will be true.
 
 TODO(panicker): Move the below text?
 
 Each Document has a <dfn for="Document">discarded</dfn> boolean, which is initially false.
 The <dfn attribute for="Document">wasDiscarded</dfn> attribute's getter must return the value of this {{Document}}'s [=Document/discarded=] boolean.
 
-
-Specific example:
-
-* In desktop Chrome, background tabs that are not important to the user (not used in some time) may be [=DISCARDED=], to conserve memory
-
-    NOTE: background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not [=DISCARDED=].
 
 <!-- ============================================================ -->
 <h2 id=acknowledgements>Acknowledgements</h2>
