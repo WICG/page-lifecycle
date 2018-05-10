@@ -1,4 +1,6 @@
 # A Lifecycle for the Web
+Link to spec: https://wicg.github.io/web-lifecycle/spec.html
+
 ## Motivation
 For detailed motivation see [this doc](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.ejq0luje6eyb).
 
