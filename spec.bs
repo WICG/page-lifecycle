@@ -112,10 +112,11 @@ In the case of a a browsing context event loop if the Document of the task is in
 
 Rename <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">”Discarded” in HTML spec</a>  to "Destroyed".
 
-### HTML: Modifications to <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#navigate">Navigate a browsing context</a>
-Before Step#1 add following:
+### HTML: Modifications to <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">Initialize the document</a>
 
-If the browsing context was previously [=Discarded=] then <code>wasDiscarded</code> must be set to true on its active document and on all documents of its nested browsing contexts.
+Before Step #3 add following:
+
+If the browsing context was previously [=Discarded=] then set the {{Document}}'s [=Document/discarded=] boolean to true.
 
 
 Additions to Web Lifecycle spec
@@ -172,6 +173,12 @@ Browsing contexts -- that are in the background and have their documents in <a h
 
 When a top level browsing context (tab in the browser) is [=Discarded=] due to resource pressure (or unexpected events eg. process crash), and say later the user revisits the tab in the browser, then the Document of the new top level browsing context and documents of all its descendant browsing contexts will have <code>wasDiscarded</code> state set to true.
 
+TODO(panicker): Move the below text?
+
+Each Document has a <dfn for="Document">discarded</dfn> boolean, which is initially false.
+The <dfn attribute for="Document">wasDiscarded</dfn> attribute's getter must return the value of this {{Document}}'s [=Document/discarded=] boolean.
+
+
 Specific example:
 
 * In desktop Chrome, background tabs that are not important to the user (not used in some time) may be [=DISCARDED=], to conserve memory
@@ -182,4 +189,4 @@ Specific example:
 <h2 id=acknowledgements>Acknowledgements</h2>
 <!-- ============================================================ -->
 
-Special thanks to Ojan Vafai, Philip Walton, Fadi Meawad, Olli Petay, Todd Reifsteck for their technical input and suggestions that led to improvements to this specification.
+Special thanks to Ojan Vafai, Philip Walton, Olli Petay, Todd Reifsteck for their technical input and suggestions that led to improvements to this specification.
