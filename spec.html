@@ -367,7 +367,7 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
     <li data-md="">
      <p>FROZEN: lifecycle state for CPU suspension. Normally HIDDEN pages will be FROZEN to conserve resources.</p>
     <li data-md="">
-     <p><dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" id="discarded">Discarded</dfn>: lifecycle state for tab discarding. Normally FROZEN frames will be moved to Discarded to conserve resources.</p>
+     <p><dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" id="discarded">Discarded</dfn>: lifecycle state <a data-link-type="dfn" href="#discarded" id="ref-for-discarded">Discarded</a> means that the <a data-link-type="dfn" href="#discard" id="ref-for-discard">discard</a> algorithm was called on the Document’s browsing context. Normally FROZEN frames will be moved to <a data-link-type="dfn" href="#discarded" id="ref-for-discarded①">Discarded</a> state to conserve resources.</p>
    </ul>
    <p>TODO(panicker): Insert diagram</p>
    <h2 class="heading settled" data-level="3" id="sec-api"><span class="secno">3. </span><span class="content">API</span><a class="self-link" href="#sec-api"></a></h2>
@@ -413,7 +413,7 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
    <p>Rename <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">”Discarded” in HTML spec</a> to "Destroyed".</p>
    <h4 class="heading settled" data-level="4.1.6" id="html-modifications-to-initialize-the-document"><span class="secno">4.1.6. </span><span class="content">HTML: Modifications to <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">Initialize the document</a></span><a class="self-link" href="#html-modifications-to-initialize-the-document"></a></h4>
    <p>Before Step #3 add following:</p>
-   <p>If the browsing context was previously <a data-link-type="dfn" href="#discarded" id="ref-for-discarded">Discarded</a> then set the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#document" id="ref-for-document①">Document</a></code>'s <a data-link-type="dfn" href="#document-discarded" id="ref-for-document-discarded">discarded</a> boolean to true.</p>
+   <p>If the browsing context was previously <a data-link-type="dfn" href="#discarded" id="ref-for-discarded②">Discarded</a> then set the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#document" id="ref-for-document①">Document</a></code>'s <a data-link-type="dfn" href="#document-discarded" id="ref-for-document-discarded">discarded</a> boolean to true.</p>
    <h3 class="heading settled" data-level="4.2" id="additions-to-web-lifecycle-spec"><span class="secno">4.2. </span><span class="content">Additions to Web Lifecycle spec</span><a class="self-link" href="#additions-to-web-lifecycle-spec"></a></h3>
    <h4 class="heading settled" data-dfn-type="dfn" data-level="4.2.1" data-lt="FROZENNESS state" data-noexport="" id="frozenness-state"><span class="secno">4.2.1. </span><span class="content">FROZENNESS state</span><a class="self-link" href="#frozenness-state"></a></h4>
     A document can be in one of the following FROZENNESS states: 
@@ -476,14 +476,13 @@ Specific example:</p>
    <h4 class="heading settled" data-dfn-type="dfn" data-level="4.2.3" data-lt="Discarded state" data-noexport="" id="discarded-state"><span class="secno">4.2.3. </span><span class="content">Discarded state</span><a class="self-link" href="#discarded-state"></a></h4>
     To <dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" id="discard">discard</dfn> a browsing context, <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">destroy the browsing context</a>, and make note of the fact that the reason it was destroyed was because of discarding. Consequently all descendant browsing contexts are discarded as well. Document objects for all the entries in the browsing context’s session history are destroyed. 
    <p class="note" role="note"><span>NOTE:</span> Discard is typically done to reclaim system memory, when memory and other resources are running low. On the other hand destroying a browser context is the normal teardown due to user leaving the page etc.</p>
-   <p>Lifecycle state <a data-link-type="dfn" href="#discarded" id="ref-for-discarded①">Discarded</a> means that the <a data-link-type="dfn" href="#discard" id="ref-for-discard">discard</a> algorithm was called on the Document’s browsing context.</p>
-   <p>Browsing contexts -- that are in the background and have their documents in <a href="https://www.w3.org/TR/page-visibility-2/#visibility-states-and-the-visibilitystate-enum">VisibilityState hidden</a> -- can be <a data-link-type="dfn" href="#discarded" id="ref-for-discarded②">Discarded</a>, under resource pressure (eg. low memory). Specific example:</p>
+   <p>Browsing contexts -- that are in the background and have their documents in <a href="https://www.w3.org/TR/page-visibility-2/#visibility-states-and-the-visibilitystate-enum">VisibilityState hidden</a> -- can be <a data-link-type="dfn" href="#discarded" id="ref-for-discarded③">Discarded</a>, under resource pressure (eg. low memory). Specific example:</p>
    <ul>
     <li data-md="">
-     <p>In desktop Chrome, background tabs that are not important to the user (not used in some time) may be <a data-link-type="dfn" href="#discarded" id="ref-for-discarded③">DISCARDED</a>, to conserve memory</p>
-     <p class="note" role="note"><span>NOTE:</span> background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not <a data-link-type="dfn" href="#discarded" id="ref-for-discarded④">DISCARDED</a>.</p>
+     <p>In desktop Chrome, background tabs that are not important to the user (not used in some time) may be <a data-link-type="dfn" href="#discarded" id="ref-for-discarded④">DISCARDED</a>, to conserve memory</p>
+     <p class="note" role="note"><span>NOTE:</span> background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not <a data-link-type="dfn" href="#discarded" id="ref-for-discarded⑤">DISCARDED</a>.</p>
    </ul>
-   <p>When a top level browsing context (tab in the browser) is <a data-link-type="dfn" href="#discarded" id="ref-for-discarded⑤">Discarded</a> due to resource pressure (or unexpected events eg. process crash), and later the user revisits the tab in the browser, then the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#document" id="ref-for-document②">Document</a></code>'s <a data-link-type="dfn" href="#document-discarded" id="ref-for-document-discarded①">discarded</a> boolean will be true.</p>
+   <p>When a top level browsing context (tab in the browser) is <a data-link-type="dfn" href="#discarded" id="ref-for-discarded⑥">Discarded</a> due to resource pressure (or unexpected events eg. process crash), and later the user revisits the tab in the browser, then the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#document" id="ref-for-document②">Document</a></code>'s <a data-link-type="dfn" href="#document-discarded" id="ref-for-document-discarded①">discarded</a> boolean will be true.</p>
    <p>TODO(panicker): Move the below text?</p>
    <p>Each Document has a <dfn class="dfn-paneled" data-dfn-for="Document" data-dfn-type="dfn" data-noexport="" id="document-discarded">discarded</dfn> boolean, which is initially false.
 The <dfn class="dfn-paneled idl-code" data-dfn-for="Document" data-dfn-type="attribute" data-export="" id="dom-document-wasdiscarded"><code class="highlight">wasDiscarded</code></dfn> attribute’s getter must return the value of this <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#document" id="ref-for-document③">Document</a></code>'s <a data-link-type="dfn" href="#document-discarded" id="ref-for-document-discarded②">discarded</a> boolean.</p>
@@ -548,8 +547,9 @@ The <dfn class="dfn-paneled idl-code" data-dfn-for="Document" data-dfn-type="att
   <aside class="dfn-panel" data-for="discarded">
    <b><a href="#discarded">#discarded</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-discarded">4.1.6. HTML: Modifications to Initialize the document</a>
-    <li><a href="#ref-for-discarded①">4.2.3. Discarded state</a> <a href="#ref-for-discarded②">(2)</a> <a href="#ref-for-discarded③">(3)</a> <a href="#ref-for-discarded④">(4)</a> <a href="#ref-for-discarded⑤">(5)</a>
+    <li><a href="#ref-for-discarded">2. Lifecycle States</a> <a href="#ref-for-discarded①">(2)</a>
+    <li><a href="#ref-for-discarded②">4.1.6. HTML: Modifications to Initialize the document</a>
+    <li><a href="#ref-for-discarded③">4.2.3. Discarded state</a> <a href="#ref-for-discarded④">(2)</a> <a href="#ref-for-discarded⑤">(3)</a> <a href="#ref-for-discarded⑥">(4)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="frozen">
@@ -582,7 +582,7 @@ The <dfn class="dfn-paneled idl-code" data-dfn-for="Document" data-dfn-type="att
   <aside class="dfn-panel" data-for="discard">
    <b><a href="#discard">#discard</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-discard">4.2.3. Discarded state</a>
+    <li><a href="#ref-for-discard">2. Lifecycle States</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="document-discarded">
