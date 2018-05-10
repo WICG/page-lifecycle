@@ -34,7 +34,7 @@ This spec defines what the lifecycle of a web page is and adds extensions to ena
 
 This spec formalizes two new lifecycle states to support the above:
     * FROZEN: lifecycle state for CPU suspension. Normally HIDDEN pages will be FROZEN to conserve resources.
-    * <dfn export>Discarded</dfn>: lifecycle state for tab discarding. Normally FROZEN frames will be moved to Discarded to conserve resources. 
+    * <dfn export>Discarded</dfn>: lifecycle state [=Discarded=] means that the [=discard=] algorithm was called on the Document's browsing context. Normally FROZEN frames will be moved to [=Discarded=] state to conserve resources. 
 
 TODO(panicker): Insert diagram
 
@@ -166,8 +166,6 @@ To change the frozenness of a document given a document |doc| and FROZENNESS sta
 To <dfn export>discard</dfn> a browsing context, <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">destroy the browsing context</a>, and make note of the fact that the reason it was destroyed was because of discarding. Consequently all descendant browsing contexts are discarded as well. Document objects for all the entries in the browsing context's session history are destroyed.
 
     NOTE: Discard is typically done to reclaim system memory, when memory and other resources are running low. On the other hand destroying a browser context is the normal teardown due to user leaving the page etc. 
-
-Lifecycle state [=Discarded=] means that the [=discard=] algorithm was called on the Document's browsing context.
 
 Browsing contexts -- that are in the background and have their documents in <a href="https://www.w3.org/TR/page-visibility-2/#visibility-states-and-the-visibilitystate-enum">VisibilityState hidden</a> -- can be [=Discarded=], under resource pressure (eg. low memory). Specific example:
 
