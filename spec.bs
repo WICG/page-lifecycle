@@ -22,6 +22,7 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/;
     type: attribute; text: persisted; for:PageTransitionEvent; url: browsing-the-web.html#dom-pagetransitionevent-persisted
     type: dfn; text: traverse the history; url: browsing-the-web.html#traverse-the-history
     type: dfn; text: list of the descendant browsing contexts; url: browsers.html#list-of-the-descendant-browsing-contexts
+    type: dfn; text: browsing context; for: document; url: browsers.html#concept-document-bc
 </pre>
 
 Introduction {#intro}
@@ -45,7 +46,7 @@ This spec defines what the lifecycle of a web page is and adds extensions to ena
 
 This spec formalizes two new lifecycle states to support the above:
     * FROZEN: lifecycle state for CPU suspension. Normally HIDDEN pages will be FROZEN to conserve resources.
-    * <dfn for="Lifecycle">Discarded</dfn>: lifecycle state Discarded means that the [=discard=] algorithm was called on the Document's browsing context. Normally FROZEN frames will be moved to [=Lifecycle/Discarded=] state to conserve resources. 
+    * <dfn for="Lifecycle">Discarded</dfn>: means that the [=discard=] algorithm was called on the {{Document}}'s [=document/browsing context=]. Normally FROZEN frames will be moved to [=Lifecycle/discarded=] state to conserve resources.
 
 TODO(panicker): Insert diagram
 
@@ -63,6 +64,8 @@ Web Lifecycle involves the following additions:
 </pre>
 
 The <dfn attribute for="Document">onfreeze</dfn> and <dfn attribute for="Document">onresume</dfn> attributes are [=event handler IDL attributes=] for the <code>freeze</code> and <code>resume</code> events, respectively.
+
+The <dfn attribute for="Document">wasDiscarded</dfn> attribute's getter must return the value of this {{Document}}'s [=Document/discarded=] boolean.
 
     NOTE: these APIs are added on {{Document}}, instead of on {{Window}}, for consistency with the Page Visibility API; we expect these APIs to be used in tandem with that existing one. [[PAGE-VISIBILITY]]
 
@@ -123,11 +126,11 @@ Step #1 currently ignores "tasks whose associated {{Document}}s are not [=fully 
 
 Rename the "<a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">discard</a>" concept, for both browsing contexts and documents, to "destroy". This allows us to use the "discarded" terminology for the user-facing {{Document/wasDiscarded}} attribute.
 
-### HTML: Modifications to <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">Initialize the document</a>
+### HTML: Modifications to <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">Initialize the document</a> ### {#html-initialize-doc}
 
 Before Step #3 add following:
 
-If the browsing context was previously [=Discarded=] then set the {{Document}}'s [=Document/discarded=] boolean to true.
+If the browsing context was previously [=/discarded=], then set the {{Document}}'s [=Document/discarded=] boolean to true.
 
 
 Additions to Web Lifecycle spec {#web-lifecycle}
@@ -146,9 +149,9 @@ For instance, if a browsing context is in the background or hidden, and a grace 
 Specific examples:
 
 * In mobile Chrome, tabs that have been in background for (at least) 5 minutes, may be [=FROZEN=], to conserve battery and data.
-* In desktop Chrome, background tabs that are not important to the user (not used in some time) may be [=DISCARDED=], to conserve memory
+* In desktop Chrome, background tabs that are not important to the user (not used in some time) may be [=/discarded=], to conserve memory
 
-    NOTE: background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not [=FROZEN=] or [=DISCARDED=].
+    NOTE: background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not [=FROZEN=] or [=/discarded=].
 
 The UA will typically execute [[#change-frozenness-of-a-top-level-document]] with <code>UNFROZEN</code> when the user revisits that browsing context. In addition, the UA may choose to periodically execute [[#change-frozenness-of-a-top-level-document]] with <code>UNFROZEN</code> in the background, if plentiful resources are available.
 
@@ -175,22 +178,19 @@ To change the frozenness of a document given a document |doc| and FROZENNESS sta
     NOTE: it is intentional that the ordering between event-firing and setting the state are different in the two cases above.
 
 <h4>Discarding</h4>
-To <dfn export>discard</dfn> a browsing context, <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">destroy the browsing context</a>, and make note of the fact that the reason it was destroyed was because of discarding. Consequently all descendant browsing contexts are discarded as well. Document objects for all the entries in the browsing context's session history are destroyed.
-
-    NOTE: Discard is typically done to reclaim system memory, when memory and other resources are running low. On the other hand destroying a browser context is the normal teardown due to user leaving the page etc. 
-
-Browsing contexts -- that are in the background and have their documents in <a href="https://www.w3.org/TR/page-visibility-2/#visibility-states-and-the-visibilitystate-enum">VisibilityState hidden</a> -- can be [=Lifecycle/Discarded=], under resource pressure (eg. low memory). Specific example:
-
-* In desktop Chrome, background tabs that are not important to the user (not used in some time) may be [=Lifecycle/DISCARDED=], to conserve memory
-
-    NOTE: background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not [=Lifecycle/Discarded=].
-
-When a top level browsing context (tab in the browser) is [=Lifecycle/Discarded=] due to resource pressure (or unexpected events eg. process crash), and later the user revisits the tab in the browser, then the {{Document}}'s [=Document/discarded=] boolean will be true.
-
-TODO(panicker): Move the below text?
-
 Each Document has a <dfn for="Document">discarded</dfn> boolean, which is initially false.
-The <dfn attribute for="Document">wasDiscarded</dfn> attribute's getter must return the value of this {{Document}}'s [=Document/discarded=] boolean.
+
+To <dfn export lt="discarded|discard">discard</dfn> a browsing context, <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">destroy the browsing context</a>, and make note of the fact that the reason it and any descendant browsing contents were destroyed was because of discarding.
+
+    NOTE: [=Discard=] is typically done to reclaim system memory, when memory and other resources are running low. On the other hand destroying a browser context is the normal teardown due to user leaving the page etc.
+
+Browsing contexts -- that are in the background and have their documents in <a href="https://www.w3.org/TR/page-visibility-2/#visibility-states-and-the-visibilitystate-enum">VisibilityState hidden</a> -- can be [=/discarded=], under resource pressure (eg. low memory). Specific example:
+
+* In desktop Chrome, background tabs that are not important to the user (not used in some time) may be [=/discarded=], to conserve memory
+
+    NOTE: background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not [=/discarded=].
+
+When a [=top-level browsing context=] (tab in the browser) is [=/discarded=] due to resource pressure (or unexpected events eg. process crash), and later the user revisits the tab in the browser, then the {{Document}}'s [=Document/discarded=] boolean will be true due to [[#html-initialize-doc]].
 
 
 <!-- ============================================================ -->
