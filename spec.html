@@ -307,7 +307,7 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
         <li><a href="#html-bfcache-dfn"><span class="secno">4.1.3</span> <span class="content">HTML: <span>Unloading documents</span> and <span>History Traversal</span></span></a>
         <li><a href="#html-html-event-loop-processing-model"><span class="secno">4.1.4</span> <span class="content">HTML: <span>HTML Event Loop Processing Model</span></span></a>
         <li><a href="#html-discarding-browsing-context"><span class="secno">4.1.5</span> <span class="content">HTML: <span>Discarding browsing context</span></span></a>
-        <li><a href="#html-modifications-to-navigate-a-browsing-context"><span class="secno">4.1.6</span> <span class="content">HTML: Modifications to <span>Navigate a browsing context</span></span></a>
+        <li><a href="#html-modifications-to-initialize-the-document"><span class="secno">4.1.6</span> <span class="content">HTML: Modifications to <span>Initialize the document</span></span></a>
        </ol>
       <li>
        <a href="#additions-to-web-lifecycle-spec"><span class="secno">4.2</span> <span class="content">Additions to Web Lifecycle spec</span></a>
@@ -375,7 +375,7 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
 <pre class="idl highlight def"><span class="kt">partial</span> <span class="kt">interface</span> <a class="nv idl-code" data-link-type="interface" href="https://html.spec.whatwg.org/multipage/dom.html#document" id="ref-for-document">Document</a> {
     <span class="kt">attribute</span> <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler">EventHandler</a>  <dfn class="nv idl-code" data-dfn-for="Document" data-dfn-type="attribute" data-export="" data-type="EventHandler" id="dom-document-onfreeze"><code class="highlight">onfreeze</code><a class="self-link" href="#dom-document-onfreeze"></a></dfn>;
     <span class="kt">attribute</span> <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler①">EventHandler</a>  <dfn class="nv idl-code" data-dfn-for="Document" data-dfn-type="attribute" data-export="" data-type="EventHandler" id="dom-document-onresume"><code class="highlight">onresume</code><a class="self-link" href="#dom-document-onresume"></a></dfn>;
-    <span class="kt">readonly</span> <span class="kt">attribute</span> <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean"><span class="kt">boolean</span></a> <dfn class="nv idl-code" data-dfn-for="Document" data-dfn-type="attribute" data-export="" data-readonly="" data-type="boolean" id="dom-document-wasdiscarded"><code class="highlight">wasDiscarded</code><a class="self-link" href="#dom-document-wasdiscarded"></a></dfn>;
+    <span class="kt">readonly</span> <span class="kt">attribute</span> <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean"><span class="kt">boolean</span></a> <a class="nv idl-code" data-link-type="attribute" data-readonly="" data-type="boolean" href="#dom-document-wasdiscarded" id="ref-for-dom-document-wasdiscarded">wasDiscarded</a>;
 };
 </pre>
    <p class="note" role="note"><span>NOTE:</span> these are added on Document, instead of on Window, for consistency with the <a href="https://w3c.github.io/page-visibility/">page visibility API</a>; we expect these APIs to be used in tandem with that existing one.</p>
@@ -411,9 +411,9 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
    <p>In the case of a a browsing context event loop if the Document of the task is in <a data-link-type="dfn" href="#frozen" id="ref-for-frozen①">FROZEN</a> state, then ignore freezeable tasks associated with such a Document.</p>
    <h4 class="heading settled" data-level="4.1.5" id="html-discarding-browsing-context"><span class="secno">4.1.5. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">Discarding browsing context</a></span><a class="self-link" href="#html-discarding-browsing-context"></a></h4>
    <p>Rename <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">”Discarded” in HTML spec</a> to "Destroyed".</p>
-   <h4 class="heading settled" data-level="4.1.6" id="html-modifications-to-navigate-a-browsing-context"><span class="secno">4.1.6. </span><span class="content">HTML: Modifications to <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#navigate">Navigate a browsing context</a></span><a class="self-link" href="#html-modifications-to-navigate-a-browsing-context"></a></h4>
-    Before Step#1 add following: 
-   <p>If the browsing context was previously <a data-link-type="dfn" href="#discarded" id="ref-for-discarded">Discarded</a> then <code class="highlight">wasDiscarded</code> must be set to true on its active document and on all documents of its nested browsing contexts.</p>
+   <h4 class="heading settled" data-level="4.1.6" id="html-modifications-to-initialize-the-document"><span class="secno">4.1.6. </span><span class="content">HTML: Modifications to <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">Initialize the document</a></span><a class="self-link" href="#html-modifications-to-initialize-the-document"></a></h4>
+   <p>Before Step #3 add following:</p>
+   <p>If the browsing context was previously <a data-link-type="dfn" href="#discarded" id="ref-for-discarded">Discarded</a> then set the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#document" id="ref-for-document①">Document</a></code>'s <a data-link-type="dfn" href="#document-discarded" id="ref-for-document-discarded">discarded</a> boolean to true.</p>
    <h3 class="heading settled" data-level="4.2" id="additions-to-web-lifecycle-spec"><span class="secno">4.2. </span><span class="content">Additions to Web Lifecycle spec</span><a class="self-link" href="#additions-to-web-lifecycle-spec"></a></h3>
    <h4 class="heading settled" data-dfn-type="dfn" data-level="4.2.1" data-lt="FROZENNESS state" data-noexport="" id="frozenness-state"><span class="secno">4.2.1. </span><span class="content">FROZENNESS state</span><a class="self-link" href="#frozenness-state"></a></h4>
     A document can be in one of the following FROZENNESS states: 
@@ -479,6 +479,9 @@ Specific example:</p>
    <p>Lifecycle state <a data-link-type="dfn" href="#discarded" id="ref-for-discarded①">Discarded</a> means that the <a data-link-type="dfn" href="#discard" id="ref-for-discard">discard</a> algorithm was called on the Document’s browsing context.</p>
    <p>Browsing contexts -- that are in the background and have their documents in <a href="https://www.w3.org/TR/page-visibility-2/#visibility-states-and-the-visibilitystate-enum">VisibilityState hidden</a> -- can be <a data-link-type="dfn" href="#discarded" id="ref-for-discarded②">Discarded</a>, under resource pressure (eg. low memory).</p>
    <p>When a top level browsing context (tab in the browser) is <a data-link-type="dfn" href="#discarded" id="ref-for-discarded③">Discarded</a> due to resource pressure (or unexpected events eg. process crash), and say later the user revisits the tab in the browser, then the Document of the new top level browsing context and documents of all its descendant browsing contexts will have <code class="highlight">wasDiscarded</code> state set to true.</p>
+   <p>TODO(panicker): Move the below text?</p>
+   <p>Each Document has a <dfn class="dfn-paneled" data-dfn-for="Document" data-dfn-type="dfn" data-noexport="" id="document-discarded">discarded</dfn> boolean, which is initially false.
+The <dfn class="dfn-paneled idl-code" data-dfn-for="Document" data-dfn-type="attribute" data-export="" id="dom-document-wasdiscarded"><code class="highlight">wasDiscarded</code></dfn> attribute’s getter must return the value of this <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#document" id="ref-for-document②">Document</a></code>'s <a data-link-type="dfn" href="#document-discarded" id="ref-for-document-discarded①">discarded</a> boolean.</p>
    <p>Specific example:</p>
    <ul>
     <li data-md="">
@@ -495,6 +498,7 @@ Specific example:</p>
    <li><a href="#change-frozenness-of-a-top-level-document">Change frozenness of a top-level document</a><span>, in §4.2.2</span>
    <li><a href="#change-frozenness-of-document">Change frozenness of document</a><span>, in §4.2.2.1</span>
    <li><a href="#discard">discard</a><span>, in §4.2.3</span>
+   <li><a href="#document-discarded">discarded</a><span>, in §4.2.3</span>
    <li><a href="#discarded">Discarded</a><span>, in §2</span>
    <li><a href="#discarded-state">Discarded state</a><span>, in §4.2.2.2</span>
    <li>
@@ -510,7 +514,7 @@ Specific example:</p>
    <li><a href="#reacting-to-frozenness-state-changes">Reacting to FROZENNESS state changes</a><span>, in §4.2.1</span>
    <li><a href="#task-unfreezeable">unfreezeable</a><span>, in §4.1.2</span>
    <li><a href="#unfrozen">UNFROZEN</a><span>, in §4.2.1</span>
-   <li><a href="#dom-document-wasdiscarded">wasDiscarded</a><span>, in §3</span>
+   <li><a href="#dom-document-wasdiscarded">wasDiscarded</a><span>, in §4.2.3</span>
   </ul>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
@@ -535,17 +539,17 @@ Specific example:</p>
    <dd>Cameron McCormack; Boris Zbarsky; Tobie Langel. <a href="https://heycam.github.io/webidl/">Web IDL</a>. 15 December 2016. ED. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
-<pre class="idl highlight def"><span class="kt">partial</span> <span class="kt">interface</span> <a class="nv idl-code" data-link-type="interface" href="https://html.spec.whatwg.org/multipage/dom.html#document" id="ref-for-document①">Document</a> {
+<pre class="idl highlight def"><span class="kt">partial</span> <span class="kt">interface</span> <a class="nv idl-code" data-link-type="interface" href="https://html.spec.whatwg.org/multipage/dom.html#document" id="ref-for-document③">Document</a> {
     <span class="kt">attribute</span> <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler②">EventHandler</a>  <a class="nv" data-type="EventHandler" href="#dom-document-onfreeze"><code class="highlight">onfreeze</code></a>;
     <span class="kt">attribute</span> <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler①①">EventHandler</a>  <a class="nv" data-type="EventHandler" href="#dom-document-onresume"><code class="highlight">onresume</code></a>;
-    <span class="kt">readonly</span> <span class="kt">attribute</span> <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean①"><span class="kt">boolean</span></a> <a class="nv" data-readonly="" data-type="boolean" href="#dom-document-wasdiscarded"><code class="highlight">wasDiscarded</code></a>;
+    <span class="kt">readonly</span> <span class="kt">attribute</span> <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean①"><span class="kt">boolean</span></a> <a class="nv idl-code" data-link-type="attribute" data-readonly="" data-type="boolean" href="#dom-document-wasdiscarded" id="ref-for-dom-document-wasdiscarded①">wasDiscarded</a>;
 };
 
 </pre>
   <aside class="dfn-panel" data-for="discarded">
    <b><a href="#discarded">#discarded</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-discarded">4.1.6. HTML: Modifications to Navigate a browsing context</a>
+    <li><a href="#ref-for-discarded">4.1.6. HTML: Modifications to Initialize the document</a>
     <li><a href="#ref-for-discarded①">4.2.3. Discarded state</a> <a href="#ref-for-discarded②">(2)</a> <a href="#ref-for-discarded③">(3)</a> <a href="#ref-for-discarded④">(4)</a> <a href="#ref-for-discarded⑤">(5)</a>
    </ul>
   </aside>
@@ -580,6 +584,19 @@ Specific example:</p>
    <b><a href="#discard">#discard</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-discard">4.2.3. Discarded state</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="document-discarded">
+   <b><a href="#document-discarded">#document-discarded</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-document-discarded">4.1.6. HTML: Modifications to Initialize the document</a>
+    <li><a href="#ref-for-document-discarded①">4.2.3. Discarded state</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dom-document-wasdiscarded">
+   <b><a href="#dom-document-wasdiscarded">#dom-document-wasdiscarded</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-document-wasdiscarded">3. API</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */
