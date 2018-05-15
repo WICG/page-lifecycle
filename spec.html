@@ -5,8 +5,8 @@
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet" type="text/css">
-  <meta content="Bikeshed version 40b659a0c5ff4c3cb0abebc80b0649ff33d74104" name="generator">
-  <meta content="00b534ec806f93d48a7640a08d01a7f06e0b3436" name="document-revision">
+  <meta content="Bikeshed version d4e7d28ddfef2aa3bc0602e7461b029e8ecc025a" name="generator">
+  <meta content="d4e7d28ddfef2aa3bc0602e7461b029e8ecc025a" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -254,7 +254,7 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
    <header>
     <p data-fill-with="logo"><a href="https://www.w3.org/"><img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"></a> </p>
     <h1 class="p-name no-ref" id="title">Web Lifecycle 1</h1>
-    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2018-05-10">10 May 2018</time></span></h2>
+    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2018-05-15">15 May 2018</time></span></h2>
    </header>
    <div data-fill-with="spec-metadata">
     <dl>
@@ -302,12 +302,11 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
       <li>
        <a href="#mod"><span class="secno">4.1</span> <span class="content">Modifications to the HTML Standard</span></a>
        <ol class="toc">
-        <li><a href="#html-task-dfn"><span class="secno">4.1.1</span> <span class="content">HTML: <span>task definition</span></span></a>
-        <li><a href="#html-task-source-dfn"><span class="secno">4.1.2</span> <span class="content">HTML: <span>task source</span></span></a>
-        <li><a href="#html-bfcache-dfn"><span class="secno">4.1.3</span> <span class="content">HTML: <span>Unloading documents</span> and <span>History Traversal</span></span></a>
-        <li><a href="#html-event-loop"><span class="secno">4.1.4</span> <span class="content">HTML: <span>HTML Event Loop Processing Model</span></span></a>
-        <li><a href="#html-discarding"><span class="secno">4.1.5</span> <span class="content">HTML: <span>Discarding browsing context</span></span></a>
-        <li><a href="#html-initialize-doc"><span class="secno">4.1.6</span> <span class="content">HTML: Modifications to <span>Initialize the document</span></span></a>
+        <li><a href="#html-task-source-dfn"><span class="secno">4.1.1</span> <span class="content">HTML: <span>task source</span></span></a>
+        <li><a href="#html-bfcache-dfn"><span class="secno">4.1.2</span> <span class="content">HTML: <span>Unloading documents</span> and <span>History Traversal</span></span></a>
+        <li><a href="#html-event-loop"><span class="secno">4.1.3</span> <span class="content">HTML: <span>HTML Event Loop Processing Model</span></span></a>
+        <li><a href="#html-discarding"><span class="secno">4.1.4</span> <span class="content">HTML: <span>Discarding browsing context</span></span></a>
+        <li><a href="#html-initialize-doc"><span class="secno">4.1.5</span> <span class="content">HTML: Modifications to <span>Initialize the document</span></span></a>
        </ol>
       <li>
        <a href="#web-lifecycle"><span class="secno">4.2</span> <span class="content">Additions to Web Lifecycle spec</span></a>
@@ -395,13 +394,12 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
 </pre>
    <h2 class="heading settled" data-level="4" id="sec-processing-model"><span class="secno">4. </span><span class="content">Processing model</span><a class="self-link" href="#sec-processing-model"></a></h2>
    <h3 class="heading settled" data-level="4.1" id="mod"><span class="secno">4.1. </span><span class="content">Modifications to the HTML Standard</span><a class="self-link" href="#mod"></a></h3>
-   <h4 class="heading settled" data-level="4.1.1" id="html-task-dfn"><span class="secno">4.1.1. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/#concept-task">task definition</a></span><a class="self-link" href="#html-task-dfn"></a></h4>
-   <p>Each task gets an associated <dfn class="dfn-paneled" data-dfn-for="task" data-dfn-type="dfn" data-noexport="" id="task-freezable">freezable</dfn> boolean field.</p>
-   <h4 class="heading settled" data-level="4.1.2" id="html-task-source-dfn"><span class="secno">4.1.2. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/#task-source">task source</a></span><a class="self-link" href="#html-task-source-dfn"></a></h4>
-   <p>Each task source is classified as <dfn data-dfn-for="task source" data-dfn-type="dfn" data-noexport="" id="task-source-freezable">freezable<a class="self-link" href="#task-source-freezable"></a></dfn> or <dfn data-dfn-for="task source" data-dfn-type="dfn" data-noexport="" id="task-source-unfreezable">unfreezable<a class="self-link" href="#task-source-unfreezable"></a></dfn>.</p>
+   <h4 class="heading settled" data-level="4.1.1" id="html-task-source-dfn"><span class="secno">4.1.1. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/#task-source">task source</a></span><a class="self-link" href="#html-task-source-dfn"></a></h4>
+   <p>Each task source is classified as <dfn class="dfn-paneled" data-dfn-for="task source" data-dfn-type="dfn" data-noexport="" id="task-source-freezable">freezable</dfn> or <dfn data-dfn-for="task source" data-dfn-type="dfn" data-noexport="" id="task-source-unfreezable">unfreezable<a class="self-link" href="#task-source-unfreezable"></a></dfn>.</p>
+   <p>All tasks queued on <a data-link-type="dfn" href="#task-source-freezable" id="ref-for-task-source-freezable">freezable</a> task source are automatically freezable.</p>
    <p>TODO(panicker): Add specific examples of task sources such as timers, loading.</p>
    <p>TODO(domenic): classify all existing task sources in the HTML spec; find out if other specs have defined any relevant task sources.</p>
-   <h4 class="heading settled" data-level="4.1.3" id="html-bfcache-dfn"><span class="secno">4.1.3. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#unloading-documents">Unloading documents</a> and <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#history-traversal">History Traversal</a></span><a class="self-link" href="#html-bfcache-dfn"></a></h4>
+   <h4 class="heading settled" data-level="4.1.2" id="html-bfcache-dfn"><span class="secno">4.1.2. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#unloading-documents">Unloading documents</a> and <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#history-traversal">History Traversal</a></span><a class="self-link" href="#html-bfcache-dfn"></a></h4>
    <p>When documents move into and out of bfcache they will transition through <a data-link-type="dfn" href="#frozen" id="ref-for-frozen">FROZEN</a> &amp; <a data-link-type="dfn" href="#unfrozen" id="ref-for-unfrozen">UNFROZEN</a> state respectively.</p>
    <ul>
     <li data-md="">
@@ -409,11 +407,11 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
     <li data-md="">
      <p>In the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#traverse-the-history" id="ref-for-traverse-the-history">traverse the history</a> algorithm, after Step #4.6.4, if the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#dom-pagetransitionevent-persisted" id="ref-for-dom-pagetransitionevent-persisted①">persisted</a></code> attribute is true (i.e. we are moving out of bfcache), run the <a href="#change-frozenness-of-document" id="ref-for-change-frozenness-of-document①">§4.2.2.2 Change frozenness of document</a> algorithm, passing in <var>document</var> and <code class="highlight">UNFROZEN</code>.</p>
    </ul>
-   <h4 class="heading settled" data-level="4.1.4" id="html-event-loop"><span class="secno">4.1.4. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model">HTML Event Loop Processing Model</a></span><a class="self-link" href="#html-event-loop"></a></h4>
-   <p>Step #1 currently ignores "tasks whose associated <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document④">Document</a></code>s are not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#fully-active" id="ref-for-fully-active">fully active</a>". Modify this clause to also ignore <a data-link-type="dfn" href="#task-freezable" id="ref-for-task-freezable">freezable</a> tasks whose associated <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑤">Document</a></code> is in the <a data-link-type="dfn" href="#frozen" id="ref-for-frozen①">FROZEN</a> state.</p>
-   <h4 class="heading settled" data-level="4.1.5" id="html-discarding"><span class="secno">4.1.5. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">Discarding browsing context</a></span><a class="self-link" href="#html-discarding"></a></h4>
+   <h4 class="heading settled" data-level="4.1.3" id="html-event-loop"><span class="secno">4.1.3. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model">HTML Event Loop Processing Model</a></span><a class="self-link" href="#html-event-loop"></a></h4>
+   <p>Step #1 currently ignores "tasks whose associated <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document④">Document</a></code>s are not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#fully-active" id="ref-for-fully-active">fully active</a>". Modify this clause to also ignore <a data-link-type="dfn">freezable</a> tasks whose associated <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑤">Document</a></code> is in the <a data-link-type="dfn" href="#frozen" id="ref-for-frozen①">FROZEN</a> state.</p>
+   <h4 class="heading settled" data-level="4.1.4" id="html-discarding"><span class="secno">4.1.4. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">Discarding browsing context</a></span><a class="self-link" href="#html-discarding"></a></h4>
    <p>Rename the "<a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">discard</a>" concept, for both browsing contexts and documents, to "destroy". This allows us to use the "discarded" terminology for the user-facing <code class="idl"><a data-link-type="idl" href="#dom-document-wasdiscarded" id="ref-for-dom-document-wasdiscarded①">wasDiscarded</a></code> attribute.</p>
-   <h4 class="heading settled" data-level="4.1.6" id="html-initialize-doc"><span class="secno">4.1.6. </span><span class="content">HTML: Modifications to <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">Initialize the document</a></span><a class="self-link" href="#html-initialize-doc"></a></h4>
+   <h4 class="heading settled" data-level="4.1.5" id="html-initialize-doc"><span class="secno">4.1.5. </span><span class="content">HTML: Modifications to <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">Initialize the document</a></span><a class="self-link" href="#html-initialize-doc"></a></h4>
    <p>Before Step #3 add following:</p>
    <p>If the browsing context was previously <a data-link-type="dfn" href="#discarded" id="ref-for-discarded①">discarded</a>, then set the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑥">Document</a></code>'s <a data-link-type="dfn" href="#document-discarded" id="ref-for-document-discarded①">discarded</a> boolean to true.</p>
    <h3 class="heading settled" data-level="4.2" id="web-lifecycle"><span class="secno">4.2. </span><span class="content">Additions to Web Lifecycle spec</span><a class="self-link" href="#web-lifecycle"></a></h3>
@@ -487,7 +485,7 @@ Specific examples:</p>
      <p>In desktop Chrome, background tabs that are not important to the user (not used in some time) may be <a data-link-type="dfn" href="#discarded" id="ref-for-discarded⑥">discarded</a>, to conserve memory</p>
      <p class="note" role="note"><span>NOTE:</span> background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not <a data-link-type="dfn" href="#discarded" id="ref-for-discarded⑦">discarded</a>.</p>
    </ul>
-   <p>When a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context①">top-level browsing context</a> (tab in the browser) is <a data-link-type="dfn" href="#discarded" id="ref-for-discarded⑧">discarded</a> due to resource pressure (or unexpected events eg. process crash), and later the user revisits the tab in the browser, then the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑦">Document</a></code>'s <a data-link-type="dfn" href="#document-discarded" id="ref-for-document-discarded②">discarded</a> boolean will be true due to <a href="#html-initialize-doc">§4.1.6 HTML: Modifications to Initialize the document</a>.</p>
+   <p>When a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context①">top-level browsing context</a> (tab in the browser) is <a data-link-type="dfn" href="#discarded" id="ref-for-discarded⑧">discarded</a> due to resource pressure (or unexpected events eg. process crash), and later the user revisits the tab in the browser, then the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑦">Document</a></code>'s <a data-link-type="dfn" href="#document-discarded" id="ref-for-document-discarded②">discarded</a> boolean will be true due to <a href="#html-initialize-doc">§4.1.5 HTML: Modifications to Initialize the document</a>.</p>
    <h2 class="heading settled" data-level="5" id="acknowledgements"><span class="secno">5. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
    <p>Special thanks to Ojan Vafai, Philip Walton, Fadi Meawad, Olli Petay, Todd Reifsteck for their technical input and suggestions that led to improvements to this specification.</p>
   </main>
@@ -505,18 +503,13 @@ Specific examples:</p>
      <li><a href="#document-discarded">dfn for Document</a><span>, in §4.2.3</span>
     </ul>
    <li><a href="#lifecycle-discarded">Discarded</a><span>, in §2</span>
-   <li>
-    freezable
-    <ul>
-     <li><a href="#task-freezable">dfn for task</a><span>, in §4.1.1</span>
-     <li><a href="#task-source-freezable">dfn for task source</a><span>, in §4.1.2</span>
-    </ul>
+   <li><a href="#task-source-freezable">freezable</a><span>, in §4.1.1</span>
    <li><a href="#frozen">FROZEN</a><span>, in §4.2.1</span>
    <li><a href="#frozenness-state">FROZENNESS state</a><span>, in §4.2</span>
    <li><a href="#dom-document-onfreeze">onfreeze</a><span>, in §3</span>
    <li><a href="#dom-document-onresume">onresume</a><span>, in §3</span>
    <li><a href="#reacting-to-frozenness-state-changes">Reacting to FROZENNESS state changes</a><span>, in §4.2.1</span>
-   <li><a href="#task-source-unfreezable">unfreezable</a><span>, in §4.1.2</span>
+   <li><a href="#task-source-unfreezable">unfreezable</a><span>, in §4.1.1</span>
    <li><a href="#unfrozen">UNFROZEN</a><span>, in §4.2.1</span>
    <li><a href="#dom-document-wasdiscarded">wasDiscarded</a><span>, in §3</span>
   </ul>
@@ -596,27 +589,27 @@ Specific examples:</p>
    <b><a href="#dom-document-wasdiscarded">#dom-document-wasdiscarded</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-document-wasdiscarded">3. API</a>
-    <li><a href="#ref-for-dom-document-wasdiscarded①">4.1.5. HTML: Discarding browsing context</a>
+    <li><a href="#ref-for-dom-document-wasdiscarded①">4.1.4. HTML: Discarding browsing context</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="task-freezable">
-   <b><a href="#task-freezable">#task-freezable</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="task-source-freezable">
+   <b><a href="#task-source-freezable">#task-source-freezable</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-task-freezable">4.1.4. HTML: HTML Event Loop Processing Model</a>
+    <li><a href="#ref-for-task-source-freezable">4.1.1. HTML: task source</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="frozen">
    <b><a href="#frozen">#frozen</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-frozen">4.1.3. HTML: Unloading documents and History Traversal</a>
-    <li><a href="#ref-for-frozen①">4.1.4. HTML: HTML Event Loop Processing Model</a>
+    <li><a href="#ref-for-frozen">4.1.2. HTML: Unloading documents and History Traversal</a>
+    <li><a href="#ref-for-frozen①">4.1.3. HTML: HTML Event Loop Processing Model</a>
     <li><a href="#ref-for-frozen②">4.2.1. FROZENNESS state</a> <a href="#ref-for-frozen③">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="unfrozen">
    <b><a href="#unfrozen">#unfrozen</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-unfrozen">4.1.3. HTML: Unloading documents and History Traversal</a>
+    <li><a href="#ref-for-unfrozen">4.1.2. HTML: Unloading documents and History Traversal</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="change-frozenness-of-a-top-level-document">
@@ -628,7 +621,7 @@ Specific examples:</p>
   <aside class="dfn-panel" data-for="change-frozenness-of-document">
    <b><a href="#change-frozenness-of-document">#change-frozenness-of-document</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-change-frozenness-of-document">4.1.3. HTML: Unloading documents and History Traversal</a> <a href="#ref-for-change-frozenness-of-document">(2)</a>
+    <li><a href="#ref-for-change-frozenness-of-document">4.1.2. HTML: Unloading documents and History Traversal</a> <a href="#ref-for-change-frozenness-of-document">(2)</a>
     <li><a href="#ref-for-change-frozenness-of-document">4.2.2.1. Change frozenness of a top-level document</a> <a href="#ref-for-change-frozenness-of-document">(2)</a>
    </ul>
   </aside>
@@ -636,7 +629,7 @@ Specific examples:</p>
    <b><a href="#document-discarded">#document-discarded</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-document-discarded">3. API</a>
-    <li><a href="#ref-for-document-discarded①">4.1.6. HTML: Modifications to Initialize the document</a>
+    <li><a href="#ref-for-document-discarded①">4.1.5. HTML: Modifications to Initialize the document</a>
     <li><a href="#ref-for-document-discarded②">4.2.3. Discarding</a>
    </ul>
   </aside>
@@ -644,7 +637,7 @@ Specific examples:</p>
    <b><a href="#discarded">#discarded</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-discarded">2. Lifecycle States</a>
-    <li><a href="#ref-for-discarded①">4.1.6. HTML: Modifications to Initialize the document</a>
+    <li><a href="#ref-for-discarded①">4.1.5. HTML: Modifications to Initialize the document</a>
     <li><a href="#ref-for-discarded②">4.2.1. FROZENNESS state</a> <a href="#ref-for-discarded③">(2)</a>
     <li><a href="#ref-for-discarded④">4.2.3. Discarding</a> <a href="#ref-for-discarded⑤">(2)</a> <a href="#ref-for-discarded⑥">(3)</a> <a href="#ref-for-discarded⑦">(4)</a> <a href="#ref-for-discarded⑧">(5)</a>
    </ul>
@@ -683,6 +676,7 @@ Specific examples:</p>
                 // open the panel
                 var dfnPanel = document.querySelector(".dfn-panel[data-for='" + el.id + "']");
                 if(dfnPanel) {
+                    console.log(dfnPanel);
                     dfnPanel.classList.add("on");
                     var rect = el.getBoundingClientRect();
                     dfnPanel.style.left = window.scrollX + rect.right + 5 + "px";
