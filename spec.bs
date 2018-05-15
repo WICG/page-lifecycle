@@ -98,13 +98,11 @@ Processing model {#sec-processing-model}
 Modifications to the HTML Standard {#mod}
 --------------------------------------------
 
-### HTML: <a href="https://html.spec.whatwg.org/#concept-task">task definition</a> ### {#html-task-dfn}
-
-Each task gets an associated <dfn for="task">freezable</dfn> boolean field.
-
 ### HTML: <a href="https://html.spec.whatwg.org/#task-source">task source</a> ### {#html-task-source-dfn}
 
 Each task source is classified as <dfn for="task source">freezable</dfn> or <dfn for="task source">unfreezable</dfn>.
+
+All tasks queued on [=task source/freezable=] task source are automatically freezable.
 
 TODO(panicker): Add specific examples of task sources such as timers, loading.
 
