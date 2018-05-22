@@ -195,4 +195,4 @@ When a [=top-level browsing context=] (tab in the browser) is [=/discarded=] due
 <h2 id=acknowledgements>Acknowledgements</h2>
 <!-- ============================================================ -->
 
-Special thanks to Ojan Vafai, Philip Walton, Fadi Meawad, Olli Petay, Todd Reifsteck for their technical input and suggestions that led to improvements to this specification.
+Special thanks to Ojan Vafai, Philip Walton, Fadi Meawad, Olli Pettay, Todd Reifsteck for their technical input and suggestions that led to improvements to this specification.
