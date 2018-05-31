@@ -25,7 +25,7 @@ Whereas mobile platforms have rich service-bound APIs that allow apps to deliver
 
 For details on the app lifecycle states and definitions see [this doc](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.edtdhepwctwy).
 
-This proposal formalizes states for FROZEN and DISCARDED
+This proposal formalizes states for FROZEN and DISCARDED.
 
 Lifecycle State | Visibility | Developer Expectation | System Interventions
 --------------- | ---------- | --------------------- | --------------------
