@@ -1,14 +1,14 @@
 <pre class='metadata'>
-Title: Web Lifecycle
+Title: Page Lifecycle
 Group: webperf
-Shortname: web-lifecycle
+Shortname: page-lifecycle
 Level: 1
 ED:
 TR:
 Status: ED
 Editor: Shubhie Panicker, Google https://google.com, panicker@google.com
 Editor: Domenic Denicola, Google https://google.com, d@domenic.me
-Repository: wicg/web-lifecycle
+Repository: wicg/page-lifecycle
 Abstract: This document defines an API that supports browsers' ability to manage lifecycle of web pages.
 Default Highlight: js
 </pre>
@@ -37,7 +37,7 @@ This proposal attempts to define what the lifecycle of a web page is and add nee
     * Tab discarding (for memory saving)
     * CPU suspension (for battery, data, CPU saving)
 
-Lifecycle States {#sec-lifecycle-states}
+Page Lifecycle States {#sec-lifecycle-states}
 ==============================
 
 This spec defines what the lifecycle of a web page is and adds extensions to enable web applications to respond to two important lifecycle events commonly performed by user agents:
@@ -53,7 +53,7 @@ TODO(panicker): Insert diagram
 API {#sec-api}
 =======================================
 
-Web Lifecycle involves the following additions:
+Page Lifecycle involves the following additions:
 
 <pre class="idl">
     partial interface Document {
@@ -134,7 +134,7 @@ Before Step #3 add following:
 If the browsing context was previously [=/discarded=], then set the {{Document}}'s [=Document/discarded=] boolean to true.
 
 
-Additions to Web Lifecycle spec {#web-lifecycle}
+Additions to Page Lifecycle spec {#page-lifecycle}
 --------------------------------------------
 
 <h4>FROZENNESS state</h4>
