@@ -84,16 +84,24 @@ The callbacks are necessary for several reasons:
     
 For details see [this section of detailed doc](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.s64wegvpugn9).
 
-### API sketch
+### API
+```
+partial interface Document {
+    attribute EventHandler onfreeze;
+    attribute EventHandler onresume;
+    readonly attribute boolean wasDiscarded;
+};
+```
+
 Handle transition to FROZEN
 ```
 function handleFreeze(e) {
    // Handle transition to FROZEN
 }
-window.addEventListener("freeze", handleFreeze);
+document.addEventListener("freeze", handleFreeze);
 
 OR
-window.onfreeze = function() { … }
+document.onfreeze = function() { … }
 ```
 NOTE: subsequently the app may get discarded, without firing another callback.
 
@@ -102,11 +110,13 @@ Handle transition out of FROZEN
 function handleResume(e) {
     // handle state transition FROZEN -> ACTIVE
 }
-window.addEventListener("resume", handleResume);
+document.addEventListener("resume", handleResume);
 
 OR
-window.onresume = function() { … }
+document.onresume = function() { … }
 ```
+
+#### Potential future addition
 In the future, if frame-level freezing (i.e. freeze specific frames within a page) is pursued, then the API could be enhanced to indicate which frame tree is frozen.
 ```
 // Indicate what is frozen exactly: 
