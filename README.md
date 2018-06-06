@@ -85,7 +85,8 @@ The callbacks are necessary for several reasons:
 For details see [this section of detailed doc](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.s64wegvpugn9).
 
 ### API
-Additions to Document interface:
+
+#### Additions to Document interface:
 ```
 partial interface Document {
     attribute EventHandler onfreeze;
@@ -94,7 +95,7 @@ partial interface Document {
 };
 ```
 
-Handling transition to FROZEN:
+#### Handling transition to FROZEN:
 ```
 function handleFreeze(e) {
    // Handle transition to FROZEN
@@ -106,7 +107,7 @@ document.onfreeze = function() { … }
 ```
 NOTE: subsequently the app may get discarded, without firing another callback.
 
-Handling transition out of FROZEN:
+#### Handling transition out of FROZEN:
 ```
 function handleResume(e) {
     // handle state transition FROZEN -> ACTIVE
@@ -115,6 +116,14 @@ document.addEventListener("resume", handleResume);
 
 OR
 document.onresume = function() { … }
+```
+#### Handling of discarding, on next load:
+```
+// If the tab was previously discarded, get the persisted state for the
+// client ID of the discarded tab:
+if (document.wasDiscarded) {
+  getPersistedState(self.lastClientId);
+}
 ```
 
 #### Potential future addition
