@@ -55,10 +55,10 @@ Apps can get killed in scenarios where it is not possible to deliver a callback,
 
 It is not possible to have a guaranteed callback execute in most of these scenarios.
 
-## Proposal (MVP)
+## MVP API
 ![Lifecycle Callbacks](https://github.com/spanicker/web-lifecycle/blob/master/LifecycleCallbacks.png)
 
-We propose the following changes:
+We following changes are included in the MVP:
 
 * `onfreeze` is fired to signal transition to FROZEN.
 * `onresume` is fired to signal transition out of FROZEN. This will be used to undo what was done in `onfreeze` above. 
@@ -85,6 +85,7 @@ The callbacks are necessary for several reasons:
 For details see [this section of detailed doc](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.s64wegvpugn9).
 
 ### API
+Additions to Document interface:
 ```
 partial interface Document {
     attribute EventHandler onfreeze;
@@ -93,7 +94,7 @@ partial interface Document {
 };
 ```
 
-Handle transition to FROZEN
+Handling transition to FROZEN:
 ```
 function handleFreeze(e) {
    // Handle transition to FROZEN
@@ -105,7 +106,7 @@ document.onfreeze = function() { … }
 ```
 NOTE: subsequently the app may get discarded, without firing another callback.
 
-Handle transition out of FROZEN
+Handling transition out of FROZEN:
 ```
 function handleResume(e) {
     // handle state transition FROZEN -> ACTIVE
