@@ -139,8 +139,8 @@ TODO(domenic): classify all existing task sources in the HTML spec; find out if 
 
 When documents move into and out of bfcache they will transition its [=Document/frozenness=] state to <code>true</code> and <code>false</code> respectively.
 
-* In the [=unload a document=] algorithm, before Step #5, if the {{PageTransitionEvent/persisted}} attribute is true (i.e. we are moving to bfcache), run the [[#change-frozenness-of-document]] algorithm, passing in |document| and <code>true</code>.
-* In the [=traverse the history=] algorithm, after Step #4.6.4, if the {{PageTransitionEvent/persisted}} attribute is true (i.e. we are moving out of bfcache), run the [[#change-frozenness-of-document]] algorithm, passing in |document| and <code>false</code>.
+* In the [=unload a document=] algorithm, after Step #5, if the {{PageTransitionEvent/persisted}} attribute is true (i.e. we are moving to bfcache), run the [[#change-frozenness-of-document]] algorithm, passing in |document| and <code>true</code>.
+* In the [=traverse the history=] algorithm, before Step #4.6.4, if the {{PageTransitionEvent/persisted}} attribute is true (i.e. we are moving out of bfcache), run the [[#change-frozenness-of-document]] algorithm, passing in |document| and <code>false</code>.
 
 
 ### HTML: <a href="https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model">HTML Event Loop Processing Model</a> ### {#html-event-loop}
