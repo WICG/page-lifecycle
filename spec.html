@@ -6,7 +6,7 @@
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet" type="text/css">
   <meta content="Bikeshed version d4e7d28ddfef2aa3bc0602e7461b029e8ecc025a" name="generator">
-  <meta content="7c54a94079254b4e4309ce15aaf94b6184239d12" name="document-revision">
+  <meta content="8c3fa40467405fe940c788e97644b76d505a7047" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -384,13 +384,42 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
    <p class="note" role="note"><span>NOTE:</span> In addition <a href="https://github.com/whatwg/html/issues/3378"><code class="highlight">clientId</code> and <code class="highlight">discardedClientId</code></a> will be added to <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window①">Window</a></code>, to support restoring view state when user revisits a discarded page, causing a reload. We expect those to be used by code that reacts to these events.</p>
    <h3 class="heading settled" data-level="3.1" id="example"><span class="secno">3.1. </span><span class="content">Usage example</span><a class="self-link" href="#example"></a></h3>
    <p>Example of handling freeze and resume:</p>
-<pre class="example highlight" id="example-0f21cf48"><a class="self-link" href="#example-0f21cf48"></a>TODO<span class="p">(</span>panicker<span class="p">)</span><span class="o">:</span> Add code sample here<span class="p">.</span>
+<pre class="example highlight" id="example-edb6c132"><a class="self-link" href="#example-edb6c132"></a><span class="kr">const</span> prepareForFreeze <span class="o">=</span> <span class="p">()</span> <span class="p">=></span> <span class="p">{</span>
+  <span class="c1">// Close any open IndexedDB connections.</span>
+<span class="c1"></span>  <span class="c1">// Release any web locks.</span>
+<span class="c1"></span>  <span class="c1">// Stop timers or polling.</span>
+<span class="c1"></span><span class="p">};</span>
+
+<span class="kr">const</span> reInitializeApp <span class="o">=</span> <span class="p">()</span> <span class="p">=></span> <span class="p">{</span>
+  <span class="c1">// Restore IndexedDB connections.</span>
+<span class="c1"></span>  <span class="c1">// Re-acquire any needed web locks.</span>
+<span class="c1"></span>  <span class="c1">// Restart timers or polling.</span>
+<span class="c1"></span><span class="p">};</span>
+
+document<span class="p">.</span>addEventListener<span class="p">(</span><span class="s1">'freeze'</span><span class="p">,</span> prepareForFreeze<span class="p">);</span>
+document<span class="p">.</span>addEventListener<span class="p">(</span><span class="s1">'resume'</span><span class="p">,</span> reInitializeApp<span class="p">);</span>
 </pre>
-   <p>Example of restoring view state after discard:</p>
-<pre class="example highlight" id="example-0f21cf48①"><a class="self-link" href="#example-0f21cf48①"></a>TODO<span class="p">(</span>panicker<span class="p">)</span><span class="o">:</span> Add code sample here<span class="p">.</span>
-</pre>
-   <p>Example to show how existing onvisibilitychange API works together with new Lifecycle APIs:</p>
-<pre class="example highlight" id="example-0f21cf48②"><a class="self-link" href="#example-0f21cf48②"></a>TODO<span class="p">(</span>panicker<span class="p">)</span><span class="o">:</span> Add code sample here<span class="p">.</span>
+   <p>Example of restoring view state after discard:
+A user could have multiple tabs open for the same app &amp; URL. If they are both in the background and are both discarded, then the app would need to distinguish between the two tabs to restore the correct state. clientId and lastClientId on the Window can be used for this purpose.</p>
+<pre class="example highlight" id="example-52f09782"><a class="self-link" href="#example-52f09782"></a><span class="c1">// Persists state to IndexedDB, making sure to set the current value of</span>
+<span class="c1">// `self.clientId` on the record, so it can be retrieved later using</span>
+<span class="c1">// `getPersistedState()` (if the tab has to be reloaded after a discard).</span>
+<span class="c1"></span><span class="kr">const</span> persistState <span class="o">=</span> async <span class="p">(</span>state<span class="p">)</span> <span class="p">=></span> <span class="p">{</span>
+  <span class="kr">const</span> record <span class="o">=</span> <span class="p">{...</span>state<span class="p">,</span> cliendId<span class="o">:</span> self<span class="p">.</span>clientId<span class="p">};</span>
+
+  <span class="c1">// Persist record to IndexedDB or SessionStorage....</span>
+<span class="c1"></span><span class="p">}</span>
+
+<span class="c1">// Retrieves the state record from IndexedDB based on the passed client ID.</span>
+<span class="c1"></span><span class="kr">const</span> getPersistedState <span class="o">=</span> async <span class="p">(</span>clientId<span class="p">)</span> <span class="p">=></span> <span class="p">{</span>
+  <span class="c1">// Lookup record in IndexedDB...</span>
+<span class="c1"></span><span class="p">};</span>
+
+<span class="c1">// If the tab was previously discarded, get the persisted state for the</span>
+<span class="c1">// client ID of the discarded tab via `self.lastClientId`.</span>
+<span class="c1"></span><span class="k">if</span> <span class="p">(</span>document<span class="p">.</span>wasDiscarded<span class="p">)</span> <span class="p">{</span>
+  getPersistedState<span class="p">(</span>self<span class="p">.</span>lastClientId<span class="p">);</span>
+<span class="p">}</span>
 </pre>
    <h2 class="heading settled" data-level="4" id="sec-processing-model"><span class="secno">4. </span><span class="content">Processing model</span><a class="self-link" href="#sec-processing-model"></a></h2>
    <h3 class="heading settled" data-level="4.1" id="mod"><span class="secno">4.1. </span><span class="content">Modifications to the HTML Standard</span><a class="self-link" href="#mod"></a></h3>

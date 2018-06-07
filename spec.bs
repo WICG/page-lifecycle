@@ -76,20 +76,44 @@ Usage example {#example}
 
 Example of handling freeze and resume:
 <pre class="example highlight">
-    TODO(panicker): Add code sample here.
+const prepareForFreeze = () => {
+  // Close any open IndexedDB connections.
+  // Release any web locks.
+  // Stop timers or polling.
+};
 
+const reInitializeApp = () => {
+  // Restore IndexedDB connections.
+  // Re-acquire any needed web locks.
+  // Restart timers or polling.
+};
+
+document.addEventListener('freeze', prepareForFreeze);
+document.addEventListener('resume', reInitializeApp);
 </pre>
 
 Example of restoring view state after discard:
+A user could have multiple tabs open for the same app & URL. If they are both in the background and are both discarded, then the app would need to distinguish between the two tabs to restore the correct state. clientId and lastClientId on the Window can be used for this purpose.
 <pre class="example highlight">
-    TODO(panicker): Add code sample here.
+// Persists state to IndexedDB, making sure to set the current value of
+// `self.clientId` on the record, so it can be retrieved later using
+// `getPersistedState()` (if the tab has to be reloaded after a discard).
+const persistState = async (state) => {
+  const record = {...state, cliendId: self.clientId};
 
-</pre>
+  // Persist record to IndexedDB or SessionStorage....
+}
 
-Example to show how existing onvisibilitychange API works together with new Lifecycle APIs:
-<pre class="example highlight">
-    TODO(panicker): Add code sample here.
+// Retrieves the state record from IndexedDB based on the passed client ID.
+const getPersistedState = async (clientId) => {
+  // Lookup record in IndexedDB...
+};
 
+// If the tab was previously discarded, get the persisted state for the
+// client ID of the discarded tab via `self.lastClientId`.
+if (document.wasDiscarded) {
+  getPersistedState(self.lastClientId);
+}
 </pre>
 
 Processing model {#sec-processing-model}
