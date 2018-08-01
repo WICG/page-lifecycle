@@ -6,7 +6,7 @@
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet" type="text/css">
   <meta content="Bikeshed version d4e7d28ddfef2aa3bc0602e7461b029e8ecc025a" name="generator">
-  <meta content="552330d7ed6f82d617e4a599fd263866af4bc833" name="document-revision">
+  <meta content="4150a1b17d457f1707424a15ec19ffeea9f0c89c" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -254,7 +254,7 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
    <header>
     <p data-fill-with="logo"><a href="https://www.w3.org/"><img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"></a> </p>
     <h1 class="p-name no-ref" id="title">Page Lifecycle 1</h1>
-    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2018-06-07">7 June 2018</time></span></h2>
+    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2018-08-01">1 August 2018</time></span></h2>
    </header>
    <div data-fill-with="spec-metadata">
     <dl>
@@ -339,7 +339,7 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
   </nav>
   <main>
    <h2 class="heading settled" data-level="1" id="intro"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#intro"></a></h2>
-    With large numbers of web apps (and tabs) running, critical resources such as memory, CPU, battery, network, etc. easily get oversubscribed, leading to a bad end user experience. Application lifecycle is a key way that modern OSs manage resources. 
+    With large numbers of web apps (and tabs) running, critical resources such as memory, CPU, battery, network, etc. easily get oversubscribed, leading to a bad end-user experience. Application lifecycle is a key way that modern OSs manage resources. 
    <p>For a platform to support application lifecycle, it needs to:</p>
    <ul>
     <li data-md="">
@@ -435,7 +435,7 @@ A user could have multiple tabs open for the same app &amp; URL. If they are bot
    </ul>
    <p>TODO(domenic): classify all existing task sources in the HTML spec; find out if other specs have defined any relevant task sources.</p>
    <h4 class="heading settled" data-level="4.1.2" id="html-bfcache-dfn"><span class="secno">4.1.2. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#unloading-documents">Unloading documents</a> and <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#history-traversal">History Traversal</a></span><a class="self-link" href="#html-bfcache-dfn"></a></h4>
-   <p>When documents move into and out of bfcache they will transition its <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness">frozenness</a> state to <code class="highlight"><span class="kc">true</span></code> and <code class="highlight"><span class="kc">false</span></code> respectively.</p>
+   <p>When documents move into and out of <a href="https://webkit.org/blog/427/webkit-page-cache-i-the-basics/">bfcache (back forward cache)</a> they will transition its <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness">frozenness</a> state to <code class="highlight"><span class="kc">true</span></code> and <code class="highlight"><span class="kc">false</span></code> respectively.</p>
    <ul>
     <li data-md="">
      <p>In the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#unload-a-document" id="ref-for-unload-a-document">unload a document</a> algorithm, after Step #5, if the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#dom-pagetransitionevent-persisted" id="ref-for-dom-pagetransitionevent-persisted">persisted</a></code> attribute is true (i.e. we are moving to bfcache), run the <a href="#change-frozenness-of-document" id="ref-for-change-frozenness-of-document①">§4.2.2.2 Change frozenness of document</a> algorithm, passing in <var>document</var> and <code class="highlight"><span class="kc">true</span></code>.</p>

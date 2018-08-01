@@ -27,7 +27,7 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/;
 
 Introduction {#intro}
 =====================
-With large numbers of web apps (and tabs) running, critical resources such as memory, CPU, battery, network, etc. easily get oversubscribed, leading to a bad end user experience. Application lifecycle is a key way that modern OSs manage resources.
+With large numbers of web apps (and tabs) running, critical resources such as memory, CPU, battery, network, etc. easily get oversubscribed, leading to a bad end-user experience. Application lifecycle is a key way that modern OSs manage resources.
 
 For a platform to support application lifecycle, it needs to:
     * provide developers with signals about transitions between the lifecycle states
@@ -137,7 +137,7 @@ TODO(domenic): classify all existing task sources in the HTML spec; find out if 
 
 ### HTML: <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#unloading-documents">Unloading documents</a> and <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#history-traversal">History Traversal</a> ### {#html-bfcache-dfn}
 
-When documents move into and out of bfcache they will transition its [=Document/frozenness=] state to <code>true</code> and <code>false</code> respectively.
+When documents move into and out of <a href="https://webkit.org/blog/427/webkit-page-cache-i-the-basics/">bfcache (back forward cache)</a> they will transition its [=Document/frozenness=] state to <code>true</code> and <code>false</code> respectively.
 
 * In the [=unload a document=] algorithm, after Step #5, if the {{PageTransitionEvent/persisted}} attribute is true (i.e. we are moving to bfcache), run the [[#change-frozenness-of-document]] algorithm, passing in |document| and <code>true</code>.
 * In the [=traverse the history=] algorithm, before Step #4.6.4, if the {{PageTransitionEvent/persisted}} attribute is true (i.e. we are moving out of bfcache), run the [[#change-frozenness-of-document]] algorithm, passing in |document| and <code>false</code>.
