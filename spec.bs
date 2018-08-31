@@ -190,6 +190,8 @@ Specific examples:
 
     NOTE: background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not [=/frozen=] or [=/discarded=].
 
+    NOTE: For a detailed list of heuristics & exclusions used by Chrome, see <a href=https://docs.google.com/document/d/1QJpuBTdllLVflMJSov0tlFX3e3yfSfd_-al2IBavbQM/edit>this doc</a>. 
+    
 The UA will typically execute [[#change-frozenness-of-a-top-level-document]] with <code>false</code> when the user revisits that browsing context. In addition, the UA may choose to periodically execute [[#change-frozenness-of-a-top-level-document]] with <code>false</code> in the background, if plentiful resources are available.
 
 <h4 dfn>Reacting to FROZENNESS state changes</h4>
@@ -226,6 +228,8 @@ Browsing contexts -- that are in the background and have their documents in <a h
 * In desktop Chrome, background tabs that are not important to the user (not used in some time) may be [=/discarded=], to conserve memory
 
     NOTE: background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not [=/discarded=].
+
+    NOTE: For a detailed list of heuristics & exclusions used by Chrome, see <a href=https://docs.google.com/document/d/1QJpuBTdllLVflMJSov0tlFX3e3yfSfd_-al2IBavbQM/edit>this doc</a>. 
 
 When a [=top-level browsing context=] (tab in the browser) is [=/discarded=] due to resource pressure (or unexpected events eg. process crash), and later the user revisits the tab in the browser, then the {{Document}}'s [=Document/discarded=] boolean will be true due to [[#html-initialize-doc]].
 
