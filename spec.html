@@ -6,7 +6,7 @@
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet" type="text/css">
   <meta content="Bikeshed version d4e7d28ddfef2aa3bc0602e7461b029e8ecc025a" name="generator">
-  <meta content="8fd940320da307c911c0387de6c85d0341597ca2" name="document-revision">
+  <meta content="9bee7c52c328e488ef4ba58c4744cd9fa17be239" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -254,7 +254,7 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
    <header>
     <p data-fill-with="logo"><a href="https://www.w3.org/"><img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"></a> </p>
     <h1 class="p-name no-ref" id="title">Page Lifecycle 1</h1>
-    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2018-08-30">30 August 2018</time></span></h2>
+    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2018-09-04">4 September 2018</time></span></h2>
    </header>
    <div data-fill-with="spec-metadata">
     <dl>
@@ -433,17 +433,17 @@ A user could have multiple tabs open for the same app &amp; URL. If they are bot
     <li data-md="">
      <p>networking: tasks queued due to loading of resources</p>
     <li data-md="">
-     <p>other task sources that are specific to the page being frozen eg. DOM manipulation, user interaction, history traversal etc.</p>
+     <p>DOM manipulation, user interaction, history traversal etc.</p>
    </ul>
-   <p class="note" role="note"><span>NOTE:</span> networking tasks are freezable with an exception: when a pending fetch keep-alive request in inflight, then networking tasks must not be frozen.</p>
+   <p class="note" role="note"><span>NOTE:</span> networking task source is freezable with an exception: when a pending fetch keep-alive request in inflight, then networking task source must not be frozen.</p>
    <p>Examples of <a data-link-type="dfn" href="#task-source-unfreezable" id="ref-for-task-source-unfreezable">unfreezable</a> task sources are:</p>
    <ul>
     <li data-md="">
-     <p>v8 task sources for garbage collection</p>
+     <p>V8 task sources for garbage collection</p>
     <li data-md="">
      <p>IPC task sources needed to communicate with browser process</p>
     <li data-md="">
-     <p>other task sources that are shared with other pages within the same process</p>
+     <p>other task sources that are shared with the entire process</p>
    </ul>
    <p>TODO(domenic): classify all existing task sources in the HTML spec; find out if other specs have defined any relevant task sources.</p>
    <p>TODO(panicker): Add note about keeping everything within a site instance that are scriptable (eg. documents that can post-message with each other) in the same lifecycle state.</p>
