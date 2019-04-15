@@ -23,6 +23,22 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/;
     type: dfn; text: traverse the history; url: browsing-the-web.html#traverse-the-history
     type: dfn; text: list of the descendant browsing contexts; url: browsers.html#list-of-the-descendant-browsing-contexts
     type: dfn; text: browsing context; for: document; url: browsers.html#concept-document-bc
+    type: dfn; text: readiness; for: document; url: dom.html#current-document-readiness
+    type: dfn; text: iframe load in progress; url: iframe-embed-object.html#iframe-load-in-progress
+    type: dfn; text: iframe load event steps; url: iframe-embed-object.html#iframe-load-event-steps
+    type: dfn; text: Update the rendering; url: webappapis.html#update-the-rendering
+    type: dfn; text: being rendered; url: rendering.html#being-rendered
+    type: dfn; text: browsing context container; url: browsers.html#browsing-context-container
+</pre>
+
+<pre class='anchors'>
+spec: CSS2; urlPrefix: https://www.w3.org/TR/CSS2/
+    type: dfn; text: viewport; url: visuren.html#viewport
+</pre>
+
+<pre class='anchors'>
+spec: IntersectionObserver; urlPrefix: https://w3c.github.io/IntersectionObserver/
+    type: dfn; text: compute the intersection of a target element and the root; url: #calculate-intersection-rect-algo
 </pre>
 
 Introduction {#intro}
@@ -116,6 +132,49 @@ if (document.wasDiscarded) {
 }
 </pre>
 
+Feature Policies {#feature-policies}
+=====================
+To improve CPU utilization of [=nested browsing contexts=] that are not critical to a page's usability two feature policies are defined:
+ * execution-while-not-rendered, which has a [=default allowlist=] of '*'
+ * execution-while-out-of-viewport, which has a [=default allowlist=] of '*'
+
+The <dfn export>execution-while-not-rendered</dfn> policy controls whether [=task source/freezable=]
+tasks should execute for [=nested browsing contexts=] whose [=browsing context container=] is not [=being rendered=]. ie. `display: none`.
+
+The <dfn export>execution-while-out-of-viewport</dfn> policy controls whether [=task source/freezable=]
+tasks should execute for [=nested browsing contexts=] whose [=browsing context container=] does not intersect the [=viewport=] according
+to [=compute the intersection of a target element and the root=].
+
+Application of these policies is accomplished by placing the document (and its decendants) in a [=/frozen=] state when the following
+conditions have been met:
+ * [=iframe load event steps=] have been run
+ * the policy is disabled for the document
+ * relevant policy condition applies (not rendered or scrolled out of view)
+
+If these conditions aren't met the document will be in the [=/unfrozen=] state.
+
+<pre class="example highlight">
+
+// The iframe will be frozen immediately after it is loaded.
+
+&lt;iframe allow="execution-while-not-rendered 'none'"
+  src="subframe.html" style="display:none"&gt;&lt;/iframe&gt;
+</pre>
+
+To run the <dfn export>update document frozenness steps</dfn> for a {{Document}} <var>document</var>,
+run the following steps:
+1. If <var>document</var>'s [=document/browsing context=] is not a [=nested browsing context=], return.
+1. If <var>document</var>'s [=document/readiness=] is not "complete", return.
+1. Let <var>element</var> be <var>document</var>'s [=nested browsing context=]'s [=browsing context container=].
+1. Let <var>frozenness</var> be unset.
+1. If <var>document</var> is not [=allowed to use=] the [=execution-while-not-rendered=] feature then:
+    1. If <var>element</var>'s is not [=being rendered=],  set <var>frozenness</var>'s to true.
+    1. Otherwise, set <var>frozenness</var> to false.
+1. Otherwise if <var>document</var> is not [=allowed to use=] the [=execution-while-out-of-viewport=] feature then:
+    1. If <var>element</var>'s does not intersect the [=viewport=] according to [=compute the intersection of a target element and the root=], set <var>frozenness</var> to true.
+    1. Otherwise, set <var>frozenness</var> to false.
+1. If <var>frozenness</var> does not equal <var>document</var>'s [=FROZENNESS=] state, [=queue a task=] to be set <var>document</var>'s [=FROZENNESS=] to <var>frozenness</var>.
+
 Processing model {#sec-processing-model}
 ========================================
 
@@ -157,7 +216,11 @@ When documents move into and out of <a href="https://webkit.org/blog/427/webkit-
 
 ### HTML: <a href="https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model">HTML Event Loop Processing Model</a> ### {#html-event-loop}
 
-Step #1 currently ignores "tasks whose associated {{Document}}s are not [=fully active=]". Modify this clause to also ignore [=task/freezable=] tasks whose associated {{Document}} is in the [=/frozen=] state.
+Step #1 currently ignores "tasks whose associated {{Document}}s are not [=fully active=]". Modify this clause to also ignore [=task source/freezable=] tasks whose associated {{Document}} is in the [=/frozen=] state.
+
+After Step #11 during the [=Update the rendering=] add the following step.
+
+For each [=fully active=] {{Document}} in |docs|, run the [=update document frozenness steps=].
 
 ### HTML: <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">Discarding browsing context</a> ### {#html-discarding}
 
@@ -169,6 +232,11 @@ Before Step #3 add following:
 
 If the browsing context was previously [=/discarded=], then set the {{Document}}'s [=Document/discarded=] boolean to true.
 
+### HTML: Modifications to [=iframe load event steps=] ### {#html-iframe-load}
+
+After Step #5 add following:
+
+Run the [=update document frozenness steps=].
 
 Additions to Page Lifecycle spec {#page-lifecycle}
 --------------------------------------------
