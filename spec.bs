@@ -31,90 +31,47 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/;
     type: dfn; text: browsing context container; url: browsers.html#browsing-context-container
     type: dfn; text: media elements; url: media.html#media-element
     type: dfn; text: media-elements; url: media.html#media-elements
-    type: dfn; text: dom-manipulation-task-source; url: webappapis.html#dom-manipulation-task-source
-    type: dfn; text: user-interaction-task-source; url: webappapis.html#user-interaction-task-source
-    type: dfn; text: networking-task-source; url: webappapis.html#networking-task-source
-    type: dfn; text: history-traversal-task-source; url: webappapis.html#history-traversal-task-source
-    type: dfn; text: embed-task-source; url: iframe-embed-object.html#embed-task-source
-    type: dfn; text: media-element-event-task-source; url: media.html#media-element-event-task-source
-    type: dfn; text: canvas-blob-serialisation-task-source; url: canvas.html#canvas-blob-serialisation-task-source
-    type: dfn; text: microtask-task-source; url: webappapis.html#microtask-task-source
-    type: dfn; text: timer-task-source; url: timers-and-user-prompts.html#timer-task-source
-    type: dfn; text: remote-event-task-source; url: server-sent-events.html#remote-event-task-source
-    type: dfn; text: websocket-task-source; url: web-sockets.html#websocket-task-source
-    type: dfn; text: posted-message-task-source; url: web-messaging.html#posted-message-task-source
-    type: dfn; text: unshipped-port-message-queue; url: web-messaging.html#unshipped-port-message-queue
-</pre>
-
-<pre class='anchors'>
+    type: dfn; text: DOM manipulation task source; url: webappapis.html#dom-manipulation-task-source
+    type: dfn; text: user interaction task source; url: webappapis.html#user-interaction-task-source
+    type: dfn; text: networking task source; url: webappapis.html#networking-task-source
+    type: dfn; text: history traversal task source; url: webappapis.html#history-traversal-task-source
+    type: dfn; text: embed task source; url: iframe-embed-object.html#embed-task-source
+    type: dfn; text: media element event task source; url: media.html#media-element-event-task-source
+    type: dfn; text: canvas blob serialisation task source; url: canvas.html#canvas-blob-serialisation-task-source
+    type: dfn; text: microtask task source; url: webappapis.html#microtask-task-source
+    type: dfn; text: timer task source; url: timers-and-user-prompts.html#timer-task-source
+    type: dfn; text: remote event task source; url: server-sent-events.html#remote-event-task-source
+    type: dfn; text: websocket task source; url: web-sockets.html#websocket-task-source
+    type: dfn; text: posted message task source; url: web-messaging.html#posted-message-task-source
+    type: dfn; text: unshipped port message queue; url: web-messaging.html#unshipped-port-message-queue
 spec: CSS2; urlPrefix: https://www.w3.org/TR/CSS2/
     type: dfn; text: viewport; url: visuren.html#viewport
-</pre>
-
-<pre class='anchors'>
-spec: FileAPI; urlPrefix: https://www.w3.org/TR/FileAPI/
-    type: dfn; text: fileReadingTaskSource; url: #blobreader-task-source
-</pre>
-
-<pre class='anchors'>
-spec: IndexedDB; urlPrefix: https://www.w3.org/TR/IndexedDB/
-    type: dfn; text: database-access-task-source; url: #database-access-task-source
-</pre>
-
-<pre class='anchors'>
+spec: FileAPI; urlPrefix: https://w3c.github.io/FileAPI/
+    type: dfn; text: file reading task source; url: #blobreader-task-source
+spec: IndexedDB; urlPrefix: https://w3c.github.io/IndexedDB/
+    type: dfn; text: database access task source; url: #database-access-task-source
 spec: PresentationAPI; urlPrefix: https://w3c.github.io/presentation-api/
-    type: dfn; text: presentation-task-source; url: #common-idioms
-</pre>
-
-
-<pre class='anchors'>
+    type: dfn; text: presentation task source; url: #common-idioms
 spec: IntersectionObserver; urlPrefix: https://w3c.github.io/IntersectionObserver/
     type: dfn; text: compute the intersection of a target element and the root; url: #calculate-intersection-rect-algo
-</pre>
-
-<pre class='anchors'>
-spec: GenericSensor; urlPrefix: https://www.w3.org/TR/2016/WD-generic-sensor-20160830/
-    type: dfn; text: sensor-task-source; url: #sensor-task-source
-</pre>
-
-<pre class='anchors'>
+spec: GenericSensor; urlPrefix: https://w3c.github.io/sensors/
+    type: dfn; text: sensor task source; url: #sensor-task-source
 spec: PerformanceTimeline; urlPrefix: https://w3c.github.io/performance-timeline/
-    type: dfn; text: performance-timeline-task-source; url: #queue-a-performanceentry
-</pre>
-
-<pre class='anchors'>
+    type: dfn; text: performance timeline task source; url: #queue-a-performanceentry
 spec: WebGL; urlPrefix: https://www.khronos.org/registry/webgl/specs/latest/1.0/
-    type: dfn; text: web-gl-task-source; url: #5.15
-</pre>
-
-<pre class='anchors'>
-spec: RequestIdleCallback; urlPrefix: https://www.w3.org/TR/requestidlecallback/
-    type: dfn; text: idle-task-task-source; url: #the-requestidlecallback-method
-</pre>
-
-<pre class='anchors'>
+    type: dfn; text: WebGL task source; url: #5.15
+spec: RequestIdleCallback; urlPrefix: https://w3c.github.io/requestidlecallback/
+    type: dfn; text: idle task task source; url: #the-requestidlecallback-method
 spec: CSSFontLoading; urlPrefix: https://drafts.csswg.org/css-font-loading/
-    type: dfn; text: font-loading-task-source; url: #task-source
-</pre>
-
-<pre class='anchors'>
+    type: dfn; text: font loading task source; url: #task-source
 spec: Manifest; urlPrefix: https://w3c.github.io/manifest/
-    type: dfn; text: application-life-cycle-task-source; url: #dfn-application-life-cycle-task-source
-</pre>
-
-<pre class='anchors'>
+    type: dfn; text: application life cycle task source; url: #dfn-application-life-cycle-task-source
 spec: BackgroundFetch; urlPrefix: https://wicg.github.io/background-fetch/
-    type: dfn; text: background-fetch-task-source; url: #background-fetch-task-source
-</pre>
-
-<pre class='anchors'>
-spec: Permissions; urlPrefix: https://www.w3.org/TR/permissions/
-    type: dfn; text: permission-task-source; url: #permission-task-source
-</pre>
-
-<pre class='anchors'>
+    type: dfn; text: background fetch task source; url: #background-fetch-task-source
+spec: Permissions; urlPrefix: https://w3c.github.io/permissions/
+    type: dfn; text: permission task source; url: #permission-task-source
 spec: ServiceWorker; urlPrefix: https://w3c.github.io/ServiceWorker/
-    type: dfn; text: client-message-queue-task-source; url: #dfn-client-message-queue
+    type: dfn; text: client message queue task source; url: #dfn-client-message-queue
 </pre>
 
 
@@ -275,31 +232,31 @@ Examples of [=task source/freezable=] task sources are:
 
 <table><tbody>
 <tr><th>Task Queue</th><th>Freezable</th></tr>
-<tr><td>[=dom-manipulation-task-source=]</td><td>Yes</td></tr>
-<tr><td>[=user-interaction-task-source=]</td><td>Yes</td></tr>
-<tr><td>[=networking-task-source=]</td><td>Yes* (pending request inflight allowed)</td></tr>
-<tr><td>[=history-traversal-task-source=]</td><td>Yes</td></tr>
-<tr><td>[=embed-task-source=]</td><td>Yes</td></tr>
-<tr><td>[=media-element-event-task-source=]</td><td>Yes</td></tr>
-<tr><td>[=canvas-blob-serialisation-task-source=]</td><td>Yes</td></tr>
-<tr><td>[=microtask-task-source=]</td><td>Yes</td></tr>
-<tr><td>[=timer-task-source=]</td><td>Yes</td></tr>
-<tr><td>[=remote-event-task-source=]</td><td>Yes</td></tr>
-<tr><td>[=websocket-task-source=]</td><td>Yes</td></tr>
-<tr><td>[=posted-message-task-source=]</td><td>Yes</td></tr>
-<tr><td>[=unshipped-port-message-queue=]</td><td>Yes</td></tr>
-<tr><td>[=fileReadingTaskSource=]</td><td>Yes</td></tr>
-<tr><td>[=database-access-task-source=]</td><td>Yes</td></tr>
-<tr><td>[=presentation-task-source=]</td><td>Yes</td></tr>
-<tr><td>[=sensor-task-source=]</td><td>Yes</td></tr>
-<tr><td>[=performance-timeline-task-source=]</td><td>Yes</td></tr>
-<tr><td>[=web-gl-task-source=]</td><td>Yes</td></tr>
-<tr><td>[=idle-task-task-source=]</td><td>Yes</td></tr>
-<tr><td>[=font-loading-task-source=]</td><td>Yes</td></tr>
-<tr><td>[=application-life-cycle-task-source=]</td><td>Yes</td></tr>
-<tr><td>[=background-fetch-task-source=]</td><td>Yes</td></tr>
-<tr><td>[=permission-task-source=]</td><td>Yes</td></tr>
-<tr><td>[=client-message-queue-task-source=]</td><td>Yes</td></tr>
+<tr><td>[=DOM manipulation task source=]</td><td>Yes</td></tr>
+<tr><td>[=user interaction task source=]</td><td>Yes</td></tr>
+<tr><td>[=networking task source=]</td><td>Yes* (pending request inflight allowed)</td></tr>
+<tr><td>[=history traversal task source=]</td><td>Yes</td></tr>
+<tr><td>[=embed task source=]</td><td>Yes</td></tr>
+<tr><td>[=media element event task source=]</td><td>Yes</td></tr>
+<tr><td>[=canvas blob serialisation task source=]</td><td>Yes</td></tr>
+<tr><td>[=microtask task source=]</td><td>Yes</td></tr>
+<tr><td>[=timer task source=]</td><td>Yes</td></tr>
+<tr><td>[=remote event task source=]</td><td>Yes</td></tr>
+<tr><td>[=websocket task source=]</td><td>Yes</td></tr>
+<tr><td>[=posted message task source=]</td><td>Yes</td></tr>
+<tr><td>[=unshipped port message queue=]</td><td>Yes</td></tr>
+<tr><td>[=file reading task source=]</td><td>Yes</td></tr>
+<tr><td>[=database access task source=]</td><td>Yes</td></tr>
+<tr><td>[=presentation task source=]</td><td>Yes</td></tr>
+<tr><td>[=sensor task source=]</td><td>Yes</td></tr>
+<tr><td>[=performance timeline task source=]</td><td>Yes</td></tr>
+<tr><td>[=WebGL task source=]</td><td>Yes</td></tr>
+<tr><td>[=idle task task source=]</td><td>Yes</td></tr>
+<tr><td>[=font loading task source=]</td><td>Yes</td></tr>
+<tr><td>[=application life cycle task source=]</td><td>Yes</td></tr>
+<tr><td>[=background fetch task source=]</td><td>Yes</td></tr>
+<tr><td>[=permission task source=]</td><td>Yes</td></tr>
+<tr><td>[=client message queue task source=]</td><td>Yes</td></tr>
 </table>
 
 NOTE: networking task source is freezable with an exception: when a pending fetch keep-alive request in inflight, then networking task source must not be frozen.
