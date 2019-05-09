@@ -138,8 +138,8 @@ This spec defines what the lifecycle of a web page is and adds extensions to ena
     * Tab discarding (for memory saving)
 
 This spec formalizes two new lifecycle states to support the above:
-    * <dfn for="Lifecycle">Frozen</dfn>: lifecycle state for CPU suspension. This means that the [=freeze steps=] algorithm was called on the {{Document}}'s [=document/browsing context=]. Normally HIDDEN pages will be [=/frozen=] to conserve resources.
-    * <dfn for="Lifecycle">Discarded</dfn>: means that the [=discard=] algorithm was called on the {{Document}}'s [=document/browsing context=]. Normally [=/frozen=] frames will be moved to [=Lifecycle/discarded=] state to conserve resources.
+    * Frozen: lifecycle state for CPU suspension. This means that the [=freeze steps=] algorithm was called on the {{Document}}'s [=document/browsing context=]. Normally HIDDEN pages will be [=/frozen=] to conserve resources.
+    * Discarded: means that the [=discard=] algorithm was called on the {{Document}}'s [=document/browsing context=]. Normally [=/frozen=] frames will be moved to the discarded state to conserve resources.
 
 TODO(panicker): Insert diagram
 
@@ -327,7 +327,7 @@ Step #1 currently ignores "tasks whose associated {{Document}}s are not [=fully 
 
 After Step #11 during the [=Update the rendering=] add the following step.
 
-For each [=fully active=] {{Document}} |doc| in |docs|, run the [=update document frozenness steps=] given |doc|.
+For each [=fully active=] {{Document}} |doc| in <var ignore>docs</var>, run the [=update document frozenness steps=] given |doc|.
 
 ### HTML: <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">Discarding browsing context</a> ### {#html-discarding}
 
@@ -343,16 +343,16 @@ If the browsing context was previously [=/discarded=], then set the {{Document}}
 
 After Step #5 add following:
 
-Run the [=update document frozenness steps=] given |child document|.
+Run the [=update document frozenness steps=] given <var ignore>child document</var>.
 
-### HTML: Modifications to [=media-elements=]
+### HTML: Modifications to [=media-elements=] ### {#html-media-elements}
 
 Each HTMLMediaElement has a <dfn for="HTMLMediaElement">resume frozen flag</dfn>, which is initially set to false.
 
 Additions to Page Lifecycle spec {#page-lifecycle}
 --------------------------------------------
 
-<h4>FROZENNESS state</h4>
+<h4 id="frozenness-state">FROZENNESS state</h4>
 A document can be in one of the following <dfn for="Document">FROZENNESS</dfn> states:
 
 * true: the document is <dfn export lt="frozen">frozen</dfn>, any freezeable tasks associated with the document will not run
@@ -373,7 +373,7 @@ Specific examples:
     
 The UA will typically execute [[#change-frozenness-of-a-top-level-document]] with <code>false</code> when the user revisits that browsing context. In addition, the UA may choose to periodically execute [[#change-frozenness-of-a-top-level-document]] with <code>false</code> in the background, if plentiful resources are available.
 
-<h4>Change frozenness of a top-level document</h4>
+<h4 id="change-frozenness-of-a-top-level-document">Change frozenness of a top-level document</h4>
 To change the [=Document/frozenness=] of a top-level document passing in a document |doc| and [=Document/frozenness=] state |x| (one of <code>true</code>, <code>false</code>):
 
 1. Assert: |doc|'s [=Document/browsing context=] is a [=top-level browsing context=].
@@ -383,7 +383,7 @@ To change the [=Document/frozenness=] of a top-level document passing in a docum
     1. Let |d| be the [=active document=] of |b|.
     1. Execute [[#change-frozenness-of-document]] passing in |d|, |x|, and <code>false</code> for |auto resume media flag|.
 
-<h4 dfn>Change frozenness of document</h4>
+<h4 dfn id="change-frozenness-of-document">Change frozenness of document</h4>
 To change the [=Document/frozenness=] of a document given a document |doc|, [=Document/frozenness=] state |x| and
 |auto resume frozen media| (one of <code>true</code>, <code>false</code>):
 1. If |x| is true:
@@ -418,7 +418,7 @@ run the following steps:
     NOTE: it is intentional that the ordering between the assignment of the of frozneness state
     comes last after event firing.
 
-<h4>Discarding</h4>
+<h4 id="discarding">Discarding</h4>
 Each Document has a <dfn for="Document">discarded</dfn> boolean, which is initially false.
 
 To <dfn export lt="discarded|discard">discard</dfn> a browsing context, <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">destroy the browsing context</a>, and make note of the fact that the reason it and any descendant browsing contents were destroyed was because of discarding.
