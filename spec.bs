@@ -10,7 +10,6 @@ Editor: Shubhie Panicker, Google https://google.com, panicker@google.com
 Editor: Domenic Denicola, Google https://google.com, d@domenic.me
 Repository: wicg/page-lifecycle
 Abstract: This document defines an API that supports browsers' ability to manage lifecycle of web pages.
-Default Highlight: js
 </pre>
 
 <pre class='link-defaults'>
@@ -125,7 +124,7 @@ Usage example {#example}
 ------------------------
 
 Example of handling freeze and resume:
-<pre class="example highlight">
+<pre class="example highlight" highlight="js">
 const prepareForFreeze = () => {
   // Close any open IndexedDB connections.
   // Release any web locks.
@@ -144,7 +143,7 @@ document.addEventListener('resume', reInitializeApp);
 
 Example of restoring view state after discard:
 A user could have multiple tabs open for the same app & URL. If they are both in the background and are both discarded, then the app would need to distinguish between the two tabs to restore the correct state. clientId and lastClientId on the Window can be used for this purpose.
-<pre class="example highlight">
+<pre class="example highlight" highlight="js">
 // Persists state to IndexedDB, making sure to set the current value of
 // `self.clientId` on the record, so it can be retrieved later using
 // `getPersistedState()` (if the tab has to be reloaded after a discard).
@@ -171,14 +170,14 @@ Feature Policies {#feature-policies}
 Controlling the execution state of [=nested browsing contexts=] is desirable from a [=document/browsing context=] in order to control
 the user experience. An application may desire that when a document is not [=being rendered=] or does not intersect the [=viewport=]
 that all execution stops in the [=nested browsing context=] (including currently playing video, audio). Stopping all execution
-can lead to an improvement in CPU utilization. To meet these needs two feature policies are defined:
- * execution-while-not-rendered, which has a [=default allowlist=] of '*'
- * execution-while-out-of-viewport, which has a [=default allowlist=] of '*'
+can lead to an improvement in CPU utilization. To meet these needs, two feature policies are defined:
+ * "<dfn export><code>execution-while-not-rendered</code></dfn>", which has a [=default allowlist=] of '*'
+ * "<dfn export><code>execution-while-out-of-viewport</code></dfn>", which has a [=default allowlist=] of '*'
 
-The <dfn export>execution-while-not-rendered</dfn> policy controls whether [=task source/freezable=]
+The "<a><code>execution-while-not-rendered</code></a>" policy controls whether [=task source/freezable=]
 tasks should execute for [=nested browsing contexts=] whose [=browsing context container=] is not [=being rendered=]. e.g. via `display: none`.
 
-The <dfn export>execution-while-out-of-viewport</dfn> policy controls whether [=task source/freezable=]
+The "<a><code>execution-while-out-of-viewport</code></a>" policy controls whether [=task source/freezable=]
 tasks should execute for [=nested browsing contexts=] whose [=browsing context container=] does not intersect the [=viewport=] according
 to [=compute the intersection of a target element and the root=].
 
@@ -188,29 +187,29 @@ conditions have been met:
  * the policy is disabled for the document
  * relevant policy condition applies (not rendered or scrolled out of view)
 
-If these conditions aren't met the document will be in the [=/unfrozen=] state.
+If these conditions aren't met, the document will be in the [=/unfrozen=] state.
 
-<pre class="example highlight">
-
-// The iframe will be frozen immediately after it is loaded.
+<pre class="example highlight" highlight="html">
+&lt;!-- The iframe will be frozen immediately after it is loaded. --&gt;
 
 &lt;iframe allow="execution-while-not-rendered 'none'"
   src="subframe.html" style="display:none"&gt;&lt;/iframe&gt;
 </pre>
 
-To run the <dfn export>update document frozenness steps</dfn> for a {{Document}} <var>document</var>,
-run the following steps:
-1. If <var>document</var>'s [=document/browsing context=] is not a [=nested browsing context=], return.
-1. If <var>document</var>'s [=document/readiness=] is not "complete", return.
-1. Let <var>element</var> be <var>document</var>'s [=nested browsing context=]'s [=browsing context container=].
-1. Let <var>frozenness</var> be false.
-1. Let <var>auto resume media</var> be false.
-1. If <var>document</var> is not [=allowed to use=] the [=execution-while-not-rendered=] feature then:
-    1. If <var>element</var> is not [=being rendered=],  set <var>frozenness</var>'s to <code>true</code>.
-1. Otherwise if <var>document</var> is not [=allowed to use=] the [=execution-while-out-of-viewport=] feature then:
-    1. If <var>element</var> does not intersect the [=viewport=] according to [=compute the intersection of a target element and the root=], set <var>frozenness</var> to <code>true</code>, <var>auto resume media</var> to <code>true</code>.
-1. If <var>frozenness</var> does not equal <var>document</var>'s [=FROZENNESS=] state, execute [[#change-frozenness-of-document]] passing in |document|, |frozenness|, |auto resume media|.
+<div algorithm>
+    To run the <dfn export>update document frozenness steps</dfn> for a {{Document}} |document|:
 
+    1. If |document|'s [=document/browsing context=] is not a [=nested browsing context=], return.
+    1. If |document|'s [=document/readiness=] is not "<code>complete</code>", return.
+    1. Let |element| be |document|'s [=document/browsing context=]'s [=browsing context container=].
+    1. Let |frozenness| be false.
+    1. Let |auto resume media| be false.
+    1. If |document| is not [=allowed to use=] the "<a><code>execution-while-not-rendered</code></a>" feature then:
+        1. If |element| is not [=being rendered=],  set |frozenness| to true.
+    1. Otherwise if |document| is not [=allowed to use=] the "<a><code>execution-while-out-of-viewport</code></a>" feature then:
+        1. If |element| does not intersect the [=viewport=] according to [=compute the intersection of a target element and the root=], set |frozenness| to true and set |auto resume media| to true.
+    1. If |frozenness| does not equal |document|'s [=FROZENNESS=] state, [=change the frozenness of a document=] given in |document|, |frozenness|, and |auto resume media|.
+</div>
 
 Processing model {#sec-processing-model}
 ========================================
@@ -272,10 +271,10 @@ TODO(panicker): Add note about keeping everything within a site instance that ar
 
 ### HTML: <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#unloading-documents">Unloading documents</a> and <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#history-traversal">History Traversal</a> ### {#html-bfcache-dfn}
 
-When documents move into and out of <a href="https://webkit.org/blog/427/webkit-page-cache-i-the-basics/">bfcache (back forward cache)</a> they will transition its [=Document/frozenness=] state to <code>true</code> and <code>false</code> respectively.
+When documents move into and out of <a href="https://webkit.org/blog/427/webkit-page-cache-i-the-basics/">bfcache (back forward cache)</a> they will transition its [=Document/frozenness=] state to true and false respectively.
 
-* In the [=unload a document=] algorithm, after Step #5, if the {{PageTransitionEvent/persisted}} attribute is true (i.e. we are moving to bfcache), run the [[#change-frozenness-of-document]] algorithm, passing in |document| and <code>true</code>.
-* In the [=traverse the history=] algorithm, before Step #4.6.4, if the {{PageTransitionEvent/persisted}} attribute is true (i.e. we are moving out of bfcache), run the [[#change-frozenness-of-document]] algorithm, passing in |document| and <code>false</code>.
+* In the [=unload a document=] algorithm, after Step #5, if the {{PageTransitionEvent/persisted}} attribute is true (i.e. we are moving to bfcache), [=change the frozenness of a document=], given |document| and true.
+* In the [=traverse the history=] algorithm, before Step #4.6.4, if the {{PageTransitionEvent/persisted}} attribute is true (i.e. we are moving out of bfcache), [=change the frozenness of a document=], given |document| and false.
 
 
 ### HTML: <a href="https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model">HTML Event Loop Processing Model</a> ### {#html-event-loop}
@@ -315,10 +314,10 @@ A document can be in one of the following <dfn for="Document">FROZENNESS</dfn> s
 * true: the document is <dfn export lt="frozen">frozen</dfn>, any freezeable tasks associated with the document will not run
 * false: the document is <dfn export lt="unfrozen">unfrozen</dfn>, tasks associated with the document will run as usual
 
-    NOTE: Per the [[#change-frozenness-of-a-top-level-document]] algorithm, when the Document of the top level browsing context changes its [=Document/frozenness=] state then all documents of descendant browsing contexts will also change [=Document/frozenness=] to the same value (and be consistent with the Document of the top level browsing context).
+    NOTE: Per the [=change the frozenness of a top-level document=] algorithm, when the Document of the top level browsing context changes its [=Document/frozenness=] state then all documents of descendant browsing contexts will also change [=Document/frozenness=] to the same value (and be consistent with the Document of the top level browsing context).
 
-The UA may choose to execute [[#change-frozenness-of-a-top-level-document]] with <code>true</code> in certain situations.
-For instance, if a top level browsing context is in the background or hidden, and a grace period has elapsed the UA could execute [[#change-frozenness-of-a-top-level-document]] with <code>true</code> to conserve resources and maintain the quality of the (foreground) user experience.
+The UA may choose to execute [=change the frozenness of a top-level document=] algorithm with true in certain situations.
+For instance, if a top level browsing context is in the background or hidden, and a grace period has elapsed the UA could execute [=change the frozenness of a top-level document=] with true to conserve resources and maintain the quality of the (foreground) user experience.
 Specific examples:
 
 * In mobile Chrome, tabs that have been in background for (at least) 5 minutes, may be [=/frozen=], to conserve battery and data.
@@ -328,52 +327,57 @@ Specific examples:
 
     NOTE: For a detailed list of heuristics & exclusions used by Chrome, see <a href=https://docs.google.com/document/d/1QJpuBTdllLVflMJSov0tlFX3e3yfSfd_-al2IBavbQM/edit>this doc</a>. 
     
-The UA will typically execute [[#change-frozenness-of-a-top-level-document]] with <code>false</code> when the user revisits that browsing context. In addition, the UA may choose to periodically execute [[#change-frozenness-of-a-top-level-document]] with <code>false</code> in the background, if plentiful resources are available.
+The UA will typically execute [=change the frozenness of a top-level document=] with false when the user revisits that browsing context. In addition, the UA may choose to periodically execute [=change the frozenness of a top-level document=] with false in the background, if plentiful resources are available.
 
-<h4 id="change-frozenness-of-a-top-level-document">Change frozenness of a top-level document</h4>
-To change the [=Document/frozenness=] of a top-level document passing in a document |doc| and [=Document/frozenness=] state |x| (one of <code>true</code>, <code>false</code>):
+<h4 id="changing-frozenness">Changing the frozenness of documents</h4>
 
-1. Assert: |doc|'s [=Document/browsing context=] is a [=top-level browsing context=].
-1. Execute [[#change-frozenness-of-document]] passing in |doc|, |x|, and <code>false</code> for |auto resume media flag|.
-1. Let |descendants| be the [=list of the descendant browsing contexts=] of |doc|.
-1. For each [=/browsing context=] |b| in |descendants|:
-    1. Let |d| be the [=active document=] of |b|.
-    1. Execute [[#change-frozenness-of-document]] passing in |d|, |x|, and <code>false</code> for |auto resume media flag|.
+<div algorithm>
+    To <dfn>change the frozenness of a top-level document</dfn>, given a {{Document}} |topLevelDoc| and boolean [=Document/frozenness=] state |frozenness|:
 
-<h4 dfn id="change-frozenness-of-document">Change frozenness of document</h4>
-To change the [=Document/frozenness=] of a document given a document |doc|, [=Document/frozenness=] state |x| and
-|auto resume frozen media| (one of <code>true</code>, <code>false</code>):
-1. If |x| is true:
-    1. Run the [=freeze steps=] given |doc| and |auto resume media flag|.
-1. Otherwise:
-    1. Run the [=resume steps=] given |doc|.
+    1. Assert: |doc|'s [=Document/browsing context=] is a [=top-level browsing context=].
+    1. [=Change the frozenness of a document=] given |topLevelDoc|, |frozenness|, and false.
+    1. Let |descendants| be the [=list of the descendant browsing contexts=] of |doc|.
+    1. For each [=/browsing context=] |b| in |descendants|:
+        1. Let |descendantDocument| be the [=active document=] of |b|.
+        1. [=Change the frozenness of a document=] given |descendantDocument|, |frozenness|, and false.
+</div>
 
-To run the <dfn export>freeze steps</dfn> for a {{Document}} <var>doc</var>,
-and |auto resume frozen media| (one of <code>true</code>, <code>false</code>)
-run the following steps:
-1. Set |doc|'s [=Document/frozenness=] state to <code>true</code>.
-1. [=Fire an event=] named <code>freeze</code> at |doc|.
-1. Let |elements| be all [=media elements=] in [=tree order=]
-1. For each |element| in |elements|.
-    1. If |element|'s {{HTMLMediaElement/paused}} is false.
-        1. Set |element|'s [=HTMLMediaElement/resume frozen flag=] to |auto resume frozen media|.
-        1. Call |element|'s {{HTMLMediaElement/pause}} method.
+<div algorithm>
+    To <dfn>change the frozenness of a document</dfn>, given a {{Document}} |doc|, a boolean [=Document/frozenness=] state |frozenness|, and a boolean |auto resume frozen media|:
 
-    NOTE: it is intentional that the ordering between the assignment of the of frozneness state
-    occurs first before event firing.
+    1. If |frozenness| is true, run the [=freeze steps=] for |doc| given |auto resume frozen media|.
+    1. Otherwise, run the [=resume steps=] given |doc|.
+</div>
 
-To run the <dfn export>resume steps</dfn> for a {{Document}} <var>doc</var>,
-run the following steps:
-1. Let |elements| be all [=media elements=] in [=tree order=]
-    1. For each |element| in |elements|.
-    1. If |elements|'s [=HTMLMediaElement/resume frozen flag=] is <code>true</code>.
-        1. Set |elements|'s [=HTMLMediaElement/resume frozen flag=] to <code>false</code>.
-        1. Call |element|'s {{HTMLMediaElement/play}} method.
-1. [=Fire an event=] named <code>resume</code> at |doc|.
-1. Set |doc|'s [=Document/frozenness=] state to <code>false</code>.
+<div algorithm>
+    To run the <dfn>freeze steps</dfn> for a {{Document}} <var>doc</var>, given a boolean |auto resume frozen media|:
 
-    NOTE: it is intentional that the ordering between the assignment of the of frozneness state
-    comes last after event firing.
+    1. Set |doc|'s [=Document/frozenness=] state to true.
+    1. [=Fire an event=] named <code>freeze</code> at |doc|.
+    1. Let |elements| be all [=media elements=] in |doc|, in [=tree order=].
+    1. For each |element| in |elements|:
+        1. If |element|'s {{HTMLMediaElement/paused}} is false, then:
+            1. Set |element|'s [=HTMLMediaElement/resume frozen flag=] to |auto resume frozen media|.
+            1. Call |element|'s {{HTMLMediaElement/pause()}} method.
+
+        NOTE: it is intentional that the ordering between the assignment of the of frozneness state
+        occurs first before event firing.
+</div>
+
+<div algorithm>
+    To run the <dfn export>resume steps</dfn> for a {{Document}} <var>doc</var>:
+
+    1. Let |elements| be all [=media elements=] in |doc|, in [=tree order=].
+        1. For each |element| in |elements|:
+            1. If |elements|'s [=HTMLMediaElement/resume frozen flag=] is true.
+                1. Set |elements|'s [=HTMLMediaElement/resume frozen flag=] to false.
+                1. Call |element|'s {{HTMLMediaElement/play()}} method.
+    1. [=Fire an event=] named <code>resume</code> at |doc|.
+    1. Set |doc|'s [=Document/frozenness=] state to false.
+
+        NOTE: it is intentional that the ordering between the assignment of the of frozneness state
+        comes last after event firing.
+</div>
 
 <h4 id="discarding">Discarding</h4>
 Each Document has a <dfn for="Document">discarded</dfn> boolean, which is initially false.
