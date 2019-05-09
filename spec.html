@@ -5,8 +5,8 @@
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet" type="text/css">
-  <meta content="Bikeshed version ca499dee738ad325bae89163f1eee6d8a2978cf4" name="generator">
-  <meta content="0a52d5805d7c804178d51cb198db85d0de6b7062" name="document-revision">
+  <meta content="Bikeshed version 10ff3eb4050069e20bb9b943c8b76fe5bfe3a48f" name="generator">
+  <meta content="c3e6cb0d744b625b2a835b8b88f22bb77688d021" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -254,7 +254,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <header>
     <p data-fill-with="logo"><a href="https://www.w3.org/"><img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"></a> </p>
     <h1 class="p-name no-ref" id="title">Page Lifecycle 1</h1>
-    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-04-30">30 April 2019</time></span></h2>
+    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-05-09">9 May 2019</time></span></h2>
    </header>
    <div data-fill-with="spec-metadata">
     <dl>
@@ -266,7 +266,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     </dl>
    </div>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2019 <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="http://www.keio.ac.jp/">Keio</a>, <a href="http://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply. </p>
+   <p class="copyright" data-fill-with="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2019 <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="http://www.keio.ac.jp/">Keio</a>, <a href="https://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply. </p>
    <hr title="Separator for header">
   </div>
   <div class="p-summary" data-fill-with="abstract">
@@ -283,7 +283,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     be updated, replaced or obsoleted by other documents at any time. It is inappropriate to cite
     this document as other than work in progress. </p>
    <p> This document was produced by a group operating under the <a href="https://www.w3.org/Consortium/Patent-Policy/"><abbr title="World Wide Web Consortium">W3C</abbr> Patent Policy</a>. <abbr title="World Wide Web Consortium">W3C</abbr> maintains a <a href="https://www.w3.org/2004/01/pp-impl/45211/status" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group; that page also includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains <a href="https://www.w3.org/Consortium/Patent-Policy/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="https://www.w3.org/Consortium/Patent-Policy/#sec-Disclosure">section 6 of the <abbr title="World Wide Web Consortium">W3C</abbr> Patent Policy</a>. </p>
-   <p>This document is governed by the <a href="https://www.w3.org/2018/Process-20180201/" id="w3c_process_revision">1 February 2018 W3C Process Document</a>. </p>
+   <p>This document is governed by the <a href="https://www.w3.org/2019/Process-20190301/" id="w3c_process_revision">1 March 2019 W3C Process Document</a>. </p>
   </div>
   <div data-fill-with="at-risk"></div>
   <nav data-fill-with="table-of-contents" id="toc">
@@ -309,18 +309,15 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
         <li><a href="#html-discarding"><span class="secno">5.1.4</span> <span class="content">HTML: <span>Discarding browsing context</span></span></a>
         <li><a href="#html-initialize-doc"><span class="secno">5.1.5</span> <span class="content">HTML: Modifications to <span>Initialize the document</span></span></a>
         <li><a href="#html-iframe-load"><span class="secno">5.1.6</span> <span class="content">HTML: Modifications to <span>iframe load event steps</span></span></a>
+        <li><a href="#html-modifications-to-media-elements"><span class="secno">5.1.7</span> <span class="content">HTML: Modifications to <span>media-elements</span></span></a>
        </ol>
       <li>
        <a href="#page-lifecycle"><span class="secno">5.2</span> <span class="content">Additions to Page Lifecycle spec</span></a>
        <ol class="toc">
         <li><a href="#frozenness-state"><span class="secno">5.2.1</span> <span class="content">FROZENNESS state</span></a>
-        <li>
-         <a href="#reacting-to-frozenness-state-changes"><span class="secno">5.2.2</span> <span class="content">Reacting to FROZENNESS state changes</span></a>
-         <ol class="toc">
-          <li><a href="#change-frozenness-of-a-top-level-document"><span class="secno">5.2.2.1</span> <span class="content">Change frozenness of a top-level document</span></a>
-          <li><a href="#change-frozenness-of-document"><span class="secno">5.2.2.2</span> <span class="content">Change frozenness of document</span></a>
-         </ol>
-        <li><a href="#discarding"><span class="secno">5.2.3</span> <span class="content">Discarding</span></a>
+        <li><a href="#change-frozenness-of-a-top-level-document"><span class="secno">5.2.2</span> <span class="content">Change frozenness of a top-level document</span></a>
+        <li><a href="#change-frozenness-of-document"><span class="secno">5.2.3</span> <span class="content">Change frozenness of document</span></a>
+        <li><a href="#discarding"><span class="secno">5.2.4</span> <span class="content">Discarding</span></a>
        </ol>
      </ol>
     <li><a href="#acknowledgements"><span class="secno">6</span> <span class="content">Acknowledgements</span></a>
@@ -367,7 +364,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <p>This spec formalizes two new lifecycle states to support the above:</p>
    <ul>
     <li data-md>
-     <p><dfn data-dfn-for="Lifecycle" data-dfn-type="dfn" data-noexport id="lifecycle-frozen">Frozen<a class="self-link" href="#lifecycle-frozen"></a></dfn>: lifecycle state for CPU suspension. This means that the <a href="#change-frozenness-of-document" id="ref-for-change-frozenness-of-document">§5.2.2.2 Change frozenness of document</a> algorithm was called on the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document">Document</a></code>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc">browsing context</a>. Normally HIDDEN pages will be <a data-link-type="dfn" href="#frozen" id="ref-for-frozen">frozen</a> to conserve resources.</p>
+     <p><dfn data-dfn-for="Lifecycle" data-dfn-type="dfn" data-noexport id="lifecycle-frozen">Frozen<a class="self-link" href="#lifecycle-frozen"></a></dfn>: lifecycle state for CPU suspension. This means that the <a data-link-type="dfn" href="#freeze-steps" id="ref-for-freeze-steps">freeze steps</a> algorithm was called on the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document">Document</a></code>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc">browsing context</a>. Normally HIDDEN pages will be <a data-link-type="dfn" href="#frozen" id="ref-for-frozen">frozen</a> to conserve resources.</p>
     <li data-md>
      <p><dfn class="dfn-paneled" data-dfn-for="Lifecycle" data-dfn-type="dfn" data-noexport id="lifecycle-discarded">Discarded</dfn>: means that the <a data-link-type="dfn" href="#discarded" id="ref-for-discarded">discard</a> algorithm was called on the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①">Document</a></code>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc①">browsing context</a>. Normally <a data-link-type="dfn" href="#frozen" id="ref-for-frozen①">frozen</a> frames will be moved to <a data-link-type="dfn" href="#lifecycle-discarded" id="ref-for-lifecycle-discarded">discarded</a> state to conserve resources.</p>
    </ul>
@@ -424,15 +421,17 @@ A user could have multiple tabs open for the same app &amp; URL. If they are bot
 <c- p>}</c->
 </pre>
    <h2 class="heading settled" data-level="4" id="feature-policies"><span class="secno">4. </span><span class="content">Feature Policies</span><a class="self-link" href="#feature-policies"></a></h2>
-    To improve CPU utilization of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context" id="ref-for-nested-browsing-context">nested browsing contexts</a> that are not critical to a page’s usability two feature policies are defined: 
+    Controlling the execution state of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context" id="ref-for-nested-browsing-context">nested browsing contexts</a> is desirable from a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc②">browsing context</a> in order to control
+the user experience. An application may desire that when a document is not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/rendering.html#being-rendered" id="ref-for-being-rendered">being rendered</a> or does not intersect the <a data-link-type="dfn" href="https://www.w3.org/TR/CSS2/visuren.html#viewport" id="ref-for-viewport">viewport</a> that all execution stops in the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context" id="ref-for-nested-browsing-context①">nested browsing context</a> (including currently playing video, audio). Stopping all execution
+can lead to an improvement in CPU utilization. To meet these needs two feature policies are defined: 
    <ul>
     <li data-md>
      <p>execution-while-not-rendered, which has a <a data-link-type="dfn" href="https://wicg.github.io/feature-policy/#default-allowlist" id="ref-for-default-allowlist">default allowlist</a> of <a class="property" data-link-type="propdesc">*</a></p>
     <li data-md>
      <p>execution-while-out-of-viewport, which has a <a data-link-type="dfn" href="https://wicg.github.io/feature-policy/#default-allowlist" id="ref-for-default-allowlist①">default allowlist</a> of <a class="property" data-link-type="propdesc">*</a></p>
    </ul>
-   <p>The <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="execution-while-not-rendered">execution-while-not-rendered</dfn> policy controls whether <a data-link-type="dfn" href="#task-source-freezable" id="ref-for-task-source-freezable">freezable</a> tasks should execute for <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context" id="ref-for-nested-browsing-context①">nested browsing contexts</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context-container" id="ref-for-browsing-context-container">browsing context container</a> is not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/rendering.html#being-rendered" id="ref-for-being-rendered">being rendered</a>. ie. `display: none`.</p>
-   <p>The <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="execution-while-out-of-viewport">execution-while-out-of-viewport</dfn> policy controls whether <a data-link-type="dfn" href="#task-source-freezable" id="ref-for-task-source-freezable①">freezable</a> tasks should execute for <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context" id="ref-for-nested-browsing-context②">nested browsing contexts</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context-container" id="ref-for-browsing-context-container①">browsing context container</a> does not intersect the <a data-link-type="dfn" href="https://www.w3.org/TR/CSS2/visuren.html#viewport" id="ref-for-viewport">viewport</a> according
+   <p>The <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="execution-while-not-rendered">execution-while-not-rendered</dfn> policy controls whether <a data-link-type="dfn" href="#task-source-freezable" id="ref-for-task-source-freezable">freezable</a> tasks should execute for <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context" id="ref-for-nested-browsing-context②">nested browsing contexts</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context-container" id="ref-for-browsing-context-container">browsing context container</a> is not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/rendering.html#being-rendered" id="ref-for-being-rendered①">being rendered</a>. e.g. via `display: none`.</p>
+   <p>The <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="execution-while-out-of-viewport">execution-while-out-of-viewport</dfn> policy controls whether <a data-link-type="dfn" href="#task-source-freezable" id="ref-for-task-source-freezable①">freezable</a> tasks should execute for <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context" id="ref-for-nested-browsing-context③">nested browsing contexts</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context-container" id="ref-for-browsing-context-container①">browsing context container</a> does not intersect the <a data-link-type="dfn" href="https://www.w3.org/TR/CSS2/visuren.html#viewport" id="ref-for-viewport①">viewport</a> according
 to <a data-link-type="dfn" href="https://w3c.github.io/IntersectionObserver/#calculate-intersection-rect-algo" id="ref-for-calculate-intersection-rect-algo">compute the intersection of a target element and the root</a>.</p>
    <p>Application of these policies is accomplished by placing the document (and its decendants) in a <a data-link-type="dfn" href="#frozen" id="ref-for-frozen②">frozen</a> state when the following
 conditions have been met:</p>
@@ -454,31 +453,29 @@ conditions have been met:</p>
 run the following steps:</p>
    <ol>
     <li data-md>
-     <p>If <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc②">browsing context</a> is not a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context" id="ref-for-nested-browsing-context③">nested browsing context</a>, return.</p>
+     <p>If <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc③">browsing context</a> is not a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context" id="ref-for-nested-browsing-context④">nested browsing context</a>, return.</p>
     <li data-md>
      <p>If <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/dom.html#current-document-readiness" id="ref-for-current-document-readiness">readiness</a> is not "complete", return.</p>
     <li data-md>
-     <p>Let <var>element</var> be <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context" id="ref-for-nested-browsing-context④">nested browsing context</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context-container" id="ref-for-browsing-context-container②">browsing context container</a>.</p>
+     <p>Let <var>element</var> be <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context" id="ref-for-nested-browsing-context⑤">nested browsing context</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context-container" id="ref-for-browsing-context-container②">browsing context container</a>.</p>
     <li data-md>
-     <p>Let <var>frozenness</var> be unset.</p>
+     <p>Let <var>frozenness</var> be false.</p>
+    <li data-md>
+     <p>Let <var>auto resume media</var> be false.</p>
     <li data-md>
      <p>If <var>document</var> is not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#allowed-to-use" id="ref-for-allowed-to-use">allowed to use</a> the <a data-link-type="dfn" href="#execution-while-not-rendered" id="ref-for-execution-while-not-rendered">execution-while-not-rendered</a> feature then:</p>
      <ol>
       <li data-md>
-       <p>If <var>element</var>’s is not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/rendering.html#being-rendered" id="ref-for-being-rendered①">being rendered</a>,  set <var>frozenness</var>’s to true.</p>
-      <li data-md>
-       <p>Otherwise, set <var>frozenness</var> to false.</p>
+       <p>If <var>element</var> is not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/rendering.html#being-rendered" id="ref-for-being-rendered②">being rendered</a>,  set <var>frozenness</var>’s to <code class="highlight"><c- kc>true</c-></code>.</p>
      </ol>
     <li data-md>
      <p>Otherwise if <var>document</var> is not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#allowed-to-use" id="ref-for-allowed-to-use①">allowed to use</a> the <a data-link-type="dfn" href="#execution-while-out-of-viewport" id="ref-for-execution-while-out-of-viewport">execution-while-out-of-viewport</a> feature then:</p>
      <ol>
       <li data-md>
-       <p>If <var>element</var>’s does not intersect the <a data-link-type="dfn" href="https://www.w3.org/TR/CSS2/visuren.html#viewport" id="ref-for-viewport①">viewport</a> according to <a data-link-type="dfn" href="https://w3c.github.io/IntersectionObserver/#calculate-intersection-rect-algo" id="ref-for-calculate-intersection-rect-algo①">compute the intersection of a target element and the root</a>, set <var>frozenness</var> to true.</p>
-      <li data-md>
-       <p>Otherwise, set <var>frozenness</var> to false.</p>
+       <p>If <var>element</var> does not intersect the <a data-link-type="dfn" href="https://www.w3.org/TR/CSS2/visuren.html#viewport" id="ref-for-viewport②">viewport</a> according to <a data-link-type="dfn" href="https://w3c.github.io/IntersectionObserver/#calculate-intersection-rect-algo" id="ref-for-calculate-intersection-rect-algo①">compute the intersection of a target element and the root</a>, set <var>frozenness</var> to <code class="highlight"><c- kc>true</c-></code>, <var>auto resume media</var> to <code class="highlight"><c- kc>true</c-></code>.</p>
      </ol>
     <li data-md>
-     <p>If <var>frozenness</var> does not equal <var>document</var>’s <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness">FROZENNESS</a> state, <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-queue-a-task">queue a task</a> to be set <var>document</var>’s <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness①">FROZENNESS</a> to <var>frozenness</var>.</p>
+     <p>If <var>frozenness</var> does not equal <var>document</var>’s <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness">FROZENNESS</a> state, execute <a href="#change-frozenness-of-document" id="ref-for-change-frozenness-of-document">§5.2.3 Change frozenness of document</a> passing in <var>document</var>, <var>frozenness</var>, <var>auto resume media</var>.</p>
    </ol>
    <h2 class="heading settled" data-level="5" id="sec-processing-model"><span class="secno">5. </span><span class="content">Processing model</span><a class="self-link" href="#sec-processing-model"></a></h2>
    <h3 class="heading settled" data-level="5.1" id="mod"><span class="secno">5.1. </span><span class="content">Modifications to the HTML Standard</span><a class="self-link" href="#mod"></a></h3>
@@ -494,6 +491,87 @@ run the following steps:</p>
     <li data-md>
      <p>DOM manipulation, user interaction, history traversal etc.</p>
    </ul>
+   <table>
+    <tbody>
+     <tr>
+      <th>Task Queue
+      <th>Freezable
+     <tr>
+      <td><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-manipulation-task-source" id="ref-for-dom-manipulation-task-source">dom-manipulation-task-source</a>
+      <td>Yes
+     <tr>
+      <td><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source" id="ref-for-user-interaction-task-source">user-interaction-task-source</a>
+      <td>Yes
+     <tr>
+      <td><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#networking-task-source" id="ref-for-networking-task-source">networking-task-source</a>
+      <td>Yes* (pending request inflight allowed)
+     <tr>
+      <td><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#history-traversal-task-source" id="ref-for-history-traversal-task-source">history-traversal-task-source</a>
+      <td>Yes
+     <tr>
+      <td><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#embed-task-source" id="ref-for-embed-task-source">embed-task-source</a>
+      <td>Yes
+     <tr>
+      <td><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/media.html#media-element-event-task-source" id="ref-for-media-element-event-task-source">media-element-event-task-source</a>
+      <td>Yes
+     <tr>
+      <td><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/canvas.html#canvas-blob-serialisation-task-source" id="ref-for-canvas-blob-serialisation-task-source">canvas-blob-serialisation-task-source</a>
+      <td>Yes
+     <tr>
+      <td><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#microtask-task-source" id="ref-for-microtask-task-source">microtask-task-source</a>
+      <td>Yes
+     <tr>
+      <td><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#timer-task-source" id="ref-for-timer-task-source">timer-task-source</a>
+      <td>Yes
+     <tr>
+      <td><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/server-sent-events.html#remote-event-task-source" id="ref-for-remote-event-task-source">remote-event-task-source</a>
+      <td>Yes
+     <tr>
+      <td><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/web-sockets.html#websocket-task-source" id="ref-for-websocket-task-source">websocket-task-source</a>
+      <td>Yes
+     <tr>
+      <td><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/web-messaging.html#posted-message-task-source" id="ref-for-posted-message-task-source">posted-message-task-source</a>
+      <td>Yes
+     <tr>
+      <td><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/web-messaging.html#unshipped-port-message-queue" id="ref-for-unshipped-port-message-queue">unshipped-port-message-queue</a>
+      <td>Yes
+     <tr>
+      <td><a data-link-type="dfn" href="https://www.w3.org/TR/FileAPI/#blobreader-task-source" id="ref-for-blobreader-task-source">fileReadingTaskSource</a>
+      <td>Yes
+     <tr>
+      <td><a data-link-type="dfn" href="https://www.w3.org/TR/IndexedDB/#database-access-task-source" id="ref-for-database-access-task-source">database-access-task-source</a>
+      <td>Yes
+     <tr>
+      <td><a data-link-type="dfn" href="https://w3c.github.io/presentation-api/#common-idioms" id="ref-for-common-idioms">presentation-task-source</a>
+      <td>Yes
+     <tr>
+      <td><a data-link-type="dfn" href="https://www.w3.org/TR/2016/WD-generic-sensor-20160830/#sensor-task-source" id="ref-for-sensor-task-source">sensor-task-source</a>
+      <td>Yes
+     <tr>
+      <td><a data-link-type="dfn" href="https://w3c.github.io/performance-timeline/#queue-a-performanceentry" id="ref-for-queue-a-performanceentry">performance-timeline-task-source</a>
+      <td>Yes
+     <tr>
+      <td><a data-link-type="dfn" href="https://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15" id="ref-for-5.15">web-gl-task-source</a>
+      <td>Yes
+     <tr>
+      <td><a data-link-type="dfn" href="https://www.w3.org/TR/requestidlecallback/#the-requestidlecallback-method" id="ref-for-the-requestidlecallback-method">idle-task-task-source</a>
+      <td>Yes
+     <tr>
+      <td><a data-link-type="dfn" href="https://drafts.csswg.org/css-font-loading/#task-source" id="ref-for-task-source">font-loading-task-source</a>
+      <td>Yes
+     <tr>
+      <td><a data-link-type="dfn" href="https://w3c.github.io/manifest/#dfn-application-life-cycle-task-source" id="ref-for-dfn-application-life-cycle-task-source">application-life-cycle-task-source</a>
+      <td>Yes
+     <tr>
+      <td><a data-link-type="dfn" href="https://wicg.github.io/background-fetch/#background-fetch-task-source" id="ref-for-background-fetch-task-source">background-fetch-task-source</a>
+      <td>Yes
+     <tr>
+      <td><a data-link-type="dfn" href="https://www.w3.org/TR/permissions/#permission-task-source" id="ref-for-permission-task-source">permission-task-source</a>
+      <td>Yes
+     <tr>
+      <td><a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-client-message-queue" id="ref-for-dfn-client-message-queue">client-message-queue-task-source</a>
+      <td>Yes
+   </table>
    <p class="note" role="note"><span>NOTE:</span> networking task source is freezable with an exception: when a pending fetch keep-alive request in inflight, then networking task source must not be frozen.</p>
    <p>Examples of <a data-link-type="dfn" href="#task-source-unfreezable" id="ref-for-task-source-unfreezable">unfreezable</a> task sources are:</p>
    <ul>
@@ -504,20 +582,19 @@ run the following steps:</p>
     <li data-md>
      <p>other task sources that are shared with the entire process</p>
    </ul>
-   <p>TODO(domenic): classify all existing task sources in the HTML spec; find out if other specs have defined any relevant task sources.</p>
    <p>TODO(panicker): Add note about keeping everything within a site instance that are scriptable (eg. documents that can post-message with each other) in the same lifecycle state.</p>
    <h4 class="heading settled" data-level="5.1.2" id="html-bfcache-dfn"><span class="secno">5.1.2. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#unloading-documents">Unloading documents</a> and <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#history-traversal">History Traversal</a></span><a class="self-link" href="#html-bfcache-dfn"></a></h4>
-   <p>When documents move into and out of <a href="https://webkit.org/blog/427/webkit-page-cache-i-the-basics/">bfcache (back forward cache)</a> they will transition its <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness②">frozenness</a> state to <code class="highlight"><c- kc>true</c-></code> and <code class="highlight"><c- kc>false</c-></code> respectively.</p>
+   <p>When documents move into and out of <a href="https://webkit.org/blog/427/webkit-page-cache-i-the-basics/">bfcache (back forward cache)</a> they will transition its <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness①">frozenness</a> state to <code class="highlight"><c- kc>true</c-></code> and <code class="highlight"><c- kc>false</c-></code> respectively.</p>
    <ul>
     <li data-md>
-     <p>In the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#unload-a-document" id="ref-for-unload-a-document">unload a document</a> algorithm, after Step #5, if the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#dom-pagetransitionevent-persisted" id="ref-for-dom-pagetransitionevent-persisted">persisted</a></code> attribute is true (i.e. we are moving to bfcache), run the <a href="#change-frozenness-of-document" id="ref-for-change-frozenness-of-document①">§5.2.2.2 Change frozenness of document</a> algorithm, passing in <var>document</var> and <code class="highlight"><c- kc>true</c-></code>.</p>
+     <p>In the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#unload-a-document" id="ref-for-unload-a-document">unload a document</a> algorithm, after Step #5, if the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#dom-pagetransitionevent-persisted" id="ref-for-dom-pagetransitionevent-persisted">persisted</a></code> attribute is true (i.e. we are moving to bfcache), run the <a href="#change-frozenness-of-document" id="ref-for-change-frozenness-of-document①">§5.2.3 Change frozenness of document</a> algorithm, passing in <var>document</var> and <code class="highlight"><c- kc>true</c-></code>.</p>
     <li data-md>
-     <p>In the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#traverse-the-history" id="ref-for-traverse-the-history">traverse the history</a> algorithm, before Step #4.6.4, if the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#dom-pagetransitionevent-persisted" id="ref-for-dom-pagetransitionevent-persisted①">persisted</a></code> attribute is true (i.e. we are moving out of bfcache), run the <a href="#change-frozenness-of-document" id="ref-for-change-frozenness-of-document②">§5.2.2.2 Change frozenness of document</a> algorithm, passing in <var>document</var> and <code class="highlight"><c- kc>false</c-></code>.</p>
+     <p>In the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#traverse-the-history" id="ref-for-traverse-the-history">traverse the history</a> algorithm, before Step #4.6.4, if the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#dom-pagetransitionevent-persisted" id="ref-for-dom-pagetransitionevent-persisted①">persisted</a></code> attribute is true (i.e. we are moving out of bfcache), run the <a href="#change-frozenness-of-document" id="ref-for-change-frozenness-of-document②">§5.2.3 Change frozenness of document</a> algorithm, passing in <var>document</var> and <code class="highlight"><c- kc>false</c-></code>.</p>
    </ul>
    <h4 class="heading settled" data-level="5.1.3" id="html-event-loop"><span class="secno">5.1.3. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model">HTML Event Loop Processing Model</a></span><a class="self-link" href="#html-event-loop"></a></h4>
    <p>Step #1 currently ignores "tasks whose associated <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑥">Document</a></code>s are not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#fully-active" id="ref-for-fully-active">fully active</a>". Modify this clause to also ignore <a data-link-type="dfn" href="#task-source-freezable" id="ref-for-task-source-freezable④">freezable</a> tasks whose associated <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑦">Document</a></code> is in the <a data-link-type="dfn" href="#frozen" id="ref-for-frozen③">frozen</a> state.</p>
    <p>After Step #11 during the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#update-the-rendering" id="ref-for-update-the-rendering">Update the rendering</a> add the following step.</p>
-   <p>For each <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#fully-active" id="ref-for-fully-active①">fully active</a> <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑧">Document</a></code> in <var>docs</var>, run the <a data-link-type="dfn" href="#update-document-frozenness-steps" id="ref-for-update-document-frozenness-steps">update document frozenness steps</a>.</p>
+   <p>For each <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#fully-active" id="ref-for-fully-active①">fully active</a> <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑧">Document</a></code> <var>doc</var> in <var>docs</var>, run the <a data-link-type="dfn" href="#update-document-frozenness-steps" id="ref-for-update-document-frozenness-steps">update document frozenness steps</a> given <var>doc</var>.</p>
    <h4 class="heading settled" data-level="5.1.4" id="html-discarding"><span class="secno">5.1.4. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">Discarding browsing context</a></span><a class="self-link" href="#html-discarding"></a></h4>
    <p>Rename the "<a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">discard</a>" concept, for both browsing contexts and documents, to "destroy". This allows us to use the "discarded" terminology for the user-facing <code class="idl"><a data-link-type="idl" href="#dom-document-wasdiscarded" id="ref-for-dom-document-wasdiscarded①">wasDiscarded</a></code> attribute.</p>
    <h4 class="heading settled" data-level="5.1.5" id="html-initialize-doc"><span class="secno">5.1.5. </span><span class="content">HTML: Modifications to <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">Initialize the document</a></span><a class="self-link" href="#html-initialize-doc"></a></h4>
@@ -525,7 +602,9 @@ run the following steps:</p>
    <p>If the browsing context was previously <a data-link-type="dfn" href="#discarded" id="ref-for-discarded①">discarded</a>, then set the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑨">Document</a></code>'s <a data-link-type="dfn" href="#document-discarded" id="ref-for-document-discarded①">discarded</a> boolean to true.</p>
    <h4 class="heading settled" data-level="5.1.6" id="html-iframe-load"><span class="secno">5.1.6. </span><span class="content">HTML: Modifications to <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#iframe-load-event-steps" id="ref-for-iframe-load-event-steps①">iframe load event steps</a></span><a class="self-link" href="#html-iframe-load"></a></h4>
    <p>After Step #5 add following:</p>
-   <p>Run the <a data-link-type="dfn" href="#update-document-frozenness-steps" id="ref-for-update-document-frozenness-steps①">update document frozenness steps</a>.</p>
+   <p>Run the <a data-link-type="dfn" href="#update-document-frozenness-steps" id="ref-for-update-document-frozenness-steps①">update document frozenness steps</a> given <var>child document</var>.</p>
+   <h4 class="heading settled" data-level="5.1.7" id="html-modifications-to-media-elements"><span class="secno">5.1.7. </span><span class="content">HTML: Modifications to <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/media.html#media-elements" id="ref-for-media-elements">media-elements</a></span><a class="self-link" href="#html-modifications-to-media-elements"></a></h4>
+   <p>Each HTMLMediaElement has a <dfn class="dfn-paneled" data-dfn-for="HTMLMediaElement" data-dfn-type="dfn" data-noexport id="htmlmediaelement-resume-frozen-flag">resume frozen flag</dfn>, which is initially set to false.</p>
    <h3 class="heading settled" data-level="5.2" id="page-lifecycle"><span class="secno">5.2. </span><span class="content">Additions to Page Lifecycle spec</span><a class="self-link" href="#page-lifecycle"></a></h3>
    <h4 class="heading settled" data-level="5.2.1" id="frozenness-state"><span class="secno">5.2.1. </span><span class="content">FROZENNESS state</span><a class="self-link" href="#frozenness-state"></a></h4>
     A document can be in one of the following <dfn class="dfn-paneled" data-dfn-for="Document" data-dfn-type="dfn" data-noexport id="document-frozenness">FROZENNESS</dfn> states: 
@@ -534,10 +613,10 @@ run the following steps:</p>
      <p>true: the document is <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="frozen">frozen</dfn>, any freezeable tasks associated with the document will not run</p>
     <li data-md>
      <p>false: the document is <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="unfrozen">unfrozen</dfn>, tasks associated with the document will run as usual</p>
-     <p class="note" role="note"><span>NOTE:</span> Per the <a href="#change-frozenness-of-a-top-level-document" id="ref-for-change-frozenness-of-a-top-level-document">§5.2.2.1 Change frozenness of a top-level document</a> algorithm, when the Document of the top level browsing context changes its <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness③">frozenness</a> state then all documents of descendant browsing contexts will also change <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness④">frozenness</a> to the same value (and be consistent with the Document of the top level browsing context).</p>
+     <p class="note" role="note"><span>NOTE:</span> Per the <a href="#change-frozenness-of-a-top-level-document">§5.2.2 Change frozenness of a top-level document</a> algorithm, when the Document of the top level browsing context changes its <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness②">frozenness</a> state then all documents of descendant browsing contexts will also change <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness③">frozenness</a> to the same value (and be consistent with the Document of the top level browsing context).</p>
    </ul>
-   <p>The UA may choose to execute <a href="#change-frozenness-of-a-top-level-document" id="ref-for-change-frozenness-of-a-top-level-document①">§5.2.2.1 Change frozenness of a top-level document</a> with <code class="highlight"><c- kc>true</c-></code> in certain situations.
-For instance, if a browsing context is in the background or hidden, and a grace period has elapsed the UA could execute <a href="#change-frozenness-of-a-top-level-document" id="ref-for-change-frozenness-of-a-top-level-document②">§5.2.2.1 Change frozenness of a top-level document</a> with <code class="highlight"><c- kc>true</c-></code> to conserve resources and maintain the quality of the (foreground) user experience.
+   <p>The UA may choose to execute <a href="#change-frozenness-of-a-top-level-document">§5.2.2 Change frozenness of a top-level document</a> with <code class="highlight"><c- kc>true</c-></code> in certain situations.
+For instance, if a top level browsing context is in the background or hidden, and a grace period has elapsed the UA could execute <a href="#change-frozenness-of-a-top-level-document">§5.2.2 Change frozenness of a top-level document</a> with <code class="highlight"><c- kc>true</c-></code> to conserve resources and maintain the quality of the (foreground) user experience.
 Specific examples:</p>
    <ul>
     <li data-md>
@@ -547,15 +626,14 @@ Specific examples:</p>
      <p class="note" role="note"><span>NOTE:</span> background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not <a data-link-type="dfn" href="#frozen" id="ref-for-frozen⑤">frozen</a> or <a data-link-type="dfn" href="#discarded" id="ref-for-discarded③">discarded</a>.</p>
      <p class="note" role="note"><span>NOTE:</span> For a detailed list of heuristics &amp; exclusions used by Chrome, see <a href="https://docs.google.com/document/d/1QJpuBTdllLVflMJSov0tlFX3e3yfSfd_-al2IBavbQM/edit">this doc</a>.</p>
    </ul>
-   <p>The UA will typically execute <a href="#change-frozenness-of-a-top-level-document" id="ref-for-change-frozenness-of-a-top-level-document③">§5.2.2.1 Change frozenness of a top-level document</a> with <code class="highlight"><c- kc>false</c-></code> when the user revisits that browsing context. In addition, the UA may choose to periodically execute <a href="#change-frozenness-of-a-top-level-document" id="ref-for-change-frozenness-of-a-top-level-document④">§5.2.2.1 Change frozenness of a top-level document</a> with <code class="highlight"><c- kc>false</c-></code> in the background, if plentiful resources are available.</p>
-   <h4 class="heading settled" data-dfn-type="dfn" data-level="5.2.2" data-lt="Reacting to FROZENNESS state changes" data-noexport id="reacting-to-frozenness-state-changes"><span class="secno">5.2.2. </span><span class="content">Reacting to FROZENNESS state changes</span><a class="self-link" href="#reacting-to-frozenness-state-changes"></a></h4>
-   <h5 class="heading settled dfn-paneled" data-dfn-type="dfn" data-level="5.2.2.1" data-lt="Change frozenness of a top-level document" data-noexport id="change-frozenness-of-a-top-level-document"><span class="secno">5.2.2.1. </span><span class="content">Change frozenness of a top-level document</span></h5>
-    To change the <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness⑤">frozenness</a> of a top-level document passing in a document <var>doc</var> and <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness⑥">frozenness</a> state <var>x</var> (one of <code class="highlight"><c- kc>true</c-></code>, <code class="highlight"><c- kc>false</c-></code>): 
+   <p>The UA will typically execute <a href="#change-frozenness-of-a-top-level-document">§5.2.2 Change frozenness of a top-level document</a> with <code class="highlight"><c- kc>false</c-></code> when the user revisits that browsing context. In addition, the UA may choose to periodically execute <a href="#change-frozenness-of-a-top-level-document">§5.2.2 Change frozenness of a top-level document</a> with <code class="highlight"><c- kc>false</c-></code> in the background, if plentiful resources are available.</p>
+   <h4 class="heading settled" data-level="5.2.2" id="change-frozenness-of-a-top-level-document"><span class="secno">5.2.2. </span><span class="content">Change frozenness of a top-level document</span><a class="self-link" href="#change-frozenness-of-a-top-level-document"></a></h4>
+    To change the <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness④">frozenness</a> of a top-level document passing in a document <var>doc</var> and <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness⑤">frozenness</a> state <var>x</var> (one of <code class="highlight"><c- kc>true</c-></code>, <code class="highlight"><c- kc>false</c-></code>): 
    <ol>
     <li data-md>
-     <p class="assertion">Assert: <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc③">browsing context</a> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context">top-level browsing context</a>.</p>
+     <p class="assertion">Assert: <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc④">browsing context</a> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context">top-level browsing context</a>.</p>
     <li data-md>
-     <p>Execute <a href="#change-frozenness-of-document" id="ref-for-change-frozenness-of-document③">§5.2.2.2 Change frozenness of document</a> passing in <var>doc</var> and <var>x</var>.</p>
+     <p>Execute <a href="#change-frozenness-of-document" id="ref-for-change-frozenness-of-document③">§5.2.3 Change frozenness of document</a> passing in <var>doc</var>, <var>x</var>, and <code class="highlight"><c- kc>false</c-></code> for <var>auto resume media flag</var>.</p>
     <li data-md>
      <p>Let <var>descendants</var> be the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#list-of-the-descendant-browsing-contexts" id="ref-for-list-of-the-descendant-browsing-contexts">list of the descendant browsing contexts</a> of <var>doc</var>.</p>
     <li data-md>
@@ -564,31 +642,75 @@ Specific examples:</p>
       <li data-md>
        <p>Let <var>d</var> be the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document">active document</a> of <var>b</var>.</p>
       <li data-md>
-       <p>Execute <a href="#change-frozenness-of-document" id="ref-for-change-frozenness-of-document④">§5.2.2.2 Change frozenness of document</a> passing in <var>d</var> and <var>x</var>.</p>
+       <p>Execute <a href="#change-frozenness-of-document" id="ref-for-change-frozenness-of-document④">§5.2.3 Change frozenness of document</a> passing in <var>d</var>, <var>x</var>, and <code class="highlight"><c- kc>false</c-></code> for <var>auto resume media flag</var>.</p>
      </ol>
    </ol>
-   <h5 class="heading settled dfn-paneled" data-dfn-type="dfn" data-level="5.2.2.2" data-lt="Change frozenness of document" data-noexport id="change-frozenness-of-document"><span class="secno">5.2.2.2. </span><span class="content">Change frozenness of document</span></h5>
-    To change the <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness⑦">frozenness</a> of a document given a document <var>doc</var> and <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness⑧">frozenness</a> state <var>x</var>: 
+   <h4 class="heading settled dfn-paneled" data-dfn-type="dfn" data-level="5.2.3" data-lt="Change frozenness of document" data-noexport id="change-frozenness-of-document"><span class="secno">5.2.3. </span><span class="content">Change frozenness of document</span></h4>
+    To change the <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness⑥">frozenness</a> of a document given a document <var>doc</var>, <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness⑦">frozenness</a> state <var>x</var> and <var>auto resume frozen media</var> (one of <code class="highlight"><c- kc>true</c-></code>, <code class="highlight"><c- kc>false</c-></code>): 
    <ol>
     <li data-md>
-     <p>If <var>x</var> is <code class="highlight"><c- kc>true</c-></code>:</p>
+     <p>If <var>x</var> is true:</p>
      <ol>
       <li data-md>
-       <p>Set <var>doc</var>’s <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness⑨">frozenness</a> state to <code class="highlight"><c- kc>true</c-></code>.</p>
-      <li data-md>
-       <p><a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-fire" id="ref-for-concept-event-fire">Fire an event</a> named <code class="highlight">freeze</code> at <var>doc</var>.</p>
+       <p>Run the <a data-link-type="dfn" href="#freeze-steps" id="ref-for-freeze-steps①">freeze steps</a> given <var>doc</var> and <var>auto resume media flag</var>.</p>
      </ol>
     <li data-md>
      <p>Otherwise:</p>
      <ol>
       <li data-md>
-       <p><a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-fire" id="ref-for-concept-event-fire①">Fire an event</a> named <code class="highlight">resume</code> at <var>doc</var>.</p>
-      <li data-md>
-       <p>Set <var>doc</var>’s <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness①⓪">frozenness</a> state to <code class="highlight"><c- kc>false</c-></code>.</p>
+       <p>Run the <a data-link-type="dfn" href="#resume-steps" id="ref-for-resume-steps">resume steps</a> given <var>doc</var>.</p>
      </ol>
-     <p class="note" role="note"><span>NOTE:</span> it is intentional that the ordering between event-firing and setting the state are different in the two cases above.</p>
    </ol>
-   <h4 class="heading settled" data-level="5.2.3" id="discarding"><span class="secno">5.2.3. </span><span class="content">Discarding</span><a class="self-link" href="#discarding"></a></h4>
+   <p>To run the <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="freeze-steps">freeze steps</dfn> for a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①⓪">Document</a></code> <var>doc</var>,
+and <var>auto resume frozen media</var> (one of <code class="highlight"><c- kc>true</c-></code>, <code class="highlight"><c- kc>false</c-></code>)
+run the following steps:</p>
+   <ol>
+    <li data-md>
+     <p>Set <var>doc</var>’s <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness⑧">frozenness</a> state to <code class="highlight"><c- kc>true</c-></code>.</p>
+    <li data-md>
+     <p><a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-fire" id="ref-for-concept-event-fire">Fire an event</a> named <code class="highlight">freeze</code> at <var>doc</var>.</p>
+    <li data-md>
+     <p>Let <var>elements</var> be all <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/media.html#media-element" id="ref-for-media-element">media elements</a> in <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-tree-order" id="ref-for-concept-tree-order">tree order</a></p>
+    <li data-md>
+     <p>For each <var>element</var> in <var>elements</var>.</p>
+     <ol>
+      <li data-md>
+       <p>If <var>element</var>’s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/media.html#dom-media-paused" id="ref-for-dom-media-paused">paused</a></code> is false.</p>
+       <ol>
+        <li data-md>
+         <p>Set <var>element</var>’s <a data-link-type="dfn" href="#htmlmediaelement-resume-frozen-flag" id="ref-for-htmlmediaelement-resume-frozen-flag">resume frozen flag</a> to <var>auto resume frozen media</var>.</p>
+        <li data-md>
+         <p>Call <var>element</var>’s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/media.html#dom-media-pause" id="ref-for-dom-media-pause">pause</a></code> method.</p>
+       </ol>
+     </ol>
+     <p class="note" role="note"><span>NOTE:</span> it is intentional that the ordering between the assignment of the of frozneness state
+occurs first before event firing.</p>
+   </ol>
+   <p>To run the <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="resume-steps">resume steps</dfn> for a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①①">Document</a></code> <var>doc</var>,
+run the following steps:</p>
+   <ol>
+    <li data-md>
+     <p>Let <var>elements</var> be all <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/media.html#media-element" id="ref-for-media-element①">media elements</a> in <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-tree-order" id="ref-for-concept-tree-order①">tree order</a></p>
+     <ol>
+      <li data-md>
+       <p>For each <var>element</var> in <var>elements</var>.</p>
+      <li data-md>
+       <p>If <var>elements</var>’s <a data-link-type="dfn" href="#htmlmediaelement-resume-frozen-flag" id="ref-for-htmlmediaelement-resume-frozen-flag①">resume frozen flag</a> is <code class="highlight"><c- kc>true</c-></code>.</p>
+       <ol>
+        <li data-md>
+         <p>Set <var>elements</var>’s <a data-link-type="dfn" href="#htmlmediaelement-resume-frozen-flag" id="ref-for-htmlmediaelement-resume-frozen-flag②">resume frozen flag</a> to <code class="highlight"><c- kc>false</c-></code>.</p>
+        <li data-md>
+         <p>Call <var>element</var>’s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/media.html#dom-media-play" id="ref-for-dom-media-play">play</a></code> method.</p>
+       </ol>
+     </ol>
+    <li data-md>
+     <p><a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-fire" id="ref-for-concept-event-fire①">Fire an event</a> named <code class="highlight">resume</code> at <var>doc</var>.</p>
+    <li data-md>
+     <p>Set <var>doc</var>’s <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness⑨">frozenness</a> state to <code class="highlight"><c- kc>false</c-></code>.</p>
+     <p class="note" role="note"><span>NOTE:</span> it is intentional that the ordering between the assignment of the of frozneness state
+comes last after event firing.</p>
+   </ol>
+   <h4 class="heading settled" data-level="5.2.4" id="discarding"><span class="secno">5.2.4. </span><span class="content">Discarding</span><a class="self-link" href="#discarding"></a></h4>
     Each Document has a <dfn class="dfn-paneled" data-dfn-for="Document" data-dfn-type="dfn" data-noexport id="document-discarded">discarded</dfn> boolean, which is initially false. 
    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-export data-lt="discarded|discard" id="discarded">discard</dfn> a browsing context, <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">destroy the browsing context</a>, and make note of the fact that the reason it and any descendant browsing contents were destroyed was because of discarding.</p>
    <p class="note" role="note"><span>NOTE:</span> <a data-link-type="dfn" href="#discarded" id="ref-for-discarded④">Discard</a> is typically done to reclaim system memory, when memory and other resources are running low. On the other hand destroying a browser context is the normal teardown due to user leaving the page etc.</p>
@@ -599,7 +721,7 @@ Specific examples:</p>
      <p class="note" role="note"><span>NOTE:</span> background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not <a data-link-type="dfn" href="#discarded" id="ref-for-discarded⑦">discarded</a>.</p>
      <p class="note" role="note"><span>NOTE:</span> For a detailed list of heuristics &amp; exclusions used by Chrome, see <a href="https://docs.google.com/document/d/1QJpuBTdllLVflMJSov0tlFX3e3yfSfd_-al2IBavbQM/edit">this doc</a>.</p>
    </ul>
-   <p>When a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context①">top-level browsing context</a> (tab in the browser) is <a data-link-type="dfn" href="#discarded" id="ref-for-discarded⑧">discarded</a> due to resource pressure (or unexpected events eg. process crash), and later the user revisits the tab in the browser, then the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①⓪">Document</a></code>'s <a data-link-type="dfn" href="#document-discarded" id="ref-for-document-discarded②">discarded</a> boolean will be true due to <a href="#html-initialize-doc">§5.1.5 HTML: Modifications to Initialize the document</a>.</p>
+   <p>When a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context①">top-level browsing context</a> (tab in the browser) is <a data-link-type="dfn" href="#discarded" id="ref-for-discarded⑧">discarded</a> due to resource pressure (or unexpected events eg. process crash), and later the user revisits the tab in the browser, then the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①②">Document</a></code>'s <a data-link-type="dfn" href="#document-discarded" id="ref-for-document-discarded②">discarded</a> boolean will be true due to <a href="#html-initialize-doc">§5.1.5 HTML: Modifications to Initialize the document</a>.</p>
    <h2 class="heading settled" data-level="6" id="acknowledgements"><span class="secno">6. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
    <p>Special thanks to Ojan Vafai, Philip Walton, Fadi Meawad, Olli Pettay, Todd Reifsteck for their technical input and suggestions that led to improvements to this specification.</p>
   </main>
@@ -607,34 +729,47 @@ Specific examples:</p>
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
-   <li><a href="#change-frozenness-of-a-top-level-document">Change frozenness of a top-level document</a><span>, in §5.2.2</span>
-   <li><a href="#change-frozenness-of-document">Change frozenness of document</a><span>, in §5.2.2.1</span>
-   <li><a href="#discarded">discard</a><span>, in §5.2.3</span>
+   <li><a href="#change-frozenness-of-document">Change frozenness of document</a><span>, in §5.2.2</span>
+   <li><a href="#discarded">discard</a><span>, in §5.2.4</span>
    <li><a href="#lifecycle-discarded">Discarded</a><span>, in §2</span>
    <li>
     discarded
     <ul>
-     <li><a href="#discarded">definition of</a><span>, in §5.2.3</span>
-     <li><a href="#document-discarded">dfn for Document</a><span>, in §5.2.3</span>
+     <li><a href="#discarded">definition of</a><span>, in §5.2.4</span>
+     <li><a href="#document-discarded">dfn for Document</a><span>, in §5.2.4</span>
     </ul>
    <li><a href="#execution-while-not-rendered">execution-while-not-rendered</a><span>, in §4</span>
    <li><a href="#execution-while-out-of-viewport">execution-while-out-of-viewport</a><span>, in §4</span>
    <li><a href="#task-source-freezable">freezable</a><span>, in §5.1.1</span>
+   <li><a href="#freeze-steps">freeze steps</a><span>, in §5.2.3</span>
    <li><a href="#frozen">frozen</a><span>, in §5.2.1</span>
    <li><a href="#lifecycle-frozen">Frozen</a><span>, in §2</span>
    <li><a href="#document-frozenness">FROZENNESS</a><span>, in §5.2.1</span>
    <li><a href="#dom-document-onfreeze">onfreeze</a><span>, in §3</span>
    <li><a href="#dom-document-onresume">onresume</a><span>, in §3</span>
-   <li><a href="#reacting-to-frozenness-state-changes">Reacting to FROZENNESS state changes</a><span>, in §5.2.1</span>
+   <li><a href="#htmlmediaelement-resume-frozen-flag">resume frozen flag</a><span>, in §5.1.7</span>
+   <li><a href="#resume-steps">resume steps</a><span>, in §5.2.3</span>
    <li><a href="#task-source-unfreezable">unfreezable</a><span>, in §5.1.1</span>
    <li><a href="#unfrozen">unfrozen</a><span>, in §5.2.1</span>
    <li><a href="#update-document-frozenness-steps">update document frozenness steps</a><span>, in §4</span>
    <li><a href="#dom-document-wasdiscarded">wasDiscarded</a><span>, in §3</span>
   </ul>
+  <aside class="dfn-panel" data-for="term-for-background-fetch-task-source">
+   <a href="https://wicg.github.io/background-fetch/#background-fetch-task-source">https://wicg.github.io/background-fetch/#background-fetch-task-source</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-background-fetch-task-source">5.1.1. HTML: task source</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-viewport">
    <a href="https://www.w3.org/TR/CSS2/visuren.html#viewport">https://www.w3.org/TR/CSS2/visuren.html#viewport</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-viewport">4. Feature Policies</a> <a href="#ref-for-viewport①">(2)</a>
+    <li><a href="#ref-for-viewport">4. Feature Policies</a> <a href="#ref-for-viewport①">(2)</a> <a href="#ref-for-viewport②">(3)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-task-source">
+   <a href="https://drafts.csswg.org/css-font-loading/#task-source">https://drafts.csswg.org/css-font-loading/#task-source</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-task-source">5.1.1. HTML: task source</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-document">
@@ -645,19 +780,38 @@ Specific examples:</p>
     <li><a href="#ref-for-document⑤">4. Feature Policies</a>
     <li><a href="#ref-for-document⑥">5.1.3. HTML: HTML Event Loop Processing Model</a> <a href="#ref-for-document⑦">(2)</a> <a href="#ref-for-document⑧">(3)</a>
     <li><a href="#ref-for-document⑨">5.1.5. HTML: Modifications to Initialize the document</a>
-    <li><a href="#ref-for-document①⓪">5.2.3. Discarding</a>
+    <li><a href="#ref-for-document①⓪">5.2.3. Change frozenness of document</a> <a href="#ref-for-document①①">(2)</a>
+    <li><a href="#ref-for-document①②">5.2.4. Discarding</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-event-fire">
    <a href="https://dom.spec.whatwg.org/#concept-event-fire">https://dom.spec.whatwg.org/#concept-event-fire</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-event-fire">5.2.2.2. Change frozenness of document</a> <a href="#ref-for-concept-event-fire①">(2)</a>
+    <li><a href="#ref-for-concept-event-fire">5.2.3. Change frozenness of document</a> <a href="#ref-for-concept-event-fire①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-tree-order">
+   <a href="https://dom.spec.whatwg.org/#concept-tree-order">https://dom.spec.whatwg.org/#concept-tree-order</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-tree-order">5.2.3. Change frozenness of document</a> <a href="#ref-for-concept-tree-order①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-default-allowlist">
    <a href="https://wicg.github.io/feature-policy/#default-allowlist">https://wicg.github.io/feature-policy/#default-allowlist</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-default-allowlist">4. Feature Policies</a> <a href="#ref-for-default-allowlist①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-blobreader-task-source">
+   <a href="https://www.w3.org/TR/FileAPI/#blobreader-task-source">https://www.w3.org/TR/FileAPI/#blobreader-task-source</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-blobreader-task-source">5.1.1. HTML: task source</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-sensor-task-source">
+   <a href="https://www.w3.org/TR/2016/WD-generic-sensor-20160830/#sensor-task-source">https://www.w3.org/TR/2016/WD-generic-sensor-20160830/#sensor-task-source</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-sensor-task-source">5.1.1. HTML: task source</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-eventhandler">
@@ -675,7 +829,7 @@ Specific examples:</p>
   <aside class="dfn-panel" data-for="term-for-active-document">
    <a href="https://html.spec.whatwg.org/multipage/browsers.html#active-document">https://html.spec.whatwg.org/multipage/browsers.html#active-document</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-active-document">5.2.2.1. Change frozenness of a top-level document</a>
+    <li><a href="#ref-for-active-document">5.2.2. Change frozenness of a top-level document</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-allowed-to-use">
@@ -687,21 +841,39 @@ Specific examples:</p>
   <aside class="dfn-panel" data-for="term-for-being-rendered">
    <a href="https://html.spec.whatwg.org/multipage/rendering.html#being-rendered">https://html.spec.whatwg.org/multipage/rendering.html#being-rendered</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-being-rendered">4. Feature Policies</a> <a href="#ref-for-being-rendered①">(2)</a>
+    <li><a href="#ref-for-being-rendered">4. Feature Policies</a> <a href="#ref-for-being-rendered①">(2)</a> <a href="#ref-for-being-rendered②">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-document-bc">
    <a href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc">https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-concept-document-bc">2. Page Lifecycle States</a> <a href="#ref-for-concept-document-bc①">(2)</a>
-    <li><a href="#ref-for-concept-document-bc②">4. Feature Policies</a>
-    <li><a href="#ref-for-concept-document-bc③">5.2.2.1. Change frozenness of a top-level document</a>
+    <li><a href="#ref-for-concept-document-bc②">4. Feature Policies</a> <a href="#ref-for-concept-document-bc③">(2)</a>
+    <li><a href="#ref-for-concept-document-bc④">5.2.2. Change frozenness of a top-level document</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-browsing-context-container">
    <a href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context-container">https://html.spec.whatwg.org/multipage/browsers.html#browsing-context-container</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-browsing-context-container">4. Feature Policies</a> <a href="#ref-for-browsing-context-container①">(2)</a> <a href="#ref-for-browsing-context-container②">(3)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-canvas-blob-serialisation-task-source">
+   <a href="https://html.spec.whatwg.org/multipage/canvas.html#canvas-blob-serialisation-task-source">https://html.spec.whatwg.org/multipage/canvas.html#canvas-blob-serialisation-task-source</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-canvas-blob-serialisation-task-source">5.1.1. HTML: task source</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-dom-manipulation-task-source">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-manipulation-task-source">https://html.spec.whatwg.org/multipage/webappapis.html#dom-manipulation-task-source</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-manipulation-task-source">5.1.1. HTML: task source</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-embed-task-source">
+   <a href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#embed-task-source">https://html.spec.whatwg.org/multipage/iframe-embed-object.html#embed-task-source</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-embed-task-source">5.1.1. HTML: task source</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-event-handler-idl-attributes">
@@ -716,6 +888,12 @@ Specific examples:</p>
     <li><a href="#ref-for-fully-active">5.1.3. HTML: HTML Event Loop Processing Model</a> <a href="#ref-for-fully-active①">(2)</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-history-traversal-task-source">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#history-traversal-task-source">https://html.spec.whatwg.org/multipage/webappapis.html#history-traversal-task-source</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-history-traversal-task-source">5.1.1. HTML: task source</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-iframe-load-event-steps">
    <a href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#iframe-load-event-steps">https://html.spec.whatwg.org/multipage/iframe-embed-object.html#iframe-load-event-steps</a><b>Referenced in:</b>
    <ul>
@@ -726,13 +904,55 @@ Specific examples:</p>
   <aside class="dfn-panel" data-for="term-for-list-of-the-descendant-browsing-contexts">
    <a href="https://html.spec.whatwg.org/multipage/browsers.html#list-of-the-descendant-browsing-contexts">https://html.spec.whatwg.org/multipage/browsers.html#list-of-the-descendant-browsing-contexts</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-list-of-the-descendant-browsing-contexts">5.2.2.1. Change frozenness of a top-level document</a>
+    <li><a href="#ref-for-list-of-the-descendant-browsing-contexts">5.2.2. Change frozenness of a top-level document</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-media-element">
+   <a href="https://html.spec.whatwg.org/multipage/media.html#media-element">https://html.spec.whatwg.org/multipage/media.html#media-element</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-media-element">5.2.3. Change frozenness of document</a> <a href="#ref-for-media-element①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-media-element-event-task-source">
+   <a href="https://html.spec.whatwg.org/multipage/media.html#media-element-event-task-source">https://html.spec.whatwg.org/multipage/media.html#media-element-event-task-source</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-media-element-event-task-source">5.1.1. HTML: task source</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-media-elements">
+   <a href="https://html.spec.whatwg.org/multipage/media.html#media-elements">https://html.spec.whatwg.org/multipage/media.html#media-elements</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-media-elements">5.1.7. HTML: Modifications to media-elements</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-microtask-task-source">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#microtask-task-source">https://html.spec.whatwg.org/multipage/webappapis.html#microtask-task-source</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-microtask-task-source">5.1.1. HTML: task source</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-nested-browsing-context">
    <a href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context">https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-nested-browsing-context">4. Feature Policies</a> <a href="#ref-for-nested-browsing-context①">(2)</a> <a href="#ref-for-nested-browsing-context②">(3)</a> <a href="#ref-for-nested-browsing-context③">(4)</a> <a href="#ref-for-nested-browsing-context④">(5)</a>
+    <li><a href="#ref-for-nested-browsing-context">4. Feature Policies</a> <a href="#ref-for-nested-browsing-context①">(2)</a> <a href="#ref-for-nested-browsing-context②">(3)</a> <a href="#ref-for-nested-browsing-context③">(4)</a> <a href="#ref-for-nested-browsing-context④">(5)</a> <a href="#ref-for-nested-browsing-context⑤">(6)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-networking-task-source">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#networking-task-source">https://html.spec.whatwg.org/multipage/webappapis.html#networking-task-source</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-networking-task-source">5.1.1. HTML: task source</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-dom-media-pause">
+   <a href="https://html.spec.whatwg.org/multipage/media.html#dom-media-pause">https://html.spec.whatwg.org/multipage/media.html#dom-media-pause</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-media-pause">5.2.3. Change frozenness of document</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-dom-media-paused">
+   <a href="https://html.spec.whatwg.org/multipage/media.html#dom-media-paused">https://html.spec.whatwg.org/multipage/media.html#dom-media-paused</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-media-paused">5.2.3. Change frozenness of document</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dom-pagetransitionevent-persisted">
@@ -741,10 +961,16 @@ Specific examples:</p>
     <li><a href="#ref-for-dom-pagetransitionevent-persisted">5.1.2. HTML: Unloading documents and History Traversal</a> <a href="#ref-for-dom-pagetransitionevent-persisted①">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-queue-a-task">
-   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task">https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-dom-media-play">
+   <a href="https://html.spec.whatwg.org/multipage/media.html#dom-media-play">https://html.spec.whatwg.org/multipage/media.html#dom-media-play</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-queue-a-task">4. Feature Policies</a>
+    <li><a href="#ref-for-dom-media-play">5.2.3. Change frozenness of document</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-posted-message-task-source">
+   <a href="https://html.spec.whatwg.org/multipage/web-messaging.html#posted-message-task-source">https://html.spec.whatwg.org/multipage/web-messaging.html#posted-message-task-source</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-posted-message-task-source">5.1.1. HTML: task source</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-current-document-readiness">
@@ -753,11 +979,23 @@ Specific examples:</p>
     <li><a href="#ref-for-current-document-readiness">4. Feature Policies</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-remote-event-task-source">
+   <a href="https://html.spec.whatwg.org/multipage/server-sent-events.html#remote-event-task-source">https://html.spec.whatwg.org/multipage/server-sent-events.html#remote-event-task-source</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-remote-event-task-source">5.1.1. HTML: task source</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-timer-task-source">
+   <a href="https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#timer-task-source">https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#timer-task-source</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-timer-task-source">5.1.1. HTML: task source</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-top-level-browsing-context">
    <a href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context">https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-top-level-browsing-context">5.2.2.1. Change frozenness of a top-level document</a>
-    <li><a href="#ref-for-top-level-browsing-context①">5.2.3. Discarding</a>
+    <li><a href="#ref-for-top-level-browsing-context">5.2.2. Change frozenness of a top-level document</a>
+    <li><a href="#ref-for-top-level-browsing-context①">5.2.4. Discarding</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-traverse-the-history">
@@ -772,16 +1010,82 @@ Specific examples:</p>
     <li><a href="#ref-for-unload-a-document">5.1.2. HTML: Unloading documents and History Traversal</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-unshipped-port-message-queue">
+   <a href="https://html.spec.whatwg.org/multipage/web-messaging.html#unshipped-port-message-queue">https://html.spec.whatwg.org/multipage/web-messaging.html#unshipped-port-message-queue</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-unshipped-port-message-queue">5.1.1. HTML: task source</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-update-the-rendering">
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#update-the-rendering">https://html.spec.whatwg.org/multipage/webappapis.html#update-the-rendering</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-update-the-rendering">5.1.3. HTML: HTML Event Loop Processing Model</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-user-interaction-task-source">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source">https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-user-interaction-task-source">5.1.1. HTML: task source</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-websocket-task-source">
+   <a href="https://html.spec.whatwg.org/multipage/web-sockets.html#websocket-task-source">https://html.spec.whatwg.org/multipage/web-sockets.html#websocket-task-source</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-websocket-task-source">5.1.1. HTML: task source</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-database-access-task-source">
+   <a href="https://www.w3.org/TR/IndexedDB/#database-access-task-source">https://www.w3.org/TR/IndexedDB/#database-access-task-source</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-database-access-task-source">5.1.1. HTML: task source</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-calculate-intersection-rect-algo">
    <a href="https://w3c.github.io/IntersectionObserver/#calculate-intersection-rect-algo">https://w3c.github.io/IntersectionObserver/#calculate-intersection-rect-algo</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-calculate-intersection-rect-algo">4. Feature Policies</a> <a href="#ref-for-calculate-intersection-rect-algo①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-dfn-application-life-cycle-task-source">
+   <a href="https://w3c.github.io/manifest/#dfn-application-life-cycle-task-source">https://w3c.github.io/manifest/#dfn-application-life-cycle-task-source</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dfn-application-life-cycle-task-source">5.1.1. HTML: task source</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-queue-a-performanceentry">
+   <a href="https://w3c.github.io/performance-timeline/#queue-a-performanceentry">https://w3c.github.io/performance-timeline/#queue-a-performanceentry</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-queue-a-performanceentry">5.1.1. HTML: task source</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-permission-task-source">
+   <a href="https://www.w3.org/TR/permissions/#permission-task-source">https://www.w3.org/TR/permissions/#permission-task-source</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-permission-task-source">5.1.1. HTML: task source</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-common-idioms">
+   <a href="https://w3c.github.io/presentation-api/#common-idioms">https://w3c.github.io/presentation-api/#common-idioms</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-common-idioms">5.1.1. HTML: task source</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-the-requestidlecallback-method">
+   <a href="https://www.w3.org/TR/requestidlecallback/#the-requestidlecallback-method">https://www.w3.org/TR/requestidlecallback/#the-requestidlecallback-method</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-the-requestidlecallback-method">5.1.1. HTML: task source</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-dfn-client-message-queue">
+   <a href="https://w3c.github.io/ServiceWorker/#dfn-client-message-queue">https://w3c.github.io/ServiceWorker/#dfn-client-message-queue</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dfn-client-message-queue">5.1.1. HTML: task source</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-5.15">
+   <a href="https://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15">https://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-5.15">5.1.1. HTML: task source</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-boolean">
@@ -793,20 +1097,41 @@ Specific examples:</p>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
    <li>
+    <a data-link-type="biblio">[backgroundfetch]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-background-fetch-task-source" style="color:initial">background-fetch-task-source</span>
+    </ul>
+   <li>
     <a data-link-type="biblio">[CSS2]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-viewport" style="color:initial">viewport</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[cssfontloading]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-task-source" style="color:initial">font-loading-task-source</span>
     </ul>
    <li>
     <a data-link-type="biblio">[DOM]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-document" style="color:initial">Document</span>
      <li><span class="dfn-paneled" id="term-for-concept-event-fire" style="color:initial">fire an event</span>
+     <li><span class="dfn-paneled" id="term-for-concept-tree-order" style="color:initial">tree order</span>
     </ul>
    <li>
     <a data-link-type="biblio">[FEATURE-POLICY]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-default-allowlist" style="color:initial">default allowlist</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[FileAPI]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-blobreader-task-source" style="color:initial">filereadingtasksource</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[genericsensor]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-sensor-task-source" style="color:initial">sensor-task-source</span>
     </ul>
    <li>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
@@ -818,23 +1143,80 @@ Specific examples:</p>
      <li><span class="dfn-paneled" id="term-for-being-rendered" style="color:initial">being rendered</span>
      <li><span class="dfn-paneled" id="term-for-concept-document-bc" style="color:initial">browsing context <small>(for document)</small></span>
      <li><span class="dfn-paneled" id="term-for-browsing-context-container" style="color:initial">browsing context container</span>
+     <li><span class="dfn-paneled" id="term-for-canvas-blob-serialisation-task-source" style="color:initial">canvas-blob-serialisation-task-source</span>
+     <li><span class="dfn-paneled" id="term-for-dom-manipulation-task-source" style="color:initial">dom-manipulation-task-source</span>
+     <li><span class="dfn-paneled" id="term-for-embed-task-source" style="color:initial">embed-task-source</span>
      <li><span class="dfn-paneled" id="term-for-event-handler-idl-attributes" style="color:initial">event handler idl attribute</span>
      <li><span class="dfn-paneled" id="term-for-fully-active" style="color:initial">fully active</span>
+     <li><span class="dfn-paneled" id="term-for-history-traversal-task-source" style="color:initial">history-traversal-task-source</span>
      <li><span class="dfn-paneled" id="term-for-iframe-load-event-steps" style="color:initial">iframe load event steps</span>
      <li><span class="dfn-paneled" id="term-for-list-of-the-descendant-browsing-contexts" style="color:initial">list of the descendant browsing contexts</span>
+     <li><span class="dfn-paneled" id="term-for-media-element" style="color:initial">media elements</span>
+     <li><span class="dfn-paneled" id="term-for-media-element-event-task-source" style="color:initial">media-element-event-task-source</span>
+     <li><span class="dfn-paneled" id="term-for-media-elements" style="color:initial">media-elements</span>
+     <li><span class="dfn-paneled" id="term-for-microtask-task-source" style="color:initial">microtask-task-source</span>
      <li><span class="dfn-paneled" id="term-for-nested-browsing-context" style="color:initial">nested browsing context</span>
+     <li><span class="dfn-paneled" id="term-for-networking-task-source" style="color:initial">networking-task-source</span>
+     <li><span class="dfn-paneled" id="term-for-dom-media-pause" style="color:initial">pause()</span>
+     <li><span class="dfn-paneled" id="term-for-dom-media-paused" style="color:initial">paused</span>
      <li><span class="dfn-paneled" id="term-for-dom-pagetransitionevent-persisted" style="color:initial">persisted</span>
-     <li><span class="dfn-paneled" id="term-for-queue-a-task" style="color:initial">queue a task</span>
+     <li><span class="dfn-paneled" id="term-for-dom-media-play" style="color:initial">play()</span>
+     <li><span class="dfn-paneled" id="term-for-posted-message-task-source" style="color:initial">posted-message-task-source</span>
      <li><span class="dfn-paneled" id="term-for-current-document-readiness" style="color:initial">readiness</span>
+     <li><span class="dfn-paneled" id="term-for-remote-event-task-source" style="color:initial">remote-event-task-source</span>
+     <li><span class="dfn-paneled" id="term-for-timer-task-source" style="color:initial">timer-task-source</span>
      <li><span class="dfn-paneled" id="term-for-top-level-browsing-context" style="color:initial">top-level browsing context</span>
      <li><span class="dfn-paneled" id="term-for-traverse-the-history" style="color:initial">traverse the history</span>
      <li><span class="dfn-paneled" id="term-for-unload-a-document" style="color:initial">unload a document</span>
+     <li><span class="dfn-paneled" id="term-for-unshipped-port-message-queue" style="color:initial">unshipped-port-message-queue</span>
      <li><span class="dfn-paneled" id="term-for-update-the-rendering" style="color:initial">update the rendering</span>
+     <li><span class="dfn-paneled" id="term-for-user-interaction-task-source" style="color:initial">user-interaction-task-source</span>
+     <li><span class="dfn-paneled" id="term-for-websocket-task-source" style="color:initial">websocket-task-source</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[IndexedDB]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-database-access-task-source" style="color:initial">database-access-task-source</span>
     </ul>
    <li>
     <a data-link-type="biblio">[intersectionobserver]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-calculate-intersection-rect-algo" style="color:initial">compute the intersection of a target element and the root</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[manifest]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-dfn-application-life-cycle-task-source" style="color:initial">application-life-cycle-task-source</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[performancetimeline]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-queue-a-performanceentry" style="color:initial">performance-timeline-task-source</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[permissions]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-permission-task-source" style="color:initial">permission-task-source</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[presentationapi]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-common-idioms" style="color:initial">presentation-task-source</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[requestidlecallback]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-the-requestidlecallback-method" style="color:initial">idle-task-task-source</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[serviceworker]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-dfn-client-message-queue" style="color:initial">client-message-queue-task-source</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[WEBGL-2]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-5.15" style="color:initial">web-gl-task-source</span>
     </ul>
    <li>
     <a data-link-type="biblio">[WebIDL]</a> defines the following terms:
@@ -851,8 +1233,18 @@ Specific examples:</p>
    <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/">DOM Standard</a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
    <dt id="biblio-feature-policy">[FEATURE-POLICY]
    <dd><a href="https://wicg.github.io/feature-policy/">Feature Policy</a>. Living Standard. URL: <a href="https://wicg.github.io/feature-policy/">https://wicg.github.io/feature-policy/</a>
+   <dt id="biblio-fileapi">[FileAPI]
+   <dd>Marijn Kruisselbrink; Arun Ranganathan. <a href="https://www.w3.org/TR/FileAPI/">File API</a>. 6 November 2018. WD. URL: <a href="https://www.w3.org/TR/FileAPI/">https://www.w3.org/TR/FileAPI/</a>
    <dt id="biblio-html">[HTML]
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
+   <dt id="biblio-indexeddb">[IndexedDB]
+   <dd>Nikunj Mehta; et al. <a href="https://www.w3.org/TR/IndexedDB/">Indexed Database API</a>. 8 January 2015. REC. URL: <a href="https://www.w3.org/TR/IndexedDB/">https://www.w3.org/TR/IndexedDB/</a>
+   <dt id="biblio-permissions">[PERMISSIONS]
+   <dd>Mounir Lamouri; Marcos Caceres; Jeffrey Yasskin. <a href="https://www.w3.org/TR/permissions/">Permissions</a>. 25 September 2017. WD. URL: <a href="https://www.w3.org/TR/permissions/">https://www.w3.org/TR/permissions/</a>
+   <dt id="biblio-requestidlecallback">[REQUESTIDLECALLBACK]
+   <dd>Ross McIlroy; Ilya Grigorik. <a href="https://www.w3.org/TR/requestidlecallback/">Cooperative Scheduling of Background Tasks</a>. 10 October 2017. PR. URL: <a href="https://www.w3.org/TR/requestidlecallback/">https://www.w3.org/TR/requestidlecallback/</a>
+   <dt id="biblio-webgl-2">[WEBGL-2]
+   <dd>Dean Jackson; Jeff Gilbert. <a href="https://www.khronos.org/registry/webgl/specs/latest/2.0/">WebGL 2.0 Specification</a>. 12 August 2017. URL: <a href="https://www.khronos.org/registry/webgl/specs/latest/2.0/">https://www.khronos.org/registry/webgl/specs/latest/2.0/</a>
    <dt id="biblio-webidl">[WebIDL]
    <dd>Cameron McCormack; Boris Zbarsky; Tobie Langel. <a href="https://heycam.github.io/webidl/">Web IDL</a>. 15 December 2016. ED. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
   </dl>
@@ -927,14 +1319,20 @@ Specific examples:</p>
     <li><a href="#ref-for-task-source-unfreezable">5.1.1. HTML: task source</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="htmlmediaelement-resume-frozen-flag">
+   <b><a href="#htmlmediaelement-resume-frozen-flag">#htmlmediaelement-resume-frozen-flag</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-htmlmediaelement-resume-frozen-flag">5.2.3. Change frozenness of document</a> <a href="#ref-for-htmlmediaelement-resume-frozen-flag①">(2)</a> <a href="#ref-for-htmlmediaelement-resume-frozen-flag②">(3)</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="document-frozenness">
    <b><a href="#document-frozenness">#document-frozenness</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-document-frozenness">4. Feature Policies</a> <a href="#ref-for-document-frozenness①">(2)</a>
-    <li><a href="#ref-for-document-frozenness②">5.1.2. HTML: Unloading documents and History Traversal</a>
-    <li><a href="#ref-for-document-frozenness③">5.2.1. FROZENNESS state</a> <a href="#ref-for-document-frozenness④">(2)</a>
-    <li><a href="#ref-for-document-frozenness⑤">5.2.2.1. Change frozenness of a top-level document</a> <a href="#ref-for-document-frozenness⑥">(2)</a>
-    <li><a href="#ref-for-document-frozenness⑦">5.2.2.2. Change frozenness of document</a> <a href="#ref-for-document-frozenness⑧">(2)</a> <a href="#ref-for-document-frozenness⑨">(3)</a> <a href="#ref-for-document-frozenness①⓪">(4)</a>
+    <li><a href="#ref-for-document-frozenness">4. Feature Policies</a>
+    <li><a href="#ref-for-document-frozenness①">5.1.2. HTML: Unloading documents and History Traversal</a>
+    <li><a href="#ref-for-document-frozenness②">5.2.1. FROZENNESS state</a> <a href="#ref-for-document-frozenness③">(2)</a>
+    <li><a href="#ref-for-document-frozenness④">5.2.2. Change frozenness of a top-level document</a> <a href="#ref-for-document-frozenness⑤">(2)</a>
+    <li><a href="#ref-for-document-frozenness⑥">5.2.3. Change frozenness of document</a> <a href="#ref-for-document-frozenness⑦">(2)</a> <a href="#ref-for-document-frozenness⑧">(3)</a> <a href="#ref-for-document-frozenness⑨">(4)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="frozen">
@@ -952,18 +1350,25 @@ Specific examples:</p>
     <li><a href="#ref-for-unfrozen">4. Feature Policies</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="change-frozenness-of-a-top-level-document">
-   <b><a href="#change-frozenness-of-a-top-level-document">#change-frozenness-of-a-top-level-document</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-change-frozenness-of-a-top-level-document">5.2.1. FROZENNESS state</a> <a href="#ref-for-change-frozenness-of-a-top-level-document">(2)</a> <a href="#ref-for-change-frozenness-of-a-top-level-document">(3)</a> <a href="#ref-for-change-frozenness-of-a-top-level-document">(4)</a> <a href="#ref-for-change-frozenness-of-a-top-level-document">(5)</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="change-frozenness-of-document">
    <b><a href="#change-frozenness-of-document">#change-frozenness-of-document</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-change-frozenness-of-document">2. Page Lifecycle States</a>
+    <li><a href="#ref-for-change-frozenness-of-document">4. Feature Policies</a>
     <li><a href="#ref-for-change-frozenness-of-document">5.1.2. HTML: Unloading documents and History Traversal</a> <a href="#ref-for-change-frozenness-of-document">(2)</a>
-    <li><a href="#ref-for-change-frozenness-of-document">5.2.2.1. Change frozenness of a top-level document</a> <a href="#ref-for-change-frozenness-of-document">(2)</a>
+    <li><a href="#ref-for-change-frozenness-of-document">5.2.2. Change frozenness of a top-level document</a> <a href="#ref-for-change-frozenness-of-document">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="freeze-steps">
+   <b><a href="#freeze-steps">#freeze-steps</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-freeze-steps">2. Page Lifecycle States</a>
+    <li><a href="#ref-for-freeze-steps①">5.2.3. Change frozenness of document</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="resume-steps">
+   <b><a href="#resume-steps">#resume-steps</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-resume-steps">5.2.3. Change frozenness of document</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="document-discarded">
@@ -971,7 +1376,7 @@ Specific examples:</p>
    <ul>
     <li><a href="#ref-for-document-discarded">3. API</a>
     <li><a href="#ref-for-document-discarded①">5.1.5. HTML: Modifications to Initialize the document</a>
-    <li><a href="#ref-for-document-discarded②">5.2.3. Discarding</a>
+    <li><a href="#ref-for-document-discarded②">5.2.4. Discarding</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="discarded">
@@ -980,7 +1385,7 @@ Specific examples:</p>
     <li><a href="#ref-for-discarded">2. Page Lifecycle States</a>
     <li><a href="#ref-for-discarded①">5.1.5. HTML: Modifications to Initialize the document</a>
     <li><a href="#ref-for-discarded②">5.2.1. FROZENNESS state</a> <a href="#ref-for-discarded③">(2)</a>
-    <li><a href="#ref-for-discarded④">5.2.3. Discarding</a> <a href="#ref-for-discarded⑤">(2)</a> <a href="#ref-for-discarded⑥">(3)</a> <a href="#ref-for-discarded⑦">(4)</a> <a href="#ref-for-discarded⑧">(5)</a>
+    <li><a href="#ref-for-discarded④">5.2.4. Discarding</a> <a href="#ref-for-discarded⑤">(2)</a> <a href="#ref-for-discarded⑥">(3)</a> <a href="#ref-for-discarded⑦">(4)</a> <a href="#ref-for-discarded⑧">(5)</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */

@@ -29,6 +29,21 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/;
     type: dfn; text: Update the rendering; url: webappapis.html#update-the-rendering
     type: dfn; text: being rendered; url: rendering.html#being-rendered
     type: dfn; text: browsing context container; url: browsers.html#browsing-context-container
+    type: dfn; text: media elements; url: media.html#media-element
+    type: dfn; text: media-elements; url: media.html#media-elements
+    type: dfn; text: dom-manipulation-task-source; url: webappapis.html#dom-manipulation-task-source
+    type: dfn; text: user-interaction-task-source; url: webappapis.html#user-interaction-task-source
+    type: dfn; text: networking-task-source; url: webappapis.html#networking-task-source
+    type: dfn; text: history-traversal-task-source; url: webappapis.html#history-traversal-task-source
+    type: dfn; text: embed-task-source; url: iframe-embed-object.html#embed-task-source
+    type: dfn; text: media-element-event-task-source; url: media.html#media-element-event-task-source
+    type: dfn; text: canvas-blob-serialisation-task-source; url: canvas.html#canvas-blob-serialisation-task-source
+    type: dfn; text: microtask-task-source; url: webappapis.html#microtask-task-source
+    type: dfn; text: timer-task-source; url: timers-and-user-prompts.html#timer-task-source
+    type: dfn; text: remote-event-task-source; url: server-sent-events.html#remote-event-task-source
+    type: dfn; text: websocket-task-source; url: web-sockets.html#websocket-task-source
+    type: dfn; text: posted-message-task-source; url: web-messaging.html#posted-message-task-source
+    type: dfn; text: unshipped-port-message-queue; url: web-messaging.html#unshipped-port-message-queue
 </pre>
 
 <pre class='anchors'>
@@ -37,9 +52,71 @@ spec: CSS2; urlPrefix: https://www.w3.org/TR/CSS2/
 </pre>
 
 <pre class='anchors'>
+spec: FileAPI; urlPrefix: https://www.w3.org/TR/FileAPI/
+    type: dfn; text: fileReadingTaskSource; url: #blobreader-task-source
+</pre>
+
+<pre class='anchors'>
+spec: IndexedDB; urlPrefix: https://www.w3.org/TR/IndexedDB/
+    type: dfn; text: database-access-task-source; url: #database-access-task-source
+</pre>
+
+<pre class='anchors'>
+spec: PresentationAPI; urlPrefix: https://w3c.github.io/presentation-api/
+    type: dfn; text: presentation-task-source; url: #common-idioms
+</pre>
+
+
+<pre class='anchors'>
 spec: IntersectionObserver; urlPrefix: https://w3c.github.io/IntersectionObserver/
     type: dfn; text: compute the intersection of a target element and the root; url: #calculate-intersection-rect-algo
 </pre>
+
+<pre class='anchors'>
+spec: GenericSensor; urlPrefix: https://www.w3.org/TR/2016/WD-generic-sensor-20160830/
+    type: dfn; text: sensor-task-source; url: #sensor-task-source
+</pre>
+
+<pre class='anchors'>
+spec: PerformanceTimeline; urlPrefix: https://w3c.github.io/performance-timeline/
+    type: dfn; text: performance-timeline-task-source; url: #queue-a-performanceentry
+</pre>
+
+<pre class='anchors'>
+spec: WebGL; urlPrefix: https://www.khronos.org/registry/webgl/specs/latest/1.0/
+    type: dfn; text: web-gl-task-source; url: #5.15
+</pre>
+
+<pre class='anchors'>
+spec: RequestIdleCallback; urlPrefix: https://www.w3.org/TR/requestidlecallback/
+    type: dfn; text: idle-task-task-source; url: #the-requestidlecallback-method
+</pre>
+
+<pre class='anchors'>
+spec: CSSFontLoading; urlPrefix: https://drafts.csswg.org/css-font-loading/
+    type: dfn; text: font-loading-task-source; url: #task-source
+</pre>
+
+<pre class='anchors'>
+spec: Manifest; urlPrefix: https://w3c.github.io/manifest/
+    type: dfn; text: application-life-cycle-task-source; url: #dfn-application-life-cycle-task-source
+</pre>
+
+<pre class='anchors'>
+spec: BackgroundFetch; urlPrefix: https://wicg.github.io/background-fetch/
+    type: dfn; text: background-fetch-task-source; url: #background-fetch-task-source
+</pre>
+
+<pre class='anchors'>
+spec: Permissions; urlPrefix: https://www.w3.org/TR/permissions/
+    type: dfn; text: permission-task-source; url: #permission-task-source
+</pre>
+
+<pre class='anchors'>
+spec: ServiceWorker; urlPrefix: https://w3c.github.io/ServiceWorker/
+    type: dfn; text: client-message-queue-task-source; url: #dfn-client-message-queue
+</pre>
+
 
 Introduction {#intro}
 =====================
@@ -61,7 +138,7 @@ This spec defines what the lifecycle of a web page is and adds extensions to ena
     * Tab discarding (for memory saving)
 
 This spec formalizes two new lifecycle states to support the above:
-    * <dfn for="Lifecycle">Frozen</dfn>: lifecycle state for CPU suspension. This means that the [[#change-frozenness-of-document]] algorithm was called on the {{Document}}'s [=document/browsing context=]. Normally HIDDEN pages will be [=/frozen=] to conserve resources.
+    * <dfn for="Lifecycle">Frozen</dfn>: lifecycle state for CPU suspension. This means that the [=freeze steps=] algorithm was called on the {{Document}}'s [=document/browsing context=]. Normally HIDDEN pages will be [=/frozen=] to conserve resources.
     * <dfn for="Lifecycle">Discarded</dfn>: means that the [=discard=] algorithm was called on the {{Document}}'s [=document/browsing context=]. Normally [=/frozen=] frames will be moved to [=Lifecycle/discarded=] state to conserve resources.
 
 TODO(panicker): Insert diagram
@@ -134,12 +211,15 @@ if (document.wasDiscarded) {
 
 Feature Policies {#feature-policies}
 =====================
-To improve CPU utilization of [=nested browsing contexts=] that are not critical to a page's usability two feature policies are defined:
+Controlling the execution state of [=nested browsing contexts=] is desirable from a [=document/browsing context=] in order to control
+the user experience. An application may desire that when a document is not [=being rendered=] or does not intersect the [=viewport=]
+that all execution stops in the [=nested browsing context=] (including currently playing video, audio). Stopping all execution
+can lead to an improvement in CPU utilization. To meet these needs two feature policies are defined:
  * execution-while-not-rendered, which has a [=default allowlist=] of '*'
  * execution-while-out-of-viewport, which has a [=default allowlist=] of '*'
 
 The <dfn export>execution-while-not-rendered</dfn> policy controls whether [=task source/freezable=]
-tasks should execute for [=nested browsing contexts=] whose [=browsing context container=] is not [=being rendered=]. ie. `display: none`.
+tasks should execute for [=nested browsing contexts=] whose [=browsing context container=] is not [=being rendered=]. e.g. via `display: none`.
 
 The <dfn export>execution-while-out-of-viewport</dfn> policy controls whether [=task source/freezable=]
 tasks should execute for [=nested browsing contexts=] whose [=browsing context container=] does not intersect the [=viewport=] according
@@ -166,14 +246,14 @@ run the following steps:
 1. If <var>document</var>'s [=document/browsing context=] is not a [=nested browsing context=], return.
 1. If <var>document</var>'s [=document/readiness=] is not "complete", return.
 1. Let <var>element</var> be <var>document</var>'s [=nested browsing context=]'s [=browsing context container=].
-1. Let <var>frozenness</var> be unset.
+1. Let <var>frozenness</var> be false.
+1. Let <var>auto resume media</var> be false.
 1. If <var>document</var> is not [=allowed to use=] the [=execution-while-not-rendered=] feature then:
-    1. If <var>element</var>'s is not [=being rendered=],  set <var>frozenness</var>'s to true.
-    1. Otherwise, set <var>frozenness</var> to false.
+    1. If <var>element</var> is not [=being rendered=],  set <var>frozenness</var>'s to <code>true</code>.
 1. Otherwise if <var>document</var> is not [=allowed to use=] the [=execution-while-out-of-viewport=] feature then:
-    1. If <var>element</var>'s does not intersect the [=viewport=] according to [=compute the intersection of a target element and the root=], set <var>frozenness</var> to true.
-    1. Otherwise, set <var>frozenness</var> to false.
-1. If <var>frozenness</var> does not equal <var>document</var>'s [=FROZENNESS=] state, [=queue a task=] to be set <var>document</var>'s [=FROZENNESS=] to <var>frozenness</var>.
+    1. If <var>element</var> does not intersect the [=viewport=] according to [=compute the intersection of a target element and the root=], set <var>frozenness</var> to <code>true</code>, <var>auto resume media</var> to <code>true</code>.
+1. If <var>frozenness</var> does not equal <var>document</var>'s [=FROZENNESS=] state, execute [[#change-frozenness-of-document]] passing in |document|, |frozenness|, |auto resume media|.
+
 
 Processing model {#sec-processing-model}
 ========================================
@@ -193,6 +273,35 @@ Examples of [=task source/freezable=] task sources are:
 * networking: tasks queued due to loading of resources
 * DOM manipulation, user interaction, history traversal etc.
 
+<table><tbody>
+<tr><th>Task Queue</th><th>Freezable</th></tr>
+<tr><td>[=dom-manipulation-task-source=]</td><td>Yes</td></tr>
+<tr><td>[=user-interaction-task-source=]</td><td>Yes</td></tr>
+<tr><td>[=networking-task-source=]</td><td>Yes* (pending request inflight allowed)</td></tr>
+<tr><td>[=history-traversal-task-source=]</td><td>Yes</td></tr>
+<tr><td>[=embed-task-source=]</td><td>Yes</td></tr>
+<tr><td>[=media-element-event-task-source=]</td><td>Yes</td></tr>
+<tr><td>[=canvas-blob-serialisation-task-source=]</td><td>Yes</td></tr>
+<tr><td>[=microtask-task-source=]</td><td>Yes</td></tr>
+<tr><td>[=timer-task-source=]</td><td>Yes</td></tr>
+<tr><td>[=remote-event-task-source=]</td><td>Yes</td></tr>
+<tr><td>[=websocket-task-source=]</td><td>Yes</td></tr>
+<tr><td>[=posted-message-task-source=]</td><td>Yes</td></tr>
+<tr><td>[=unshipped-port-message-queue=]</td><td>Yes</td></tr>
+<tr><td>[=fileReadingTaskSource=]</td><td>Yes</td></tr>
+<tr><td>[=database-access-task-source=]</td><td>Yes</td></tr>
+<tr><td>[=presentation-task-source=]</td><td>Yes</td></tr>
+<tr><td>[=sensor-task-source=]</td><td>Yes</td></tr>
+<tr><td>[=performance-timeline-task-source=]</td><td>Yes</td></tr>
+<tr><td>[=web-gl-task-source=]</td><td>Yes</td></tr>
+<tr><td>[=idle-task-task-source=]</td><td>Yes</td></tr>
+<tr><td>[=font-loading-task-source=]</td><td>Yes</td></tr>
+<tr><td>[=application-life-cycle-task-source=]</td><td>Yes</td></tr>
+<tr><td>[=background-fetch-task-source=]</td><td>Yes</td></tr>
+<tr><td>[=permission-task-source=]</td><td>Yes</td></tr>
+<tr><td>[=client-message-queue-task-source=]</td><td>Yes</td></tr>
+</table>
+
 NOTE: networking task source is freezable with an exception: when a pending fetch keep-alive request in inflight, then networking task source must not be frozen.
 
 Examples of [=task source/unfreezable=] task sources are:
@@ -200,8 +309,6 @@ Examples of [=task source/unfreezable=] task sources are:
 * V8 task sources for garbage collection
 * IPC task sources needed to communicate with browser process
 * other task sources that are shared with the entire process 
-
-TODO(domenic): classify all existing task sources in the HTML spec; find out if other specs have defined any relevant task sources.
 
 TODO(panicker): Add note about keeping everything within a site instance that are scriptable (eg. documents that can post-message with each other) in the same lifecycle state.
 
@@ -220,7 +327,7 @@ Step #1 currently ignores "tasks whose associated {{Document}}s are not [=fully 
 
 After Step #11 during the [=Update the rendering=] add the following step.
 
-For each [=fully active=] {{Document}} in |docs|, run the [=update document frozenness steps=].
+For each [=fully active=] {{Document}} |doc| in |docs|, run the [=update document frozenness steps=] given |doc|.
 
 ### HTML: <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">Discarding browsing context</a> ### {#html-discarding}
 
@@ -236,7 +343,11 @@ If the browsing context was previously [=/discarded=], then set the {{Document}}
 
 After Step #5 add following:
 
-Run the [=update document frozenness steps=].
+Run the [=update document frozenness steps=] given |child document|.
+
+### HTML: Modifications to [=media-elements=]
+
+Each HTMLMediaElement has a <dfn for="HTMLMediaElement">resume frozen flag</dfn>, which is initially set to false.
 
 Additions to Page Lifecycle spec {#page-lifecycle}
 --------------------------------------------
@@ -250,7 +361,7 @@ A document can be in one of the following <dfn for="Document">FROZENNESS</dfn> s
     NOTE: Per the [[#change-frozenness-of-a-top-level-document]] algorithm, when the Document of the top level browsing context changes its [=Document/frozenness=] state then all documents of descendant browsing contexts will also change [=Document/frozenness=] to the same value (and be consistent with the Document of the top level browsing context).
 
 The UA may choose to execute [[#change-frozenness-of-a-top-level-document]] with <code>true</code> in certain situations.
-For instance, if a browsing context is in the background or hidden, and a grace period has elapsed the UA could execute [[#change-frozenness-of-a-top-level-document]] with <code>true</code> to conserve resources and maintain the quality of the (foreground) user experience.
+For instance, if a top level browsing context is in the background or hidden, and a grace period has elapsed the UA could execute [[#change-frozenness-of-a-top-level-document]] with <code>true</code> to conserve resources and maintain the quality of the (foreground) user experience.
 Specific examples:
 
 * In mobile Chrome, tabs that have been in background for (at least) 5 minutes, may be [=/frozen=], to conserve battery and data.
@@ -262,27 +373,50 @@ Specific examples:
     
 The UA will typically execute [[#change-frozenness-of-a-top-level-document]] with <code>false</code> when the user revisits that browsing context. In addition, the UA may choose to periodically execute [[#change-frozenness-of-a-top-level-document]] with <code>false</code> in the background, if plentiful resources are available.
 
-<h4 dfn>Reacting to FROZENNESS state changes</h4>
-<h5 dfn>Change frozenness of a top-level document</h5>
+<h4>Change frozenness of a top-level document</h4>
 To change the [=Document/frozenness=] of a top-level document passing in a document |doc| and [=Document/frozenness=] state |x| (one of <code>true</code>, <code>false</code>):
 
 1. Assert: |doc|'s [=Document/browsing context=] is a [=top-level browsing context=].
-1. Execute [[#change-frozenness-of-document]] passing in |doc| and |x|.
+1. Execute [[#change-frozenness-of-document]] passing in |doc|, |x|, and <code>false</code> for |auto resume media flag|.
 1. Let |descendants| be the [=list of the descendant browsing contexts=] of |doc|.
 1. For each [=/browsing context=] |b| in |descendants|:
     1. Let |d| be the [=active document=] of |b|.
-    1. Execute [[#change-frozenness-of-document]] passing in |d| and |x|.
+    1. Execute [[#change-frozenness-of-document]] passing in |d|, |x|, and <code>false</code> for |auto resume media flag|.
 
-<h5 dfn>Change frozenness of document</h5>
-To change the [=Document/frozenness=] of a document given a document |doc| and [=Document/frozenness=] state |x|:
-1. If |x| is <code>true</code>:
-    1. Set |doc|'s [=Document/frozenness=] state to <code>true</code>.
-    1. [=Fire an event=] named <code>freeze</code> at |doc|.
+<h4 dfn>Change frozenness of document</h4>
+To change the [=Document/frozenness=] of a document given a document |doc|, [=Document/frozenness=] state |x| and
+|auto resume frozen media| (one of <code>true</code>, <code>false</code>):
+1. If |x| is true:
+    1. Run the [=freeze steps=] given |doc| and |auto resume media flag|.
 1. Otherwise:
-    1. [=Fire an event=] named <code>resume</code> at |doc|.
-    1. Set |doc|'s [=Document/frozenness=] state to <code>false</code>.
+    1. Run the [=resume steps=] given |doc|.
 
-    NOTE: it is intentional that the ordering between event-firing and setting the state are different in the two cases above.
+To run the <dfn export>freeze steps</dfn> for a {{Document}} <var>doc</var>,
+and |auto resume frozen media| (one of <code>true</code>, <code>false</code>)
+run the following steps:
+1. Set |doc|'s [=Document/frozenness=] state to <code>true</code>.
+1. [=Fire an event=] named <code>freeze</code> at |doc|.
+1. Let |elements| be all [=media elements=] in [=tree order=]
+1. For each |element| in |elements|.
+    1. If |element|'s {{HTMLMediaElement/paused}} is false.
+        1. Set |element|'s [=HTMLMediaElement/resume frozen flag=] to |auto resume frozen media|.
+        1. Call |element|'s {{HTMLMediaElement/pause}} method.
+
+    NOTE: it is intentional that the ordering between the assignment of the of frozneness state
+    occurs first before event firing.
+
+To run the <dfn export>resume steps</dfn> for a {{Document}} <var>doc</var>,
+run the following steps:
+1. Let |elements| be all [=media elements=] in [=tree order=]
+    1. For each |element| in |elements|.
+    1. If |elements|'s [=HTMLMediaElement/resume frozen flag=] is <code>true</code>.
+        1. Set |elements|'s [=HTMLMediaElement/resume frozen flag=] to <code>false</code>.
+        1. Call |element|'s {{HTMLMediaElement/play}} method.
+1. [=Fire an event=] named <code>resume</code> at |doc|.
+1. Set |doc|'s [=Document/frozenness=] state to <code>false</code>.
+
+    NOTE: it is intentional that the ordering between the assignment of the of frozneness state
+    comes last after event firing.
 
 <h4>Discarding</h4>
 Each Document has a <dfn for="Document">discarded</dfn> boolean, which is initially false.
