@@ -6,7 +6,7 @@
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet" type="text/css">
   <meta content="Bikeshed version 10ff3eb4050069e20bb9b943c8b76fe5bfe3a48f" name="generator">
-  <meta content="0ae7ac1a7d07caa760b17d6ead4e49b84cbef43c" name="document-revision">
+  <meta content="90dee0f8cbbf52a9d62ddbbdd8e03f4e58393d0f" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -265,7 +265,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <header>
     <p data-fill-with="logo"><a href="https://www.w3.org/"><img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"></a> </p>
     <h1 class="p-name no-ref" id="title">Page Lifecycle 1</h1>
-    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-05-09">9 May 2019</time></span></h2>
+    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-05-10">10 May 2019</time></span></h2>
    </header>
    <div data-fill-with="spec-metadata">
     <dl>
@@ -314,8 +314,8 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
       <li>
        <a href="#mod"><span class="secno">5.1</span> <span class="content">Modifications to the HTML Standard</span></a>
        <ol class="toc">
-        <li><a href="#html-task-source-dfn"><span class="secno">5.1.1</span> <span class="content">HTML: <span>task source</span></span></a>
-        <li><a href="#html-bfcache-dfn"><span class="secno">5.1.2</span> <span class="content">HTML: <span>Unloading documents</span> and <span>History Traversal</span></span></a>
+        <li><a href="#html-bfcache-dfn"><span class="secno">5.1.1</span> <span class="content">HTML: <span>Unloading documents</span> and <span>History Traversal</span></span></a>
+        <li><a href="#html-html-event-loop-definitions"><span class="secno">5.1.2</span> <span class="content">HTML: <span>HTML Event Loop Definitions</span></span></a>
         <li><a href="#html-event-loop"><span class="secno">5.1.3</span> <span class="content">HTML: <span>HTML Event Loop Processing Model</span></span></a>
         <li><a href="#html-discarding"><span class="secno">5.1.4</span> <span class="content">HTML: <span>Discarding browsing context</span></span></a>
         <li><a href="#html-initialize-doc"><span class="secno">5.1.5</span> <span class="content">HTML: Modifications to <span>Initialize the document</span></span></a>
@@ -440,8 +440,10 @@ can lead to an improvement in CPU utilization. To meet these needs, two feature 
     <li data-md>
      <p>"<dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="execution-while-out-of-viewport"><code>execution-while-out-of-viewport</code></dfn>", which has a <a data-link-type="dfn" href="https://wicg.github.io/feature-policy/#default-allowlist" id="ref-for-default-allowlist①">default allowlist</a> of <a class="property" data-link-type="propdesc">*</a></p>
    </ul>
-   <p>The "<a data-link-type="dfn" href="#execution-while-not-rendered" id="ref-for-execution-while-not-rendered"><code>execution-while-not-rendered</code></a>" policy controls whether <a data-link-type="dfn" href="#task-source-freezable" id="ref-for-task-source-freezable">freezable</a> tasks should execute for <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context" id="ref-for-nested-browsing-context②">nested browsing contexts</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context-container" id="ref-for-browsing-context-container">browsing context container</a> is not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/rendering.html#being-rendered" id="ref-for-being-rendered①">being rendered</a>. e.g. via `display: none`.</p>
-   <p>The "<a data-link-type="dfn" href="#execution-while-out-of-viewport" id="ref-for-execution-while-out-of-viewport"><code>execution-while-out-of-viewport</code></a>" policy controls whether <a data-link-type="dfn" href="#task-source-freezable" id="ref-for-task-source-freezable①">freezable</a> tasks should execute for <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context" id="ref-for-nested-browsing-context③">nested browsing contexts</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context-container" id="ref-for-browsing-context-container①">browsing context container</a> does not intersect the <a data-link-type="dfn" href="https://www.w3.org/TR/CSS2/visuren.html#viewport" id="ref-for-viewport①">viewport</a> according
+   <p>The "<a data-link-type="dfn" href="#execution-while-not-rendered" id="ref-for-execution-while-not-rendered"><code>execution-while-not-rendered</code></a>" policy controls whether
+tasks should execute for <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context" id="ref-for-nested-browsing-context②">nested browsing contexts</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context-container" id="ref-for-browsing-context-container">browsing context container</a> is not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/rendering.html#being-rendered" id="ref-for-being-rendered①">being rendered</a>. e.g. via `display: none`.</p>
+   <p>The "<a data-link-type="dfn" href="#execution-while-out-of-viewport" id="ref-for-execution-while-out-of-viewport"><code>execution-while-out-of-viewport</code></a>" policy controls whether
+tasks should execute for <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context" id="ref-for-nested-browsing-context③">nested browsing contexts</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context-container" id="ref-for-browsing-context-container①">browsing context container</a> does not intersect the <a data-link-type="dfn" href="https://www.w3.org/TR/CSS2/visuren.html#viewport" id="ref-for-viewport①">viewport</a> according
 to <a data-link-type="dfn" href="https://w3c.github.io/IntersectionObserver/#calculate-intersection-rect-algo" id="ref-for-calculate-intersection-rect-algo">compute the intersection of a target element and the root</a>.</p>
    <p>Application of these policies is accomplished by placing the document (and its decendants) in a <a data-link-type="dfn" href="#frozen" id="ref-for-frozen②">frozen</a> state when the following
 conditions have been met:</p>
@@ -490,31 +492,7 @@ conditions have been met:</p>
    </div>
    <h2 class="heading settled" data-level="5" id="sec-processing-model"><span class="secno">5. </span><span class="content">Processing model</span><a class="self-link" href="#sec-processing-model"></a></h2>
    <h3 class="heading settled" data-level="5.1" id="mod"><span class="secno">5.1. </span><span class="content">Modifications to the HTML Standard</span><a class="self-link" href="#mod"></a></h3>
-   <h4 class="heading settled" data-level="5.1.1" id="html-task-source-dfn"><span class="secno">5.1.1. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/#task-source">task source</a></span><a class="self-link" href="#html-task-source-dfn"></a></h4>
-   <p>All task sources formally specified (in HTML, CSS, and other specifications) are <dfn class="dfn-paneled" data-dfn-for="task source" data-dfn-type="dfn" data-noexport id="task-source-freezable">freezable</dfn>.</p>
-   <p>All tasks queued on <a data-link-type="dfn" href="#task-source-freezable" id="ref-for-task-source-freezable②">freezable</a> task source are automatically freezable.</p>
-   <p>Examples of specified task sources are:</p>
-   <ul>
-    <li data-md>
-     <p>timers: callbacks generated by timers of a Document</p>
-    <li data-md>
-     <p>networking: tasks queued due to loading of resources</p>
-    <li data-md>
-     <p>DOM manipulation, user interaction, history traversal etc.</p>
-   </ul>
-   <p class="note" role="note"><span>NOTE:</span> networking task source is freezable with an exception: when a pending fetch keep-alive request in inflight, then networking task source must not be frozen.</p>
-   <p>The UA may have some unspecified task sources that it may wish not to be frozen.</p>
-   <p>Examples of unspecified task sources are:</p>
-   <ul>
-    <li data-md>
-     <p>V8 task sources for garbage collection</p>
-    <li data-md>
-     <p>IPC task sources needed to communicate with browser process</p>
-    <li data-md>
-     <p>other task sources that are shared with the entire process</p>
-   </ul>
-   <p>TODO(panicker): Add note about keeping everything within a site instance that are scriptable (eg. documents that can post-message with each other) in the same lifecycle state.</p>
-   <h4 class="heading settled" data-level="5.1.2" id="html-bfcache-dfn"><span class="secno">5.1.2. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#unloading-documents">Unloading documents</a> and <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#history-traversal">History Traversal</a></span><a class="self-link" href="#html-bfcache-dfn"></a></h4>
+   <h4 class="heading settled" data-level="5.1.1" id="html-bfcache-dfn"><span class="secno">5.1.1. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#unloading-documents">Unloading documents</a> and <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#history-traversal">History Traversal</a></span><a class="self-link" href="#html-bfcache-dfn"></a></h4>
    <p>When documents move into and out of <a href="https://webkit.org/blog/427/webkit-page-cache-i-the-basics/">bfcache (back forward cache)</a> they will transition its <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness①">frozenness</a> state to true and false respectively.</p>
    <ul>
     <li data-md>
@@ -522,15 +500,17 @@ conditions have been met:</p>
     <li data-md>
      <p>In the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#traverse-the-history" id="ref-for-traverse-the-history">traverse the history</a> algorithm, before Step #4.6.4, if the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#dom-pagetransitionevent-persisted" id="ref-for-dom-pagetransitionevent-persisted①">persisted</a></code> attribute is true (i.e. we are moving out of bfcache), <a data-link-type="dfn" href="#change-the-frozenness-of-a-document" id="ref-for-change-the-frozenness-of-a-document②">change the frozenness of a document</a>, given <var>document</var> and false.</p>
    </ul>
+   <h4 class="heading settled" data-level="5.1.2" id="html-html-event-loop-definitions"><span class="secno">5.1.2. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/webappapis.html#definitions-3">HTML Event Loop Definitions</a></span><a class="self-link" href="#html-html-event-loop-definitions"></a></h4>
+   <p>Replace: A <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-task" id="ref-for-concept-task">task</a> is runnable if its <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document" id="ref-for-concept-document">document</a> if either null or <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#fully-active" id="ref-for-fully-active">fully active</a>.</p>
+   <p>With: A <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-task" id="ref-for-concept-task①">task</a> is runnable if its <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document" id="ref-for-concept-document①">document</a> is either null or <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#fully-active" id="ref-for-fully-active①">fully active</a> and <a data-link-type="dfn" href="#unfrozen" id="ref-for-unfrozen①">unfrozen</a>.</p>
    <h4 class="heading settled" data-level="5.1.3" id="html-event-loop"><span class="secno">5.1.3. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model">HTML Event Loop Processing Model</a></span><a class="self-link" href="#html-event-loop"></a></h4>
-   <p>Step #1 currently ignores "tasks whose associated <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑥">Document</a></code>s are not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#fully-active" id="ref-for-fully-active">fully active</a>". Modify this clause to also ignore <a data-link-type="dfn" href="#task-source-freezable" id="ref-for-task-source-freezable③">freezable</a> tasks whose associated <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑦">Document</a></code> is in the <a data-link-type="dfn" href="#frozen" id="ref-for-frozen③">frozen</a> state.</p>
    <p>After Step #11 during the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#update-the-rendering" id="ref-for-update-the-rendering">Update the rendering</a> add the following step.</p>
-   <p>For each <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#fully-active" id="ref-for-fully-active①">fully active</a> <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑧">Document</a></code> <var>doc</var> in <var>docs</var>, run the <a data-link-type="dfn" href="#update-document-frozenness-steps" id="ref-for-update-document-frozenness-steps">update document frozenness steps</a> given <var>doc</var>.</p>
+   <p>For each <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#fully-active" id="ref-for-fully-active②">fully active</a> <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑥">Document</a></code> <var>doc</var> in <var>docs</var>, run the <a data-link-type="dfn" href="#update-document-frozenness-steps" id="ref-for-update-document-frozenness-steps">update document frozenness steps</a> given <var>doc</var>.</p>
    <h4 class="heading settled" data-level="5.1.4" id="html-discarding"><span class="secno">5.1.4. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">Discarding browsing context</a></span><a class="self-link" href="#html-discarding"></a></h4>
    <p>Rename the "<a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">discard</a>" concept, for both browsing contexts and documents, to "destroy". This allows us to use the "discarded" terminology for the user-facing <code class="idl"><a data-link-type="idl" href="#dom-document-wasdiscarded" id="ref-for-dom-document-wasdiscarded①">wasDiscarded</a></code> attribute.</p>
    <h4 class="heading settled" data-level="5.1.5" id="html-initialize-doc"><span class="secno">5.1.5. </span><span class="content">HTML: Modifications to <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">Initialize the document</a></span><a class="self-link" href="#html-initialize-doc"></a></h4>
    <p>Before Step #3 add following:</p>
-   <p>If the browsing context was previously <a data-link-type="dfn" href="#discarded" id="ref-for-discarded①">discarded</a>, then set the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑨">Document</a></code>'s <a data-link-type="dfn" href="#document-discarded" id="ref-for-document-discarded①">discarded</a> boolean to true.</p>
+   <p>If the browsing context was previously <a data-link-type="dfn" href="#discarded" id="ref-for-discarded①">discarded</a>, then set the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑦">Document</a></code>'s <a data-link-type="dfn" href="#document-discarded" id="ref-for-document-discarded①">discarded</a> boolean to true.</p>
    <h4 class="heading settled" data-level="5.1.6" id="html-iframe-load"><span class="secno">5.1.6. </span><span class="content">HTML: Modifications to <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#iframe-load-event-steps" id="ref-for-iframe-load-event-steps①">iframe load event steps</a></span><a class="self-link" href="#html-iframe-load"></a></h4>
    <p>After Step #5 add following:</p>
    <p>Run the <a data-link-type="dfn" href="#update-document-frozenness-steps" id="ref-for-update-document-frozenness-steps①">update document frozenness steps</a> given <var>child document</var>.</p>
@@ -541,7 +521,7 @@ conditions have been met:</p>
     A document can be in one of the following <dfn class="dfn-paneled" data-dfn-for="Document" data-dfn-type="dfn" data-noexport id="document-frozenness">FROZENNESS</dfn> states: 
    <ul>
     <li data-md>
-     <p>true: the document is <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="frozen">frozen</dfn>, any freezeable tasks associated with the document will not run</p>
+     <p>true: the document is <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="frozen">frozen</dfn>, any tasks associated with the document will not run</p>
     <li data-md>
      <p>false: the document is <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="unfrozen">unfrozen</dfn>, tasks associated with the document will run as usual</p>
      <p class="note" role="note"><span>NOTE:</span> Per the <a data-link-type="dfn" href="#change-the-frozenness-of-a-top-level-document" id="ref-for-change-the-frozenness-of-a-top-level-document">change the frozenness of a top-level document</a> algorithm, when the Document of the top level browsing context changes its <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness②">frozenness</a> state then all documents of descendant browsing contexts will also change <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness③">frozenness</a> to the same value (and be consistent with the Document of the top level browsing context).</p>
@@ -551,16 +531,16 @@ For instance, if a top level browsing context is in the background or hidden, an
 Specific examples:</p>
    <ul>
     <li data-md>
-     <p>In mobile Chrome, tabs that have been in background for (at least) 5 minutes, may be <a data-link-type="dfn" href="#frozen" id="ref-for-frozen④">frozen</a>, to conserve battery and data.</p>
+     <p>In mobile Chrome, tabs that have been in background for (at least) 5 minutes, may be <a data-link-type="dfn" href="#frozen" id="ref-for-frozen③">frozen</a>, to conserve battery and data.</p>
     <li data-md>
      <p>In desktop Chrome, background tabs that are not important to the user (not used in some time) may be <a data-link-type="dfn" href="#discarded" id="ref-for-discarded②">discarded</a>, to conserve memory</p>
-     <p class="note" role="note"><span>NOTE:</span> background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not <a data-link-type="dfn" href="#frozen" id="ref-for-frozen⑤">frozen</a> or <a data-link-type="dfn" href="#discarded" id="ref-for-discarded③">discarded</a>.</p>
+     <p class="note" role="note"><span>NOTE:</span> background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not <a data-link-type="dfn" href="#frozen" id="ref-for-frozen④">frozen</a> or <a data-link-type="dfn" href="#discarded" id="ref-for-discarded③">discarded</a>.</p>
      <p class="note" role="note"><span>NOTE:</span> For a detailed list of heuristics &amp; exclusions used by Chrome, see <a href="https://docs.google.com/document/d/1QJpuBTdllLVflMJSov0tlFX3e3yfSfd_-al2IBavbQM/edit">this doc</a>.</p>
    </ul>
    <p>The UA will typically execute <a data-link-type="dfn" href="#change-the-frozenness-of-a-top-level-document" id="ref-for-change-the-frozenness-of-a-top-level-document③">change the frozenness of a top-level document</a> with false when the user revisits that browsing context. In addition, the UA may choose to periodically execute <a data-link-type="dfn" href="#change-the-frozenness-of-a-top-level-document" id="ref-for-change-the-frozenness-of-a-top-level-document④">change the frozenness of a top-level document</a> with false in the background, if plentiful resources are available.</p>
    <h4 class="heading settled" data-level="5.2.2" id="changing-frozenness"><span class="secno">5.2.2. </span><span class="content">Changing the frozenness of documents</span><a class="self-link" href="#changing-frozenness"></a></h4>
    <div class="algorithm" data-algorithm="change the frozenness of a top-level document">
-     To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="change-the-frozenness-of-a-top-level-document">change the frozenness of a top-level document</dfn>, given a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①⓪">Document</a></code> <var>topLevelDoc</var> and boolean <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness④">frozenness</a> state <var>frozenness</var>: 
+     To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="change-the-frozenness-of-a-top-level-document">change the frozenness of a top-level document</dfn>, given a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑧">Document</a></code> <var>topLevelDoc</var> and boolean <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness④">frozenness</a> state <var>frozenness</var>: 
     <ol>
      <li data-md>
       <p class="assertion">Assert: <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc⑤">browsing context</a> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context">top-level browsing context</a>.</p>
@@ -579,7 +559,7 @@ Specific examples:</p>
     </ol>
    </div>
    <div class="algorithm" data-algorithm="change the frozenness of a document">
-     To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="change-the-frozenness-of-a-document">change the frozenness of a document</dfn>, given a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①①">Document</a></code> <var>doc</var>, a boolean <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness⑤">frozenness</a> state <var>frozenness</var>, and a boolean <var>auto resume frozen media</var>: 
+     To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="change-the-frozenness-of-a-document">change the frozenness of a document</dfn>, given a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑨">Document</a></code> <var>doc</var>, a boolean <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness⑤">frozenness</a> state <var>frozenness</var>, and a boolean <var>auto resume frozen media</var>: 
     <ol>
      <li data-md>
       <p>If <var>frozenness</var> is true, run the <a data-link-type="dfn" href="#freeze-steps" id="ref-for-freeze-steps①">freeze steps</a> for <var>doc</var> given <var>auto resume frozen media</var>.</p>
@@ -588,7 +568,7 @@ Specific examples:</p>
     </ol>
    </div>
    <div class="algorithm" data-algorithm="freeze steps">
-     To run the <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="freeze-steps">freeze steps</dfn> for a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①②">Document</a></code> <var>doc</var>, given a boolean <var>auto resume frozen media</var>: 
+     To run the <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="freeze-steps">freeze steps</dfn> for a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①⓪">Document</a></code> <var>doc</var>, given a boolean <var>auto resume frozen media</var>: 
     <ol>
      <li data-md>
       <p>Set <var>doc</var>’s <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness⑥">frozenness</a> state to true.</p>
@@ -605,7 +585,7 @@ Specific examples:</p>
          <li data-md>
           <p>Set <var>element</var>’s <a data-link-type="dfn" href="#htmlmediaelement-resume-frozen-flag" id="ref-for-htmlmediaelement-resume-frozen-flag">resume frozen flag</a> to <var>auto resume frozen media</var>.</p>
          <li data-md>
-          <p>Execute <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/media.html#dom-media-pause" id="ref-for-dom-media-pause">media pause</a> on <var>element</var>.</p>
+          <p>Execute <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/media.html#internal-pause-steps" id="ref-for-internal-pause-steps">media pause</a> on <var>element</var>.</p>
         </ol>
       </ol>
       <p class="note" role="note"><span>NOTE:</span> it is intentional that the ordering between the assignment of the of frozneness state
@@ -613,7 +593,7 @@ occurs first before event firing.</p>
     </ol>
    </div>
    <div class="algorithm" data-algorithm="resume steps">
-     To run the <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="resume-steps">resume steps</dfn> for a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①③">Document</a></code> <var>doc</var>: 
+     To run the <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="resume-steps">resume steps</dfn> for a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①①">Document</a></code> <var>doc</var>: 
     <ol>
      <li data-md>
       <p>Let <var>elements</var> be all <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/media.html#media-element" id="ref-for-media-element①">media elements</a> that are <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-shadow-including-descendant" id="ref-for-concept-shadow-including-descendant①">shadow-including descendants</a> of <var>doc</var>, in <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-shadow-including-tree-order" id="ref-for-concept-shadow-including-tree-order①">shadow-including tree order</a>.</p>
@@ -627,7 +607,7 @@ occurs first before event firing.</p>
            <li data-md>
             <p>Set <var>elements</var>’s <a data-link-type="dfn" href="#htmlmediaelement-resume-frozen-flag" id="ref-for-htmlmediaelement-resume-frozen-flag②">resume frozen flag</a> to false.</p>
            <li data-md>
-            <p>Execute <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/media.html#dom-media-play" id="ref-for-dom-media-play">media play</a> on <var>element</var>.</p>
+            <p>Execute <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/media.html#internal-play-steps" id="ref-for-internal-play-steps">media play</a> on <var>element</var>.</p>
           </ol>
         </ol>
       </ol>
@@ -650,7 +630,7 @@ comes last after event firing.</p>
      <p class="note" role="note"><span>NOTE:</span> background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not <a data-link-type="dfn" href="#discarded" id="ref-for-discarded⑦">discarded</a>.</p>
      <p class="note" role="note"><span>NOTE:</span> For a detailed list of heuristics &amp; exclusions used by Chrome, see <a href="https://docs.google.com/document/d/1QJpuBTdllLVflMJSov0tlFX3e3yfSfd_-al2IBavbQM/edit">this doc</a>.</p>
    </ul>
-   <p>When a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context①">top-level browsing context</a> (tab in the browser) is <a data-link-type="dfn" href="#discarded" id="ref-for-discarded⑧">discarded</a> due to resource pressure (or unexpected events eg. process crash), and later the user revisits the tab in the browser, then the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①④">Document</a></code>'s <a data-link-type="dfn" href="#document-discarded" id="ref-for-document-discarded②">discarded</a> boolean will be true due to <a href="#html-initialize-doc">§5.1.5 HTML: Modifications to Initialize the document</a>.</p>
+   <p>When a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context①">top-level browsing context</a> (tab in the browser) is <a data-link-type="dfn" href="#discarded" id="ref-for-discarded⑧">discarded</a> due to resource pressure (or unexpected events eg. process crash), and later the user revisits the tab in the browser, then the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①②">Document</a></code>'s <a data-link-type="dfn" href="#document-discarded" id="ref-for-document-discarded②">discarded</a> boolean will be true due to <a href="#html-initialize-doc">§5.1.5 HTML: Modifications to Initialize the document</a>.</p>
    <h2 class="heading settled" data-level="6" id="acknowledgements"><span class="secno">6. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
    <p>Special thanks to Ojan Vafai, Philip Walton, Fadi Meawad, Olli Pettay, Todd Reifsteck for their technical input and suggestions that led to improvements to this specification.</p>
   </main>
@@ -669,7 +649,6 @@ comes last after event firing.</p>
     </ul>
    <li><a href="#execution-while-not-rendered">execution-while-not-rendered</a><span>, in §4</span>
    <li><a href="#execution-while-out-of-viewport">execution-while-out-of-viewport</a><span>, in §4</span>
-   <li><a href="#task-source-freezable">freezable</a><span>, in §5.1.1</span>
    <li><a href="#freeze-steps">freeze steps</a><span>, in §5.2.2</span>
    <li><a href="#frozen">frozen</a><span>, in §5.2.1</span>
    <li><a href="#document-frozenness">FROZENNESS</a><span>, in §5.2.1</span>
@@ -693,10 +672,16 @@ comes last after event firing.</p>
     <li><a href="#ref-for-document">2. Page Lifecycle States</a> <a href="#ref-for-document①">(2)</a>
     <li><a href="#ref-for-document②">3. API</a> <a href="#ref-for-document③">(2)</a> <a href="#ref-for-document④">(3)</a>
     <li><a href="#ref-for-document⑤">4. Feature Policies</a>
-    <li><a href="#ref-for-document⑥">5.1.3. HTML: HTML Event Loop Processing Model</a> <a href="#ref-for-document⑦">(2)</a> <a href="#ref-for-document⑧">(3)</a>
-    <li><a href="#ref-for-document⑨">5.1.5. HTML: Modifications to Initialize the document</a>
-    <li><a href="#ref-for-document①⓪">5.2.2. Changing the frozenness of documents</a> <a href="#ref-for-document①①">(2)</a> <a href="#ref-for-document①②">(3)</a> <a href="#ref-for-document①③">(4)</a>
-    <li><a href="#ref-for-document①④">5.2.3. Discarding</a>
+    <li><a href="#ref-for-document⑥">5.1.3. HTML: HTML Event Loop Processing Model</a>
+    <li><a href="#ref-for-document⑦">5.1.5. HTML: Modifications to Initialize the document</a>
+    <li><a href="#ref-for-document⑧">5.2.2. Changing the frozenness of documents</a> <a href="#ref-for-document⑨">(2)</a> <a href="#ref-for-document①⓪">(3)</a> <a href="#ref-for-document①①">(4)</a>
+    <li><a href="#ref-for-document①②">5.2.3. Discarding</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-document">
+   <a href="https://dom.spec.whatwg.org/#concept-document">https://dom.spec.whatwg.org/#concept-document</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-document">5.1.2. HTML: HTML Event Loop Definitions</a> <a href="#ref-for-concept-document①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-event-fire">
@@ -776,7 +761,8 @@ comes last after event firing.</p>
   <aside class="dfn-panel" data-for="term-for-fully-active">
    <a href="https://html.spec.whatwg.org/multipage/browsers.html#fully-active">https://html.spec.whatwg.org/multipage/browsers.html#fully-active</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-fully-active">5.1.3. HTML: HTML Event Loop Processing Model</a> <a href="#ref-for-fully-active①">(2)</a>
+    <li><a href="#ref-for-fully-active">5.1.2. HTML: HTML Event Loop Definitions</a> <a href="#ref-for-fully-active①">(2)</a>
+    <li><a href="#ref-for-fully-active②">5.1.3. HTML: HTML Event Loop Processing Model</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-iframe-load-event-steps">
@@ -798,16 +784,16 @@ comes last after event firing.</p>
     <li><a href="#ref-for-media-element">5.2.2. Changing the frozenness of documents</a> <a href="#ref-for-media-element①">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-dom-media-pause">
-   <a href="https://html.spec.whatwg.org/multipage/media.html#dom-media-pause">https://html.spec.whatwg.org/multipage/media.html#dom-media-pause</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-internal-pause-steps">
+   <a href="https://html.spec.whatwg.org/multipage/media.html#internal-pause-steps">https://html.spec.whatwg.org/multipage/media.html#internal-pause-steps</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-media-pause">5.2.2. Changing the frozenness of documents</a>
+    <li><a href="#ref-for-internal-pause-steps">5.2.2. Changing the frozenness of documents</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-dom-media-play">
-   <a href="https://html.spec.whatwg.org/multipage/media.html#dom-media-play">https://html.spec.whatwg.org/multipage/media.html#dom-media-play</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-internal-play-steps">
+   <a href="https://html.spec.whatwg.org/multipage/media.html#internal-play-steps">https://html.spec.whatwg.org/multipage/media.html#internal-play-steps</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-media-play">5.2.2. Changing the frozenness of documents</a>
+    <li><a href="#ref-for-internal-play-steps">5.2.2. Changing the frozenness of documents</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-media-elements">
@@ -831,13 +817,19 @@ comes last after event firing.</p>
   <aside class="dfn-panel" data-for="term-for-dom-pagetransitionevent-persisted">
    <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#dom-pagetransitionevent-persisted">https://html.spec.whatwg.org/multipage/browsing-the-web.html#dom-pagetransitionevent-persisted</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-pagetransitionevent-persisted">5.1.2. HTML: Unloading documents and History Traversal</a> <a href="#ref-for-dom-pagetransitionevent-persisted①">(2)</a>
+    <li><a href="#ref-for-dom-pagetransitionevent-persisted">5.1.1. HTML: Unloading documents and History Traversal</a> <a href="#ref-for-dom-pagetransitionevent-persisted①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-current-document-readiness">
    <a href="https://html.spec.whatwg.org/multipage/dom.html#current-document-readiness">https://html.spec.whatwg.org/multipage/dom.html#current-document-readiness</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-current-document-readiness">4. Feature Policies</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-task">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-task">https://html.spec.whatwg.org/multipage/webappapis.html#concept-task</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-task">5.1.2. HTML: HTML Event Loop Definitions</a> <a href="#ref-for-concept-task①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-top-level-browsing-context">
@@ -850,13 +842,13 @@ comes last after event firing.</p>
   <aside class="dfn-panel" data-for="term-for-traverse-the-history">
    <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#traverse-the-history">https://html.spec.whatwg.org/multipage/browsing-the-web.html#traverse-the-history</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-traverse-the-history">5.1.2. HTML: Unloading documents and History Traversal</a>
+    <li><a href="#ref-for-traverse-the-history">5.1.1. HTML: Unloading documents and History Traversal</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-unload-a-document">
    <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#unload-a-document">https://html.spec.whatwg.org/multipage/browsing-the-web.html#unload-a-document</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-unload-a-document">5.1.2. HTML: Unloading documents and History Traversal</a>
+    <li><a href="#ref-for-unload-a-document">5.1.1. HTML: Unloading documents and History Traversal</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-update-the-rendering">
@@ -888,6 +880,7 @@ comes last after event firing.</p>
     <a data-link-type="biblio">[DOM]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-document" style="color:initial">Document</span>
+     <li><span class="dfn-paneled" id="term-for-concept-document" style="color:initial">document</span>
      <li><span class="dfn-paneled" id="term-for-concept-event-fire" style="color:initial">fire an event</span>
      <li><span class="dfn-paneled" id="term-for-concept-shadow-including-descendant" style="color:initial">shadow-including descendant</span>
      <li><span class="dfn-paneled" id="term-for-concept-shadow-including-tree-order" style="color:initial">shadow-including tree order</span>
@@ -912,13 +905,14 @@ comes last after event firing.</p>
      <li><span class="dfn-paneled" id="term-for-iframe-load-event-steps" style="color:initial">iframe load event steps</span>
      <li><span class="dfn-paneled" id="term-for-list-of-the-descendant-browsing-contexts" style="color:initial">list of the descendant browsing contexts</span>
      <li><span class="dfn-paneled" id="term-for-media-element" style="color:initial">media elements</span>
-     <li><span class="dfn-paneled" id="term-for-dom-media-pause" style="color:initial">media pause</span>
-     <li><span class="dfn-paneled" id="term-for-dom-media-play" style="color:initial">media play</span>
+     <li><span class="dfn-paneled" id="term-for-internal-pause-steps" style="color:initial">media pause</span>
+     <li><span class="dfn-paneled" id="term-for-internal-play-steps" style="color:initial">media play</span>
      <li><span class="dfn-paneled" id="term-for-media-elements" style="color:initial">media-elements</span>
      <li><span class="dfn-paneled" id="term-for-nested-browsing-context" style="color:initial">nested browsing context</span>
      <li><span class="dfn-paneled" id="term-for-dom-media-paused" style="color:initial">paused</span>
      <li><span class="dfn-paneled" id="term-for-dom-pagetransitionevent-persisted" style="color:initial">persisted</span>
      <li><span class="dfn-paneled" id="term-for-current-document-readiness" style="color:initial">readiness</span>
+     <li><span class="dfn-paneled" id="term-for-concept-task" style="color:initial">task</span>
      <li><span class="dfn-paneled" id="term-for-top-level-browsing-context" style="color:initial">top-level browsing context</span>
      <li><span class="dfn-paneled" id="term-for-traverse-the-history" style="color:initial">traverse the history</span>
      <li><span class="dfn-paneled" id="term-for-unload-a-document" style="color:initial">unload a document</span>
@@ -1000,14 +994,6 @@ comes last after event firing.</p>
     <li><a href="#ref-for-update-document-frozenness-steps①">5.1.6. HTML: Modifications to iframe load event steps</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="task-source-freezable">
-   <b><a href="#task-source-freezable">#task-source-freezable</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-task-source-freezable">4. Feature Policies</a> <a href="#ref-for-task-source-freezable①">(2)</a>
-    <li><a href="#ref-for-task-source-freezable②">5.1.1. HTML: task source</a>
-    <li><a href="#ref-for-task-source-freezable③">5.1.3. HTML: HTML Event Loop Processing Model</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="htmlmediaelement-resume-frozen-flag">
    <b><a href="#htmlmediaelement-resume-frozen-flag">#htmlmediaelement-resume-frozen-flag</a></b><b>Referenced in:</b>
    <ul>
@@ -1018,7 +1004,7 @@ comes last after event firing.</p>
    <b><a href="#document-frozenness">#document-frozenness</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-document-frozenness">4. Feature Policies</a>
-    <li><a href="#ref-for-document-frozenness①">5.1.2. HTML: Unloading documents and History Traversal</a>
+    <li><a href="#ref-for-document-frozenness①">5.1.1. HTML: Unloading documents and History Traversal</a>
     <li><a href="#ref-for-document-frozenness②">5.2.1. FROZENNESS state</a> <a href="#ref-for-document-frozenness③">(2)</a>
     <li><a href="#ref-for-document-frozenness④">5.2.2. Changing the frozenness of documents</a> <a href="#ref-for-document-frozenness⑤">(2)</a> <a href="#ref-for-document-frozenness⑥">(3)</a> <a href="#ref-for-document-frozenness⑦">(4)</a>
    </ul>
@@ -1028,14 +1014,14 @@ comes last after event firing.</p>
    <ul>
     <li><a href="#ref-for-frozen">2. Page Lifecycle States</a> <a href="#ref-for-frozen①">(2)</a>
     <li><a href="#ref-for-frozen②">4. Feature Policies</a>
-    <li><a href="#ref-for-frozen③">5.1.3. HTML: HTML Event Loop Processing Model</a>
-    <li><a href="#ref-for-frozen④">5.2.1. FROZENNESS state</a> <a href="#ref-for-frozen⑤">(2)</a>
+    <li><a href="#ref-for-frozen③">5.2.1. FROZENNESS state</a> <a href="#ref-for-frozen④">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="unfrozen">
    <b><a href="#unfrozen">#unfrozen</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-unfrozen">4. Feature Policies</a>
+    <li><a href="#ref-for-unfrozen①">5.1.2. HTML: HTML Event Loop Definitions</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="change-the-frozenness-of-a-top-level-document">
@@ -1048,7 +1034,7 @@ comes last after event firing.</p>
    <b><a href="#change-the-frozenness-of-a-document">#change-the-frozenness-of-a-document</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-change-the-frozenness-of-a-document">4. Feature Policies</a>
-    <li><a href="#ref-for-change-the-frozenness-of-a-document①">5.1.2. HTML: Unloading documents and History Traversal</a> <a href="#ref-for-change-the-frozenness-of-a-document②">(2)</a>
+    <li><a href="#ref-for-change-the-frozenness-of-a-document①">5.1.1. HTML: Unloading documents and History Traversal</a> <a href="#ref-for-change-the-frozenness-of-a-document②">(2)</a>
     <li><a href="#ref-for-change-the-frozenness-of-a-document③">5.2.2. Changing the frozenness of documents</a> <a href="#ref-for-change-the-frozenness-of-a-document④">(2)</a>
    </ul>
   </aside>
