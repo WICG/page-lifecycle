@@ -6,7 +6,7 @@
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet" type="text/css">
   <meta content="Bikeshed version 10ff3eb4050069e20bb9b943c8b76fe5bfe3a48f" name="generator">
-  <meta content="d8efd3876bbd98b39456c60ba030a35b5496e0b2" name="document-revision">
+  <meta content="b89b2a784d94e211a5d6185c33a033ff544029f6" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -265,7 +265,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <header>
     <p data-fill-with="logo"><a href="https://www.w3.org/"><img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"></a> </p>
     <h1 class="p-name no-ref" id="title">Page Lifecycle 1</h1>
-    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-05-14">14 May 2019</time></span></h2>
+    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-05-15">15 May 2019</time></span></h2>
    </header>
    <div data-fill-with="spec-metadata">
     <dl>
@@ -491,6 +491,18 @@ conditions have been met:</p>
     </ol>
    </div>
    <h2 class="heading settled" data-level="5" id="sec-processing-model"><span class="secno">5. </span><span class="content">Processing model</span><a class="self-link" href="#sec-processing-model"></a></h2>
+   <p>Any <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#worklet-agent" id="ref-for-worklet-agent">Worklet agent</a> should not make <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-forward-progress" id="ref-for-sec-forward-progress">forward progress</a> whose single <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object&apos;s-realm" id="ref-for-environment-settings-object&apos;s-realm">realms</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global" id="ref-for-concept-settings-object-global">global object</a>'s <a data-link-type="dfn" href="https://drafts.css-houdini.org/worklets#workletglobalscope-owner-document" id="ref-for-workletglobalscope-owner-document">owning document</a> is <a data-link-type="dfn" href="#frozen" id="ref-for-frozen③">frozen</a>.
+Any <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#dedicated-worker-agent" id="ref-for-dedicated-worker-agent">Dedicated worker agent</a> should not make <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-forward-progress" id="ref-for-sec-forward-progress①">forward progress</a> whose <a data-link-type="dfn" href="https://drafts.css-houdini.org/worklets/#workletglobalscope-owner-document" id="ref-for-workletglobalscope-owner-document①">owner document</a> is <a data-link-type="dfn" href="#frozen" id="ref-for-frozen④">frozen</a>.</p>
+   <div class="algorithm" data-algorithm="owning document">
+     To determine the <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="owning-document">owning document</dfn> for a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#dedicated-worker-agent" id="ref-for-dedicated-worker-agent①">Dedicated worker agent</a> <var>worker</var>: 
+    <ol>
+     <li data-md>
+      <p>If <var>worker</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/workers.html#concept-WorkerGlobalScope-owner-set" id="ref-for-concept-WorkerGlobalScope-owner-set">owner set</a> consists of a single <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document" id="ref-for-concept-document">document</a> then return it.</p>
+     <li data-md>
+      <p>If <var>worker</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/workers.html#concept-WorkerGlobalScope-owner-set" id="ref-for-concept-WorkerGlobalScope-owner-set①">owner set</a> consists of a single <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#dedicated-worker-agent" id="ref-for-dedicated-worker-agent②">Dedicated worker agent</a> <var>parent</var> then return <var>parent</var>’s <a data-link-type="dfn" href="#owning-document" id="ref-for-owning-document">owning document</a>.</p>
+    </ol>
+   </div>
+   <p class="note" role="note"><span>NOTE:</span> A <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#dedicated-worker-agent" id="ref-for-dedicated-worker-agent③">Dedicated worker agent</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/workers.html#concept-WorkerGlobalScope-owner-set" id="ref-for-concept-WorkerGlobalScope-owner-set②">owner set</a> will always have exactly one element.</p>
    <h3 class="heading settled" data-level="5.1" id="mod"><span class="secno">5.1. </span><span class="content">Modifications to the HTML Standard</span><a class="self-link" href="#mod"></a></h3>
    <h4 class="heading settled" data-level="5.1.1" id="html-bfcache-dfn"><span class="secno">5.1.1. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#unloading-documents">Unloading documents</a> and <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#history-traversal">History Traversal</a></span><a class="self-link" href="#html-bfcache-dfn"></a></h4>
    <p>When documents move into and out of <a href="https://webkit.org/blog/427/webkit-page-cache-i-the-basics/">bfcache (back forward cache)</a> they will transition its <a data-link-type="dfn" href="#document-frozenness" id="ref-for-document-frozenness①">frozenness</a> state to true and false respectively.</p>
@@ -501,8 +513,8 @@ conditions have been met:</p>
      <p>In the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#traverse-the-history" id="ref-for-traverse-the-history">traverse the history</a> algorithm, before Step #4.6.4, if the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#dom-pagetransitionevent-persisted" id="ref-for-dom-pagetransitionevent-persisted①">persisted</a></code> attribute is true (i.e. we are moving out of bfcache), <a data-link-type="dfn" href="#change-the-frozenness-of-a-document" id="ref-for-change-the-frozenness-of-a-document②">change the frozenness of a document</a>, given <var>document</var> and false.</p>
    </ul>
    <h4 class="heading settled" data-level="5.1.2" id="html-html-event-loop-definitions"><span class="secno">5.1.2. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/webappapis.html#definitions-3">HTML Event Loop Definitions</a></span><a class="self-link" href="#html-html-event-loop-definitions"></a></h4>
-   <p>Replace: A <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-task" id="ref-for-concept-task">task</a> is runnable if its <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document" id="ref-for-concept-document">document</a> if either null or <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#fully-active" id="ref-for-fully-active">fully active</a>.</p>
-   <p>With: A <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-task" id="ref-for-concept-task①">task</a> is runnable if its <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document" id="ref-for-concept-document①">document</a> is either null or <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#fully-active" id="ref-for-fully-active①">fully active</a>, and is also <a data-link-type="dfn" href="#unfrozen" id="ref-for-unfrozen①">unfrozen</a>.</p>
+   <p>Replace: A <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-task" id="ref-for-concept-task">task</a> is runnable if its <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document" id="ref-for-concept-document①">document</a> if either null or <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#fully-active" id="ref-for-fully-active">fully active</a>.</p>
+   <p>With: A <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-task" id="ref-for-concept-task①">task</a> is runnable if its <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document" id="ref-for-concept-document②">document</a> is either null or <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#fully-active" id="ref-for-fully-active①">fully active</a>, and is also <a data-link-type="dfn" href="#unfrozen" id="ref-for-unfrozen①">unfrozen</a>.</p>
    <h4 class="heading settled" data-level="5.1.3" id="html-event-loop"><span class="secno">5.1.3. </span><span class="content">HTML: <a href="https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model">HTML Event Loop Processing Model</a></span><a class="self-link" href="#html-event-loop"></a></h4>
    <p>After Step #11 during the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#update-the-rendering" id="ref-for-update-the-rendering">Update the rendering</a> add the following step.</p>
    <p>For each <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#fully-active" id="ref-for-fully-active②">fully active</a> <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑥">Document</a></code> <var>doc</var> in <var>docs</var>, run the <a data-link-type="dfn" href="#update-document-frozenness-steps" id="ref-for-update-document-frozenness-steps">update document frozenness steps</a> given <var>doc</var>.</p>
@@ -531,10 +543,10 @@ For instance, if a top level browsing context is in the background or hidden, an
 Specific examples:</p>
    <ul>
     <li data-md>
-     <p>In mobile Chrome, tabs that have been in background for (at least) 5 minutes, may be <a data-link-type="dfn" href="#frozen" id="ref-for-frozen③">frozen</a>, to conserve battery and data.</p>
+     <p>In mobile Chrome, tabs that have been in background for (at least) 5 minutes, may be <a data-link-type="dfn" href="#frozen" id="ref-for-frozen⑤">frozen</a>, to conserve battery and data.</p>
     <li data-md>
      <p>In desktop Chrome, background tabs that are not important to the user (not used in some time) may be <a data-link-type="dfn" href="#discarded" id="ref-for-discarded②">discarded</a>, to conserve memory</p>
-     <p class="note" role="note"><span>NOTE:</span> background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not <a data-link-type="dfn" href="#frozen" id="ref-for-frozen④">frozen</a> or <a data-link-type="dfn" href="#discarded" id="ref-for-discarded③">discarded</a>.</p>
+     <p class="note" role="note"><span>NOTE:</span> background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not <a data-link-type="dfn" href="#frozen" id="ref-for-frozen⑥">frozen</a> or <a data-link-type="dfn" href="#discarded" id="ref-for-discarded③">discarded</a>.</p>
      <p class="note" role="note"><span>NOTE:</span> For a detailed list of heuristics &amp; exclusions used by Chrome, see <a href="https://docs.google.com/document/d/1QJpuBTdllLVflMJSov0tlFX3e3yfSfd_-al2IBavbQM/edit">this doc</a>.</p>
    </ul>
    <p>The UA will typically execute <a data-link-type="dfn" href="#change-the-frozenness-of-a-top-level-document" id="ref-for-change-the-frozenness-of-a-top-level-document③">change the frozenness of a top-level document</a> with false when the user revisits that browsing context. In addition, the UA may choose to periodically execute <a data-link-type="dfn" href="#change-the-frozenness-of-a-top-level-document" id="ref-for-change-the-frozenness-of-a-top-level-document④">change the frozenness of a top-level document</a> with false in the background, if plentiful resources are available.</p>
@@ -661,12 +673,19 @@ for their technical input and suggestions that led to improvements to this speci
    <li><a href="#document-frozenness">FROZENNESS</a><span>, in §5.2.1</span>
    <li><a href="#dom-document-onfreeze">onfreeze</a><span>, in §3</span>
    <li><a href="#dom-document-onresume">onresume</a><span>, in §3</span>
+   <li><a href="#owning-document">owning document</a><span>, in §5</span>
    <li><a href="#htmlmediaelement-resume-frozen-flag">resume frozen flag</a><span>, in §5.1.7</span>
    <li><a href="#resume-steps">resume steps</a><span>, in §5.2.2</span>
    <li><a href="#unfrozen">unfrozen</a><span>, in §5.2.1</span>
    <li><a href="#update-document-frozenness-steps">update document frozenness steps</a><span>, in §4</span>
    <li><a href="#dom-document-wasdiscarded">wasDiscarded</a><span>, in §3</span>
   </ul>
+  <aside class="dfn-panel" data-for="term-for-workletglobalscope-owner-document">
+   <a href="https://drafts.css-houdini.org/worklets#workletglobalscope-owner-document">https://drafts.css-houdini.org/worklets#workletglobalscope-owner-document</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-workletglobalscope-owner-document">5. Processing model</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-viewport">
    <a href="https://www.w3.org/TR/CSS2/visuren.html#viewport">https://www.w3.org/TR/CSS2/visuren.html#viewport</a><b>Referenced in:</b>
    <ul>
@@ -688,7 +707,8 @@ for their technical input and suggestions that led to improvements to this speci
   <aside class="dfn-panel" data-for="term-for-concept-document">
    <a href="https://dom.spec.whatwg.org/#concept-document">https://dom.spec.whatwg.org/#concept-document</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-document">5.1.2. HTML: HTML Event Loop Definitions</a> <a href="#ref-for-concept-document①">(2)</a>
+    <li><a href="#ref-for-concept-document">5. Processing model</a>
+    <li><a href="#ref-for-concept-document①">5.1.2. HTML: HTML Event Loop Definitions</a> <a href="#ref-for-concept-document②">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-event-fire">
@@ -707,6 +727,12 @@ for their technical input and suggestions that led to improvements to this speci
    <a href="https://dom.spec.whatwg.org/#concept-shadow-including-tree-order">https://dom.spec.whatwg.org/#concept-shadow-including-tree-order</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-concept-shadow-including-tree-order">5.2.2. Changing the frozenness of documents</a> <a href="#ref-for-concept-shadow-including-tree-order①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-sec-forward-progress">
+   <a href="https://tc39.github.io/ecma262/#sec-forward-progress">https://tc39.github.io/ecma262/#sec-forward-progress</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-sec-forward-progress">5. Processing model</a> <a href="#ref-for-sec-forward-progress①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-default-allowlist">
@@ -765,6 +791,12 @@ for their technical input and suggestions that led to improvements to this speci
     <li><a href="#ref-for-browsing-context-container">4. Feature Policies</a> <a href="#ref-for-browsing-context-container①">(2)</a> <a href="#ref-for-browsing-context-container②">(3)</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-dedicated-worker-agent">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#dedicated-worker-agent">https://html.spec.whatwg.org/multipage/webappapis.html#dedicated-worker-agent</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dedicated-worker-agent">5. Processing model</a> <a href="#ref-for-dedicated-worker-agent①">(2)</a> <a href="#ref-for-dedicated-worker-agent②">(3)</a> <a href="#ref-for-dedicated-worker-agent③">(4)</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-event-handler-idl-attributes">
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#event-handler-idl-attributes">https://html.spec.whatwg.org/multipage/webappapis.html#event-handler-idl-attributes</a><b>Referenced in:</b>
    <ul>
@@ -776,6 +808,12 @@ for their technical input and suggestions that led to improvements to this speci
    <ul>
     <li><a href="#ref-for-fully-active">5.1.2. HTML: HTML Event Loop Definitions</a> <a href="#ref-for-fully-active①">(2)</a>
     <li><a href="#ref-for-fully-active②">5.1.3. HTML: HTML Event Loop Processing Model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-settings-object-global">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global">https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-settings-object-global">5. Processing model</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-iframe-load-event-steps">
@@ -815,6 +853,12 @@ for their technical input and suggestions that led to improvements to this speci
     <li><a href="#ref-for-nested-browsing-context">4. Feature Policies</a> <a href="#ref-for-nested-browsing-context①">(2)</a> <a href="#ref-for-nested-browsing-context②">(3)</a> <a href="#ref-for-nested-browsing-context③">(4)</a> <a href="#ref-for-nested-browsing-context④">(5)</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-WorkerGlobalScope-owner-set">
+   <a href="https://html.spec.whatwg.org/multipage/workers.html#concept-WorkerGlobalScope-owner-set">https://html.spec.whatwg.org/multipage/workers.html#concept-WorkerGlobalScope-owner-set</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-WorkerGlobalScope-owner-set">5. Processing model</a> <a href="#ref-for-concept-WorkerGlobalScope-owner-set①">(2)</a> <a href="#ref-for-concept-WorkerGlobalScope-owner-set②">(3)</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-dom-media-paused">
    <a href="https://html.spec.whatwg.org/multipage/media.html#dom-media-paused">https://html.spec.whatwg.org/multipage/media.html#dom-media-paused</a><b>Referenced in:</b>
    <ul>
@@ -831,6 +875,12 @@ for their technical input and suggestions that led to improvements to this speci
    <a href="https://html.spec.whatwg.org/multipage/dom.html#current-document-readiness">https://html.spec.whatwg.org/multipage/dom.html#current-document-readiness</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-current-document-readiness">4. Feature Policies</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-environment-settings-object&apos;s-realm">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object&apos;s-realm">https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object's-realm</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-environment-settings-object&apos;s-realm">5. Processing model</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-task">
@@ -864,6 +914,12 @@ for their technical input and suggestions that led to improvements to this speci
     <li><a href="#ref-for-update-the-rendering">5.1.3. HTML: HTML Event Loop Processing Model</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-worklet-agent">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#worklet-agent">https://html.spec.whatwg.org/multipage/webappapis.html#worklet-agent</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-worklet-agent">5. Processing model</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-calculate-intersection-rect-algo">
    <a href="https://w3c.github.io/IntersectionObserver/#calculate-intersection-rect-algo">https://w3c.github.io/IntersectionObserver/#calculate-intersection-rect-algo</a><b>Referenced in:</b>
    <ul>
@@ -876,8 +932,19 @@ for their technical input and suggestions that led to improvements to this speci
     <li><a href="#ref-for-idl-boolean">3. API</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-workletglobalscope-owner-document">
+   <a href="https://drafts.css-houdini.org/worklets/#workletglobalscope-owner-document">https://drafts.css-houdini.org/worklets/#workletglobalscope-owner-document</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-workletglobalscope-owner-document①">5. Processing model</a>
+   </ul>
+  </aside>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
+   <li>
+    <a data-link-type="biblio">[css-houdini]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-workletglobalscope-owner-document" style="color:initial">owning document</span>
+    </ul>
    <li>
     <a data-link-type="biblio">[CSS2]</a> defines the following terms:
     <ul>
@@ -893,7 +960,12 @@ for their technical input and suggestions that led to improvements to this speci
      <li><span class="dfn-paneled" id="term-for-concept-shadow-including-tree-order" style="color:initial">shadow-including tree order</span>
     </ul>
    <li>
-    <a data-link-type="biblio">[feature-policy-1]</a> defines the following terms:
+    <a data-link-type="biblio">[ecma262]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-sec-forward-progress" style="color:initial">forward progress</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[FEATURE-POLICY]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-default-allowlist" style="color:initial">default allowlist</span>
     </ul>
@@ -908,22 +980,27 @@ for their technical input and suggestions that led to improvements to this speci
      <li><span class="dfn-paneled" id="term-for-being-rendered" style="color:initial">being rendered</span>
      <li><span class="dfn-paneled" id="term-for-concept-document-bc" style="color:initial">browsing context <small>(for document)</small></span>
      <li><span class="dfn-paneled" id="term-for-browsing-context-container" style="color:initial">browsing context container</span>
+     <li><span class="dfn-paneled" id="term-for-dedicated-worker-agent" style="color:initial">dedicated worker agent</span>
      <li><span class="dfn-paneled" id="term-for-event-handler-idl-attributes" style="color:initial">event handler idl attribute</span>
      <li><span class="dfn-paneled" id="term-for-fully-active" style="color:initial">fully active</span>
+     <li><span class="dfn-paneled" id="term-for-concept-settings-object-global" style="color:initial">global object</span>
      <li><span class="dfn-paneled" id="term-for-iframe-load-event-steps" style="color:initial">iframe load event steps</span>
      <li><span class="dfn-paneled" id="term-for-list-of-the-descendant-browsing-contexts" style="color:initial">list of the descendant browsing contexts</span>
      <li><span class="dfn-paneled" id="term-for-media-element" style="color:initial">media elements</span>
      <li><span class="dfn-paneled" id="term-for-internal-pause-steps" style="color:initial">media pause</span>
      <li><span class="dfn-paneled" id="term-for-internal-play-steps" style="color:initial">media play</span>
      <li><span class="dfn-paneled" id="term-for-nested-browsing-context" style="color:initial">nested browsing context</span>
+     <li><span class="dfn-paneled" id="term-for-concept-WorkerGlobalScope-owner-set" style="color:initial">owner set</span>
      <li><span class="dfn-paneled" id="term-for-dom-media-paused" style="color:initial">paused</span>
      <li><span class="dfn-paneled" id="term-for-dom-pagetransitionevent-persisted" style="color:initial">persisted</span>
      <li><span class="dfn-paneled" id="term-for-current-document-readiness" style="color:initial">readiness</span>
+     <li><span class="dfn-paneled" id="term-for-environment-settings-object&apos;s-realm" style="color:initial">realm</span>
      <li><span class="dfn-paneled" id="term-for-concept-task" style="color:initial">task</span>
      <li><span class="dfn-paneled" id="term-for-top-level-browsing-context" style="color:initial">top-level browsing context</span>
      <li><span class="dfn-paneled" id="term-for-traverse-the-history" style="color:initial">traverse the history</span>
      <li><span class="dfn-paneled" id="term-for-unload-a-document" style="color:initial">unload a document</span>
      <li><span class="dfn-paneled" id="term-for-update-the-rendering" style="color:initial">update the rendering</span>
+     <li><span class="dfn-paneled" id="term-for-worklet-agent" style="color:initial">worklet agent</span>
     </ul>
    <li>
     <a data-link-type="biblio">[intersectionobserver]</a> defines the following terms:
@@ -935,6 +1012,11 @@ for their technical input and suggestions that led to improvements to this speci
     <ul>
      <li><span class="dfn-paneled" id="term-for-idl-boolean" style="color:initial">boolean</span>
     </ul>
+   <li>
+    <a data-link-type="biblio">[worklets-1]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-workletglobalscope-owner-document①" style="color:initial">owner document</span>
+    </ul>
   </ul>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
@@ -943,12 +1025,14 @@ for their technical input and suggestions that led to improvements to this speci
    <dd>Bert Bos; et al. <a href="http://dev.w3.org/csswg/css2/">Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification</a>. URL: <a href="http://dev.w3.org/csswg/css2/">http://dev.w3.org/csswg/css2/</a>
    <dt id="biblio-dom">[DOM]
    <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/">DOM Standard</a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
-   <dt id="biblio-feature-policy-1">[FEATURE-POLICY-1]
-   <dd>Ian Clelland. <a href="https://w3c.github.io/webappsec-feature-policy/">Feature Policy</a>. URL: <a href="https://w3c.github.io/webappsec-feature-policy/">https://w3c.github.io/webappsec-feature-policy/</a>
+   <dt id="biblio-feature-policy">[FEATURE-POLICY]
+   <dd><a href="https://wicg.github.io/feature-policy/">Feature Policy</a>. Living Standard. URL: <a href="https://wicg.github.io/feature-policy/">https://wicg.github.io/feature-policy/</a>
    <dt id="biblio-html">[HTML]
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-webidl">[WebIDL]
-   <dd>Boris Zbarsky. <a href="https://heycam.github.io/webidl/">Web IDL</a>. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
+   <dd>Cameron McCormack; Boris Zbarsky; Tobie Langel. <a href="https://heycam.github.io/webidl/">Web IDL</a>. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
+   <dt id="biblio-worklets-1">[WORKLETS-1]
+   <dd>Ian Kilpatrick. <a href="https://drafts.css-houdini.org/worklets/">Worklets Level 1</a>. URL: <a href="https://drafts.css-houdini.org/worklets/">https://drafts.css-houdini.org/worklets/</a>
   </dl>
   <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
@@ -1001,6 +1085,12 @@ for their technical input and suggestions that led to improvements to this speci
     <li><a href="#ref-for-update-document-frozenness-steps①">5.1.6. HTML: Modifications to iframe load event steps</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="owning-document">
+   <b><a href="#owning-document">#owning-document</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-owning-document">5. Processing model</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="htmlmediaelement-resume-frozen-flag">
    <b><a href="#htmlmediaelement-resume-frozen-flag">#htmlmediaelement-resume-frozen-flag</a></b><b>Referenced in:</b>
    <ul>
@@ -1021,7 +1111,8 @@ for their technical input and suggestions that led to improvements to this speci
    <ul>
     <li><a href="#ref-for-frozen">2. Page Lifecycle States</a> <a href="#ref-for-frozen①">(2)</a>
     <li><a href="#ref-for-frozen②">4. Feature Policies</a>
-    <li><a href="#ref-for-frozen③">5.2.1. FROZENNESS state</a> <a href="#ref-for-frozen④">(2)</a>
+    <li><a href="#ref-for-frozen③">5. Processing model</a> <a href="#ref-for-frozen④">(2)</a>
+    <li><a href="#ref-for-frozen⑤">5.2.1. FROZENNESS state</a> <a href="#ref-for-frozen⑥">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="unfrozen">
