@@ -10,6 +10,7 @@ Editor: Shubhie Panicker, Google https://google.com, panicker@google.com
 Editor: Domenic Denicola, Google https://google.com, d@domenic.me
 Repository: wicg/page-lifecycle
 Abstract: This document defines an API that supports browsers' ability to manage lifecycle of web pages.
+Default Biblio Status: current
 </pre>
 
 <pre class='link-defaults'>
@@ -29,7 +30,6 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/;
     type: dfn; text: being rendered; url: rendering.html#being-rendered
     type: dfn; text: browsing context container; url: browsers.html#browsing-context-container
     type: dfn; text: media elements; url: media.html#media-element
-    type: dfn; text: media-elements; url: media.html#media-elements
     type: dfn; text: media pause; url: media.html#internal-pause-steps
     type: dfn; text: media play; url: media.html#internal-play-steps
 spec: CSS2; urlPrefix: https://www.w3.org/TR/CSS2/
@@ -136,21 +136,21 @@ Controlling the execution state of [=nested browsing contexts=] is desirable fro
 the user experience. An application may desire that when a document is not [=being rendered=] or does not intersect the [=viewport=]
 that all execution stops in the [=nested browsing context=] (including currently playing video, audio). Stopping all execution
 can lead to an improvement in CPU utilization. To meet these needs, two feature policies are defined:
- * "<dfn export><code>execution-while-not-rendered</code></dfn>", which has a [=default allowlist=] of '*'
- * "<dfn export><code>execution-while-out-of-viewport</code></dfn>", which has a [=default allowlist=] of '*'
+ * "<dfn export><code>execution-while-not-rendered</code></dfn>", which has a [=default allowlist=] of <code>*</code>
+ * "<dfn export><code>execution-while-out-of-viewport</code></dfn>", which has a [=default allowlist=] of <code>*</code>
 
 The "<a><code>execution-while-not-rendered</code></a>" policy controls whether
-tasks should execute for [=nested browsing contexts=] whose [=browsing context container=] is not [=being rendered=]. e.g. via `display: none`.
+tasks should execute for [=nested browsing contexts=] whose [=browsing context container=] is not [=being rendered=].
 
 The "<a><code>execution-while-out-of-viewport</code></a>" policy controls whether
 tasks should execute for [=nested browsing contexts=] whose [=browsing context container=] does not intersect the [=viewport=] according
 to [=compute the intersection of a target element and the root=].
 
-Application of these policies is accomplished by placing the document (and its decendants) in a [=/frozen=] state when the following
+[[#mod]] accomplishes this by placing the document (and its decendants) in a [=/frozen=] state when the following
 conditions have been met:
- * [=iframe load event steps=] have been run
- * the policy is disabled for the document
- * relevant policy condition applies (not rendered or scrolled out of view)
+ * the [=iframe load event steps=] have been run;
+ * the policy is disabled for the document; and
+ * the relevant policy condition applies (not rendered or scrolled out of view).
 
 If these conditions aren't met, the document will be in the [=/unfrozen=] state.
 
@@ -164,16 +164,16 @@ If these conditions aren't met, the document will be in the [=/unfrozen=] state.
 <div algorithm>
     To run the <dfn export>update document frozenness steps</dfn> for a {{Document}} |document|:
 
-    1. If |document|'s [=document/browsing context=] is not a [=nested browsing context=], return.
-    1. If |document|'s [=document/readiness=] is not "<code>complete</code>", return.
+    1. If |document|'s [=document/browsing context=] is not a [=nested browsing context=], then return.
+    1. If |document|'s [=document/readiness=] is not "<code>complete</code>", then return.
     1. Let |element| be |document|'s [=document/browsing context=]'s [=browsing context container=].
     1. Let |frozenness| be false.
     1. Let |auto resume media| be false.
-    1. If |document| is not [=allowed to use=] the "<a><code>execution-while-not-rendered</code></a>" feature then:
+    1. If |document| is not [=allowed to use=] the "<a><code>execution-while-not-rendered</code></a>" feature, then:
         1. If |element| is not [=being rendered=],  set |frozenness| to true.
-    1. Otherwise if |document| is not [=allowed to use=] the "<a><code>execution-while-out-of-viewport</code></a>" feature then:
+    1. Otherwise if |document| is not [=allowed to use=] the "<a><code>execution-while-out-of-viewport</code></a>" feature, then:
         1. If |element| does not intersect the [=viewport=] according to [=compute the intersection of a target element and the root=], set |frozenness| to true and set |auto resume media| to true.
-    1. If |frozenness| does not equal |document|'s [=FROZENNESS=] state, [=change the frozenness of a document=] given in |document|, |frozenness|, and |auto resume media|.
+    1. If |frozenness| does not equal |document|'s [=Document/frozenness=] state, [=change the frozenness of a document=] given |document|, |frozenness|, and |auto resume media|.
 </div>
 
 Processing model {#sec-processing-model}
@@ -193,7 +193,7 @@ When documents move into and out of <a href="https://webkit.org/blog/427/webkit-
 
 Replace: A [=task=] is runnable if its [=document=] if either null or [=fully active=].
 
-With: A [=task=] is runnable if its [=document=] is either null or [=fully active=] and [=/unfrozen=].
+With: A [=task=] is runnable if its [=document=] is either null or [=fully active=], and is also [=/unfrozen=].
 
 ### HTML: <a href="https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model">HTML Event Loop Processing Model</a> ### {#html-event-loop}
 
@@ -217,9 +217,9 @@ After Step #5 add following:
 
 Run the [=update document frozenness steps=] given <var ignore>child document</var>.
 
-### HTML: Modifications to [=media-elements=] ### {#html-media-elements}
+### HTML: Modifications to {{HTMLMediaElement}} ### {#html-media-elements}
 
-Each HTMLMediaElement has a <dfn for="HTMLMediaElement">resume frozen flag</dfn>, which is initially set to false.
+Each {{HTMLMediaElement}} has a <dfn for="HTMLMediaElement">resume frozen flag</dfn>, which is initially set to false.
 
 Additions to Page Lifecycle spec {#page-lifecycle}
 --------------------------------------------
@@ -317,4 +317,11 @@ When a [=top-level browsing context=] (tab in the browser) is [=/discarded=] due
 <h2 id=acknowledgements>Acknowledgements</h2>
 <!-- ============================================================ -->
 
-Special thanks to Ojan Vafai, Philip Walton, Fadi Meawad, Olli Pettay, Todd Reifsteck for their technical input and suggestions that led to improvements to this specification.
+Special thanks to
+Dave Tapuska,
+Fadi Meawad,
+Ojan Vafai,
+Olli Pettay,
+Philip Walton, and
+Todd Reifsteck
+for their technical input and suggestions that led to improvements to this specification.
