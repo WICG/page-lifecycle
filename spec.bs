@@ -32,10 +32,17 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/;
     type: dfn; text: media elements; url: media.html#media-element
     type: dfn; text: media pause; url: media.html#internal-pause-steps
     type: dfn; text: media play; url: media.html#internal-play-steps
+    type: dfn; text: dedicated worker agent; url: webappapis.html#dedicated-worker-agent
+    type: dfn; text: worklet agent; url: webappapis.html#worklet-agent
 spec: CSS2; urlPrefix: https://www.w3.org/TR/CSS2/
     type: dfn; text: viewport; url: visuren.html#viewport
 spec: IntersectionObserver; urlPrefix: https://w3c.github.io/IntersectionObserver/
     type: dfn; text: compute the intersection of a target element and the root; url: #calculate-intersection-rect-algo
+spec: ECMA262; urlPrefix: https://tc39.github.io/ecma262/;
+    type: dfn; text: blocked; url: #sec-forward-progress
+    type: dfn; text: realm; url: #sec-code-realms
+spec: CSS-Houdini; urlPrefix: https://drafts.css-houdini.org/worklets;
+    type: dfn; text: owning document; for: worklet; url: #workletglobalscope-owner-document
 </pre>
 
 
@@ -178,6 +185,23 @@ If these conditions aren't met, the document will be in the [=/unfrozen=] state.
 
 Processing model {#sec-processing-model}
 ========================================
+
+Modifications to worklet and worker behavior {#worklets-workers}
+----------------------------------------------------------------
+
+Any [=worklet agent=] whose single [=/realm=]'s [=Realm/global object=]'s [=worklet/owning document=] is [=/frozen=] must become [=blocked=].
+Any [=dedicated worker agent=] whose single [=/realm=]'s [=Realm/global object=]'s [=DedicatedWorkerGlobalScope/owning document=] is non-null and [=/frozen=] must become [=blocked=].
+
+<div algorithm>
+    To determine the <dfn for="DedicatedWorkerGlobalScope" export>owning document</dfn> for a {{DedicatedWorkerGlobalScope}} |workerGlobalScope|:
+
+    1. If |workerGlobalScope|'s [=owner set=] consists of a single {{Document}} |document|, then return |document|.
+    1. If |workerGlobalScope|'s [=owner set=] consists of a single {{DedicatedWorkerGlobalScope}} |parentWorkerGlobalScope|, then return |parentWorkerGlobalScope|'s [=owning document=].
+    1. Return null.
+
+    NOTE: A {{DedicatedWorkerGlobalScope}}'s [=owner set=] will always have exactly one item.
+</div>
+
 
 Modifications to the HTML Standard {#mod}
 --------------------------------------------
