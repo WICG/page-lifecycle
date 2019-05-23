@@ -32,14 +32,15 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/;
     type: dfn; text: media elements; url: media.html#media-element
     type: dfn; text: media pause; url: media.html#internal-pause-steps
     type: dfn; text: media play; url: media.html#internal-play-steps
-    type: dfn; text: Dedicated worker agent; url: webappapis.html#dedicated-worker-agent
-    type: dfn; text: Worklet agent; url: webappapis.html#worklet-agent
+    type: dfn; text: dedicated worker agent; url: webappapis.html#dedicated-worker-agent
+    type: dfn; text: worklet agent; url: webappapis.html#worklet-agent
 spec: CSS2; urlPrefix: https://www.w3.org/TR/CSS2/
     type: dfn; text: viewport; url: visuren.html#viewport
 spec: IntersectionObserver; urlPrefix: https://w3c.github.io/IntersectionObserver/
     type: dfn; text: compute the intersection of a target element and the root; url: #calculate-intersection-rect-algo
 spec: ECMA262; urlPrefix: https://tc39.github.io/ecma262/;
-    type: dfn; text: forward progress; url: #sec-forward-progress
+    type: dfn; text: blocked; url: #sec-forward-progress
+    type: dfn; text: realm; url: #sec-code-realms
 spec: CSS-Houdini; urlPrefix: https://drafts.css-houdini.org/worklets;
     type: dfn; text: owning document; for: worklet; url: #workletglobalscope-owner-document
 </pre>
@@ -185,19 +186,21 @@ If these conditions aren't met, the document will be in the [=/unfrozen=] state.
 Processing model {#sec-processing-model}
 ========================================
 
-Any [=Worklet agent=] should not make [=forward progress=] whose single [=environment settings object/realms=]'s [=environment settings object/global object=]'s [=worklet/owning document=] is [=/frozen=].
-Any [=Dedicated worker agent=] should not make [=forward progress=] whose [=owner document=] is non-null and [=/frozen=].
+Modifications to worklet and worker behavior {#worklets-workers}
+----------------------------------------------------------------
+
+Any [=worklet agent=] whose single [=/realm=]'s [=Realm/global object=]'s [=worklet/owning document=] is [=/frozen=] must become [=blocked=].
+Any [=dedicated worker agent=] whose single [=/realm=]'s [=Realm/global object=]'s [=DedicatedWorkerGlobalScope/owning document=] is non-null and [=/frozen=] must become [=blocked=].
 
 <div algorithm>
-    To determine the <dfn export>owning document</dfn> for a [=Dedicated worker agent=] |worker|:
+    To determine the <dfn for="DedicatedWorkerGlobalScope" export>owning document</dfn> for a {{DedicatedWorkerGlobalScope}} |workerGlobalScope|:
 
-    1. If |worker|'s [=owner set=] consists of a single [=document=] then return it.
-    1. If |worker|'s [=owner set=] consists of a single [=Dedicated worker agent=] |parent| then return |parent|'s [=owning document=].
+    1. If |workerGlobalScope|'s [=owner set=] consists of a single {{Document}} |document|, then return |document|.
+    1. If |workerGlobalScope|'s [=owner set=] consists of a single {{DedicatedWorkerGlobalScope}} |parentWorkerGlobalScope|, then return |parentWorkerGlobalScope|'s [=owning document=].
     1. Return null.
 
+    NOTE: A {{DedicatedWorkerGlobalScope}}'s [=owner set=] will always have exactly one item.
 </div>
-
-    NOTE: A [=Dedicated worker agent=]'s [=owner set=] will always have exactly one element.
 
 
 Modifications to the HTML Standard {#mod}
