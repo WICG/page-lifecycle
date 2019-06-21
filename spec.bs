@@ -5,7 +5,7 @@ Shortname: page-lifecycle
 Level: 1
 ED:
 TR:
-Status: ED
+Status: CG-DRAFT
 Editor: Shubhie Panicker, Google https://google.com, panicker@google.com
 Editor: Domenic Denicola, Google https://google.com, d@domenic.me
 Repository: wicg/page-lifecycle
