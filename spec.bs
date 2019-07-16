@@ -244,6 +244,77 @@ Run the [=update document frozenness steps=] given <var ignore>child document</v
 
 Each {{HTMLMediaElement}} has a <dfn for="HTMLMediaElement">resume frozen flag</dfn>, which is initially set to false.
 
+Modifications to the Service Worker Standard {#serviceworker-mod}
+--------------------------------------------
+
+### Service Worker: <a href="https://w3c.github.io/ServiceWorker/#client-interface">Client Interface</a> ### {#serviceworker-client-dfn}
+
+<pre class="idl">
+    partial interface Client {
+        readonly attribute  ClientState state;
+    };
+
+    enum ClientState {
+        "active",
+        "frozen"
+    };
+</pre>
+
+A {{Client}} object has an associated <dfn id="dfn-service-worker-client-state" for="Client">state</dfn>, which is one of {{ClientState}} attribute value.
+
+<section>
+  <h4 id="service-worker-client-state">{{ServiceWorkerClient/state}}</h4>
+
+  The <dfn attribute for="ServiceWorkerClient">state</dfn> attribute *must* return the [=context object=]'s [=Client/state=].
+</section>
+
+### Service Worker: <a href="https://w3c.github.io/ServiceWorker/#clients-interface">Clients Interface</a> ### {#serviceworker-clients-dfn}
+
+<pre class="idl">
+    partial dictionary ClientQueryOptions {
+        ClientStateQuery state = "active";
+    };
+
+    enum ClientStateQuery {
+        "active",
+        "frozen",
+        "all"
+    };
+</pre>
+
+Adjust <a href="https://w3c.github.io/ServiceWorker/#clients-matchall">Match All</a> algorithm:
+
+Before Step #2.5.1 insert
+
+1. Let <var ignore>state</var> be the result of running [=Get Client State=] with <var ignore>client</var>.
+1. If <var ignore>options</var>["{{ClientQueryOptions/state}}"] is not {{ClientStateQuery/"all"}} and does not equal <var ignore>state</var>, then [=continue=].
+
+
+<section>
+  <h4 id="client-state">{{Client/state}}</h4>
+
+  The <dfn attribute for="Client">state</dfn> attribute *must* return the [=context object=]'s [=Client/state=].
+</section>
+
+
+### Service Worker: <a href="https://w3c.github.io/ServiceWorker/#algorithms">Algorithms</a> ### {#serviceworker-algorithms-dfn}
+
+Append the following algorithm:
+
+<section algorithm>
+  <h3 id="get-client-state-algorithm"><dfn>Get Client State</dfn></h3>
+
+    : Input
+    :: |client|, a [=/service worker client=]
+    : Output
+    :: |state|, a string
+
+    1. Let |state| be {{ClientState/"active"}}.
+    1. If |client|'s [=responsible document=] is [=frozen=], set |state| to be {{ClientState/"frozen"}}.
+    1. Return |state|.
+</section>
+
+
 Page lifecycle processing model {#page-lifecycle}
 --------------------------------------------
 
