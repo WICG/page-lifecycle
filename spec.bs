@@ -14,6 +14,11 @@ Default Biblio Status: current
 
 <pre class='link-defaults'>
 spec:dom; type:interface; text:Document
+spec: infra;
+    type: dfn;
+        text: list;
+        for: set; text: append
+        for: list; text: append
 </pre>
 
 <pre class='anchors'>
@@ -42,6 +47,9 @@ spec: ECMA262; urlPrefix: https://tc39.github.io/ecma262/;
     type: dfn; text: realm; url: #sec-code-realms
 spec: CSS-Houdini; urlPrefix: https://drafts.css-houdini.org/worklets;
     type: dfn; text: owning document; for: worklet; url: #workletglobalscope-owner-document
+spec: ServiceWorker; urlPrefix: https://w3c.github.io/ServiceWorker/
+    type: dfn; text: create window client; url: #create-windowclient-algorithm
+    type: dfn; text: create client; url: #create-client-algorithm
 </pre>
 
 
@@ -251,66 +259,84 @@ Modifications to the Service Worker Standard {#serviceworker-mod}
 
 <pre class="idl">
     partial interface Client {
-        readonly attribute  ClientState state;
+        readonly attribute ClientLifecycleState lifecycleState;
     };
 
-    enum ClientState {
+    enum ClientLifecycleState {
         "active",
         "frozen"
     };
 </pre>
 
-A {{Client}} object has an associated <dfn id="dfn-service-worker-client-state" for="Client">state</dfn>, which is one of {{ClientState}} attribute value.
+A {{Client}} object has an associated <dfn id="dfn-service-worker-client-lifecycle-state" for="Client">lifecycleState</dfn>, which is one of the {{ClientLifecycleState}} enumeration values.
 
 <section>
-  <h4 id="service-worker-client-state">{{ServiceWorkerClient/state}}</h4>
+  <h4 id="service-worker-client-lifecycle-state">{{ServiceWorkerClient/lifecycleState}}</h4>
 
-  The <dfn attribute for="ServiceWorkerClient">state</dfn> attribute *must* return the [=context object=]'s [=Client/state=].
+  The <dfn attribute for="ServiceWorkerClient">lifecycleState</dfn> attribute <em>must</em> return the [=context object=]'s [=Client/lifecycleState=].
 </section>
 
 ### Service Worker: <a href="https://w3c.github.io/ServiceWorker/#clients-interface">Clients Interface</a> ### {#serviceworker-clients-dfn}
 
 <pre class="idl">
     partial dictionary ClientQueryOptions {
-        ClientStateQuery state = "active";
+        ClientLifecycleStateQuery lifecycleState = "active";
     };
 
-    enum ClientStateQuery {
+    enum ClientLifecycleStateQuery {
         "active",
         "frozen",
         "all"
     };
 </pre>
 
-Adjust <a href="https://w3c.github.io/ServiceWorker/#clients-matchall">Match All</a> algorithm:
+
+### Service Worker Algorithms: <a href="https://w3c.github.io/ServiceWorker/#clients-matchall">Match All</a> algorithm  ### {#serviceworker-matchall-dfn}
+
+Rename variable in Step #4.
+1. Let |matchedClientData| be a new [=list=].
 
 Before Step #2.5.1 insert
 
-1. Let <var ignore>state</var> be the result of running [=Get Client State=] with <var ignore>client</var>.
-1. If <var ignore>options</var>["{{ClientQueryOptions/state}}"] is not {{ClientStateQuery/"all"}} and does not equal <var ignore>state</var>, then [=continue=].
+1. Let <var ignore>lifecycleState</var> be the result of running [=Get Client Lifecycle State=] with <var ignore>client</var>.
+1. If <var ignore>options</var>["{{ClientQueryOptions/lifecycleState}}"] is not {{ClientLifecycleStateQuery/"all"}} and does not equal <var ignore>lifecycleState</var>, then [=continue=].
+
+Append lifecycleState to list in Step #5.3.1
+1. Let |windowData| be «[ "client" → |client|, "ancestorOriginsList" → a new [=list=], "lifecycleState" → |lifecycleState| ]».
+
+Append lifecycleState to matchedClientData in Step #5.4
+1. Add «[ "client" → |client|, "lifecycleState" → |lifecycleState| ]» to |matchedClientData|.
+
+Pass windowData lifecycleState into Create Window Client algorithm in Step #6.2
+1. Let <var ignore>windowClient</var> be the result of running [=Create Window Client=] algorithm with |windowData|["`client`"], |windowData|["`frameType`"], |windowData|["`visibilityState`"], |windowData|["`focusState`"], |windowData|["`ancestorOriginsList`"], and |windowData|["`lifecycleState`"] as the arguments.
+
+Adjust Step #6.3
+1. [=list/For each=] |clientData| in |matchedClientData|:
+    1. Let |clientObject| be the result of running [=Create Client=] algorithm with |clientData|["`client`"], and |clientData|["`lifecycleState`"] as the arguments.
+    1. [=Append=] |clientObject| to <var ignore>clientObjects</var>.
 
 
-<section>
-  <h4 id="client-state">{{Client/state}}</h4>
+### Service Worker Algorithms: <a href="https://w3c.github.io/ServiceWorker/#dom-clients-openwindow">Open Window</a> algorithm  ### {#serviceworker-openwindow-dfn}
 
-  The <dfn attribute for="Client">state</dfn> attribute *must* return the [=context object=]'s [=Client/state=].
-</section>
+Before Step #7.5 insert
+1. Let |lifecycleState| be the result of running [=Get Client Lifecycle State=] with [=context object=]'s associated [=service worker client=].
 
+Adjust Step #7.8.2 to provide lifecycleState
+1. Let |client| be the result of running [=Create Window Client=] with <var ignore>newContext</var>'s {{Window}} object's [=environment settings object=], <var ignore>frameType</var>, <var ignore>visibilityState</var>, <var ignore>focusState</var>, <var ignore>ancestorOriginsList</var>, and |lifecycleState| as the arguments.
 
-### Service Worker: <a href="https://w3c.github.io/ServiceWorker/#algorithms">Algorithms</a> ### {#serviceworker-algorithms-dfn}
-
+### Service Worker  <a href="https://w3c.github.io/ServiceWorker/#algorithms">Algorithms</a>  ### {#serviceworker-algorithms-dfn}
 Append the following algorithm:
 
 <section algorithm>
-  <h3 id="get-client-state-algorithm"><dfn>Get Client State</dfn></h3>
+  <h5 id="get-client-lifecycle-state-algorithm"><dfn>Get Client Lifecycle State</dfn></h5>
 
     : Input
     :: |client|, a [=/service worker client=]
     : Output
     :: |state|, a string
 
-    1. Let |state| be {{ClientState/"active"}}.
-    1. If |client|'s [=responsible document=] is [=frozen=], set |state| to be {{ClientState/"frozen"}}.
+    1. Let |state| be {{ClientLifecycleState/"active"}}.
+    1. If |client|'s [=responsible document=] is [=frozen=], set |state| to be {{ClientLifecycleState/"frozen"}}.
     1. Return |state|.
 </section>
 
