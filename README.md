@@ -1,5 +1,5 @@
 # Lifecycle API for Web Pages
-Link to spec: https://wicg.github.io/page-lifecycle/spec.html
+Link to spec: https://wicg.github.io/page-lifecycle/
 
 ## Motivation
 For detailed motivation see [this doc](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.ejq0luje6eyb).
@@ -61,7 +61,7 @@ It is not possible to have a guaranteed callback execute in most of these scenar
 We following changes are included in the MVP:
 
 * `onfreeze` is fired to signal transition to FROZEN.
-* `onresume` is fired to signal transition out of FROZEN. This will be used to undo what was done in `onfreeze` above. 
+* `onresume` is fired to signal transition out of FROZEN. This will be used to undo what was done in `onfreeze` above.
 * On DISCARDED -> ACTIVE, an attribute called `wasDiscarded` is added to the Document. This will be used to restore view state , when the user revisits a discarded tab.
 * `onfreeze` is also fired before transition to BFCACHE (before `pagehide` is fired) and `onresume` is also fired on transition out of BFCACHE (after `pageshow` is fired).
 
@@ -81,7 +81,7 @@ The callbacks are necessary for several reasons:
 * Platform predictability and transparency in the face of freezing & discarding interventions becoming the norm. Specifically helping:
     * Analytics
     * Testing story
-    
+
 For details see [this section of detailed doc](https://docs.google.com/document/d/1UuS6ff4Fd4igZgL50LDS8MeROVrOfkN13RbiP2nTT9I/edit#heading=h.s64wegvpugn9).
 
 ### API
@@ -129,7 +129,7 @@ if (document.wasDiscarded) {
 #### Potential future addition
 In the future, if frame-level freezing (i.e. freeze specific frames within a page) is pursued, then the API could be enhanced to indicate which frame tree is frozen.
 ```
-// Indicate what is frozen exactly: 
+// Indicate what is frozen exactly:
 // a. partial frame tree starting with current frame
 // b. partial frame tree starting with an ancestor frame
 // c. entire page in background
@@ -137,7 +137,7 @@ In the future, if frame-level freezing (i.e. freeze specific frames within a pag
 enum FrameLevel { ... };
 
 interface FreezeEvent {
-    readonly attribute FrameLevel frameLevel; 
+    readonly attribute FrameLevel frameLevel;
 }
 ```
 

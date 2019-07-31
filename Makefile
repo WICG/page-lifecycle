@@ -1,5 +1,30 @@
-local: spec.bs
-	bikeshed spec spec.bs spec.html
+SHELL=/bin/bash
 
-remote: spec.bs
-	curl https://api.csswg.org/bikeshed/ -f -F file=@spec.bs > spec.html
+local: spec.bs
+	bikeshed --die-on=warning spec spec.bs spec.html
+
+spec.html: spec.bs
+	@ (HTTP_STATUS=$$(curl https://api.csswg.org/bikeshed/ \
+	                       --output spec.html \
+	                       --write-out "%{http_code}" \
+	                       --header "Accept: text/plain, text/html" \
+	                       -F die-on=warning \
+	                       -F file=@spec.bs) && \
+	[[ "$$HTTP_STATUS" -eq "200" ]]) || ( \
+		echo ""; cat spec.html; echo ""; \
+		rm -f spec.html; \
+		exit 22 \
+	);
+
+remote: spec.html
+
+ci: spec.bs
+	mkdir -p out
+	make remote
+	mv spec.html out/index.html
+	cp *.png out/
+	echo '<!DOCTYPE html><meta charset="utf-8"><title>Redirecting</title><meta http-equiv="refresh" content="0; URL=./"><link rel="canonical" href="./">' > out/spec.html
+
+clean:
+	rm spec.html
+	rm -rf out
