@@ -205,46 +205,46 @@ Any [=dedicated worker agent=] whose single [=/realm=]'s [=Realm/global object=]
 Modifications to the HTML Standard {#mod}
 --------------------------------------------
 
-### HTML: <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#unloading-documents">Unloading documents</a> and <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#history-traversal">History Traversal</a> ### {#html-bfcache-dfn}
+### <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#unloading-documents">Unloading documents</a> and <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#history-traversal">history traversal</a> ### {#html-bfcache-dfn}
 
 When documents move into and out of <a href="https://webkit.org/blog/427/webkit-page-cache-i-the-basics/">bfcache (back forward cache)</a> they will transition its [=Document/frozenness=] state to true and false respectively.
 
 * In the [=unload a document=] algorithm, after Step #5, if the {{PageTransitionEvent/persisted}} attribute is true (i.e. we are moving to bfcache), [=change the frozenness of a document=], given |document| and true.
 * In the [=traverse the history=] algorithm, before Step #4.6.4, if the {{PageTransitionEvent/persisted}} attribute is true (i.e. we are moving out of bfcache), [=change the frozenness of a document=], given |document| and false.
 
-### HTML: <a href="https://html.spec.whatwg.org/multipage/webappapis.html#definitions-3">HTML Event Loop Definitions</a> ### {#html-html-event-loop-definitions}
+### <a href="https://html.spec.whatwg.org/multipage/webappapis.html#definitions-3">Event loop: definitions</a> ### {#html-html-event-loop-definitions}
 
 Replace: A [=task=] is runnable if its [=document=] if either null or [=fully active=].
 
 With: A [=task=] is runnable if its [=document=] is either null or [=fully active=], and is also [=/unfrozen=].
 
-### HTML: <a href="https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model">HTML Event Loop Processing Model</a> ### {#html-event-loop}
+### <a href="https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model">Event loop: processing model</a> ### {#html-event-loop}
 
 After Step #11 during the [=Update the rendering=] add the following step.
 
 For each [=fully active=] {{Document}} |doc| in <var ignore>docs</var>, run the [=update document frozenness steps=] given |doc|.
 
-### HTML: <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">Discarding browsing context</a> ### {#html-discarding}
+### <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">Discarding browsing contexts</a> ### {#html-discarding}
 
 Rename the "<a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">discard</a>" concept, for both browsing contexts and documents, to "destroy". This allows us to use the "discarded" terminology for the user-facing {{Document/wasDiscarded}} attribute.
 
-### HTML: Modifications to <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">Initialize the document</a> ### {#html-initialize-doc}
+### <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">Initialize the document</a> ### {#html-initialize-doc}
 
 Before Step #3 add following:
 
 If the browsing context was previously [=/discarded=], then set the {{Document}}'s [=Document/discarded=] boolean to true.
 
-### HTML: Modifications to [=iframe load event steps=] ### {#html-iframe-load}
+### [=iframe load event steps=] ### {#html-iframe-load}
 
 After Step #5 add following:
 
 Run the [=update document frozenness steps=] given <var ignore>child document</var>.
 
-### HTML: Modifications to {{HTMLMediaElement}} ### {#html-media-elements}
+### {{HTMLMediaElement}} ### {#html-media-elements}
 
 Each {{HTMLMediaElement}} has a <dfn for="HTMLMediaElement">resume frozen flag</dfn>, which is initially set to false.
 
-Additions to Page Lifecycle spec {#page-lifecycle}
+Page lifecycle processing model {#page-lifecycle}
 --------------------------------------------
 
 <h4 id="frozenness-state">FROZENNESS state</h4>
