@@ -10,6 +10,7 @@ Editor: Domenic Denicola, Google https://google.com, d@domenic.me
 Repository: wicg/page-lifecycle
 Abstract: This document defines an API that supports browsers' ability to manage lifecycle of web pages.
 Default Biblio Status: current
+Markup Shorthands: markdown yes
 </pre>
 
 <pre class='link-defaults'>
@@ -255,7 +256,7 @@ Each {{HTMLMediaElement}} has a <dfn for="HTMLMediaElement">resume frozen flag</
 Modifications to the Service Worker Standard {#serviceworker-mod}
 --------------------------------------------
 
-### <a href="https://w3c.github.io/ServiceWorker/#client-interface"><code>Client</code></a> ### {#serviceworker-client-dfn}
+### <a href="https://w3c.github.io/ServiceWorker/#client-interface">`Client`</a> ### {#serviceworker-client-dfn}
 
 <pre class="idl">
     partial interface Client {
@@ -274,7 +275,7 @@ A {{Client}} object has an associated <dfn id="dfn-service-worker-client-lifecyc
 
 The <dfn attribute for="ServiceWorkerClient">lifecycleState</dfn> attribute <em>must</em> return the [=context object=]'s [=Client/lifecycle state=].
 
-### <a href="https://w3c.github.io/ServiceWorker/#clients-interface"><code>Clients</code></a> ### {#serviceworker-clients-dfn}
+### <a href="https://w3c.github.io/ServiceWorker/#clients-interface">`Clients`</a> ### {#serviceworker-clients-dfn}
 
 <pre class="idl">
     partial dictionary ClientQueryOptions {
@@ -288,7 +289,7 @@ The <dfn attribute for="ServiceWorkerClient">lifecycleState</dfn> attribute <em>
     };
 </pre>
 
-#### <a href="https://w3c.github.io/ServiceWorker/#clients-matchall"><code>matchAll(options)</code></a> #### {#serviceworker-matchall-dfn}
+#### <a href="https://w3c.github.io/ServiceWorker/#clients-matchall">`matchAll(options)`</a> #### {#serviceworker-matchall-dfn}
 
 Rename variable in Step #4.
 1. Let |matchedClientData| be a new [=list=].
@@ -313,7 +314,7 @@ Adjust Step #6.3
     1. [=Append=] |clientObject| to <var ignore>clientObjects</var>.
 
 
-#### <a href="https://w3c.github.io/ServiceWorker/#dom-clients-openwindow"><code>openWindow(url)</code></a> #### {#serviceworker-openwindow-dfn}
+#### <a href="https://w3c.github.io/ServiceWorker/#dom-clients-openwindow">`openWindow(url)`</a> #### {#serviceworker-openwindow-dfn}
 
 Before Step #7.5 insert
 1. Let |lifecycleState| be the result of running [=Get Client Lifecycle State=] with [=context object=]'s associated [=service worker client=].
