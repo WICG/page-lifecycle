@@ -1,2 +1,4 @@
 spec.html
 out/
+deploy_key
+deploy_key.pub
