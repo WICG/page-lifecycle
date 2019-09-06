@@ -1213,7 +1213,7 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 08c4b0e94d147852f66673459784d3429bb3bda1" name="generator">
+  <meta content="Bikeshed version cdc21b1ba6c6fc1fc48b20d35014ddc2c330229a" name="generator">
   <link href="https://wicg.github.io/page-lifecycle/" rel="canonical">
 <style>/* style-md-lists */
 
@@ -1472,7 +1472,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Page Lifecycle</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2019-08-27">27 August 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2019-09-06">6 September 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1530,6 +1530,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
         <li><a href="#html-initialize-doc"><span class="secno">5.2.5</span> <span class="content"><span>Initialize the document</span></span></a>
         <li><a href="#html-iframe-load"><span class="secno">5.2.6</span> <span class="content"><span>iframe load event steps</span></span></a>
         <li><a href="#html-media-elements"><span class="secno">5.2.7</span> <span class="content"><code class="idl"><span>HTMLMediaElement</span></code></span></a>
+        <li><a href="#html-post-message"><span class="secno">5.2.8</span> <span class="content"><span>Posting messages</span></span></a>
        </ol>
       <li>
        <a href="#serviceworker-mod"><span class="secno">5.3</span> <span class="content">Modifications to the Service Worker Standard</span></a>
@@ -1763,6 +1764,9 @@ Any <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappa
    <p>Run the <a data-link-type="dfn" href="#update-document-frozenness-steps" id="ref-for-update-document-frozenness-steps①">update document frozenness steps</a> given <var>child document</var>.</p>
    <h4 class="heading settled" data-level="5.2.7" id="html-media-elements"><span class="secno">5.2.7. </span><span class="content"><code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/media.html#htmlmediaelement" id="ref-for-htmlmediaelement">HTMLMediaElement</a></code></span><a class="self-link" href="#html-media-elements"></a></h4>
    <p>Each <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/media.html#htmlmediaelement" id="ref-for-htmlmediaelement①">HTMLMediaElement</a></code> has a <dfn class="dfn-paneled" data-dfn-for="HTMLMediaElement" data-dfn-type="dfn" data-noexport id="htmlmediaelement-resume-frozen-flag">resume frozen flag</dfn>, which is initially set to false.</p>
+   <h4 class="heading settled" data-level="5.2.8" id="html-post-message"><span class="secno">5.2.8. </span><span class="content"><a href="https://html.spec.whatwg.org/multipage/web-messaging.html#posting-messages">Posting messages</a></span><a class="self-link" href="#html-post-message"></a></h4>
+   <p>Add a note:</p>
+   <p class="note" role="note"><span>NOTE:</span> When posting a message to a <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window②">Window</a></code> that is <a data-link-type="dfn" href="#frozen" id="ref-for-frozen⑤">frozen</a>, events that are queued on the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/web-messaging.html#posted-message-task-source" id="ref-for-posted-message-task-source">posted message task source</a> will not run until the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window③">Window</a></code> is <a data-link-type="dfn" href="#unfrozen" id="ref-for-unfrozen②">unfrozen</a>. If too many events are queued, the user agent might <a data-link-type="dfn" href="#discarded" id="ref-for-discarded②">discard</a> the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window④">Window</a></code>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/window-object.html#window-bc" id="ref-for-window-bc">browsing context</a> (as part of the general allowance for discarding under resource pressure).</p>
    <h3 class="heading settled" data-level="5.3" id="serviceworker-mod"><span class="secno">5.3. </span><span class="content">Modifications to the Service Worker Standard</span><a class="self-link" href="#serviceworker-mod"></a></h3>
    <h4 class="heading settled" data-level="5.3.1" id="serviceworker-client-dfn"><span class="secno">5.3.1. </span><span class="content"><a href="https://w3c.github.io/ServiceWorker/#client-interface"><code>Client</code></a></span><a class="self-link" href="#serviceworker-client-dfn"></a></h4>
 <pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://w3c.github.io/ServiceWorker/#client" id="ref-for-client"><c- g>Client</c-></a> {
@@ -1836,7 +1840,7 @@ Any <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappa
    <p>Adjust Step #7.8.2 to provide lifecycleState</p>
    <ol>
     <li data-md>
-     <p>Let <var>client</var> be the result of running <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#create-windowclient-algorithm" id="ref-for-create-windowclient-algorithm①">Create Window Client</a> with <var>newContext</var>’s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window②">Window</a></code> object’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object">environment settings object</a>, <var>frameType</var>, <var>visibilityState</var>, <var>focusState</var>, <var>ancestorOriginsList</var>, and <var>lifecycleState</var> as the arguments.</p>
+     <p>Let <var>client</var> be the result of running <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#create-windowclient-algorithm" id="ref-for-create-windowclient-algorithm①">Create Window Client</a> with <var>newContext</var>’s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window⑤">Window</a></code> object’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object">environment settings object</a>, <var>frameType</var>, <var>visibilityState</var>, <var>focusState</var>, <var>ancestorOriginsList</var>, and <var>lifecycleState</var> as the arguments.</p>
    </ol>
    <h4 class="heading settled" data-level="5.3.3" id="serviceworker-algorithms-dfn"><span class="secno">5.3.3. </span><span class="content"><a href="https://w3c.github.io/ServiceWorker/#algorithms">Algorithms</a></span><a class="self-link" href="#serviceworker-algorithms-dfn"></a></h4>
    <section class="algorithm" data-algorithm="Get Client Lifecycle State">
@@ -1854,7 +1858,7 @@ Any <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappa
      <li data-md>
       <p>Let <var>state</var> be <code class="idl"><a data-link-type="idl" href="#dom-clientlifecyclestate-active" id="ref-for-dom-clientlifecyclestate-active">"active"</a></code>.</p>
      <li data-md>
-      <p>If <var>client</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global" id="ref-for-concept-settings-object-global">global object</a>'s <a data-link-type="dfn" href="#dedicatedworkerglobalscope-owning-document" id="ref-for-dedicatedworkerglobalscope-owning-document②">owning document</a> is <a data-link-type="dfn" href="#frozen" id="ref-for-frozen⑤">frozen</a>, set <var>state</var> to be <code class="idl"><a data-link-type="idl" href="#dom-clientlifecyclestate-frozen" id="ref-for-dom-clientlifecyclestate-frozen">"frozen"</a></code></p>
+      <p>If <var>client</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global" id="ref-for-concept-settings-object-global">global object</a>'s <a data-link-type="dfn" href="#dedicatedworkerglobalscope-owning-document" id="ref-for-dedicatedworkerglobalscope-owning-document②">owning document</a> is <a data-link-type="dfn" href="#frozen" id="ref-for-frozen⑥">frozen</a>, set <var>state</var> to be <code class="idl"><a data-link-type="idl" href="#dom-clientlifecyclestate-frozen" id="ref-for-dom-clientlifecyclestate-frozen">"frozen"</a></code></p>
      <li data-md>
       <p>Return <var>state</var>.</p>
     </ol>
@@ -1892,10 +1896,10 @@ For instance, if a top level browsing context is in the background or hidden, an
 Specific examples:</p>
    <ul>
     <li data-md>
-     <p>In mobile Chrome, tabs that have been in background for (at least) 5 minutes, may be <a data-link-type="dfn" href="#frozen" id="ref-for-frozen⑥">frozen</a>, to conserve battery and data.</p>
+     <p>In mobile Chrome, tabs that have been in background for (at least) 5 minutes, may be <a data-link-type="dfn" href="#frozen" id="ref-for-frozen⑦">frozen</a>, to conserve battery and data.</p>
     <li data-md>
-     <p>In desktop Chrome, background tabs that are not important to the user (not used in some time) may be <a data-link-type="dfn" href="#discarded" id="ref-for-discarded②">discarded</a>, to conserve memory</p>
-     <p class="note" role="note"><span>NOTE:</span> background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not <a data-link-type="dfn" href="#frozen" id="ref-for-frozen⑦">frozen</a> or <a data-link-type="dfn" href="#discarded" id="ref-for-discarded③">discarded</a>.</p>
+     <p>In desktop Chrome, background tabs that are not important to the user (not used in some time) may be <a data-link-type="dfn" href="#discarded" id="ref-for-discarded③">discarded</a>, to conserve memory</p>
+     <p class="note" role="note"><span>NOTE:</span> background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not <a data-link-type="dfn" href="#frozen" id="ref-for-frozen⑧">frozen</a> or <a data-link-type="dfn" href="#discarded" id="ref-for-discarded④">discarded</a>.</p>
      <p class="note" role="note"><span>NOTE:</span> For a detailed list of heuristics &amp; exclusions used by Chrome, see <a href="https://docs.google.com/document/d/1QJpuBTdllLVflMJSov0tlFX3e3yfSfd_-al2IBavbQM/edit">this doc</a>.</p>
    </ul>
    <p>The UA will typically execute <a data-link-type="dfn" href="#change-the-frozenness-of-a-top-level-document" id="ref-for-change-the-frozenness-of-a-top-level-document③">change the frozenness of a top-level document</a> with false when the user revisits that browsing context. In addition, the UA may choose to periodically execute <a data-link-type="dfn" href="#change-the-frozenness-of-a-top-level-document" id="ref-for-change-the-frozenness-of-a-top-level-document④">change the frozenness of a top-level document</a> with false in the background, if plentiful resources are available.</p>
@@ -1983,15 +1987,15 @@ comes last after event firing.</p>
    <h4 class="heading settled" data-level="5.4.3" id="discarding"><span class="secno">5.4.3. </span><span class="content">Discarding</span><a class="self-link" href="#discarding"></a></h4>
     Each Document has a <dfn class="dfn-paneled" data-dfn-for="Document" data-dfn-type="dfn" data-noexport id="document-discarded">discarded</dfn> boolean, which is initially false. 
    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-export data-lt="discarded|discard" id="discarded">discard</dfn> a browsing context, <a href="https://html.spec.whatwg.org/multipage/window-object.html#a-browsing-context-is-discarded">destroy the browsing context</a>, and make note of the fact that the reason it and any descendant browsing contents were destroyed was because of discarding.</p>
-   <p class="note" role="note"><span>NOTE:</span> <a data-link-type="dfn" href="#discarded" id="ref-for-discarded④">Discard</a> is typically done to reclaim system memory, when memory and other resources are running low. On the other hand destroying a browser context is the normal teardown due to user leaving the page etc.</p>
-   <p>Browsing contexts -- that are in the background and have their documents in <a href="https://www.w3.org/TR/page-visibility-2/#visibility-states-and-the-visibilitystate-enum">VisibilityState hidden</a> -- can be <a data-link-type="dfn" href="#discarded" id="ref-for-discarded⑤">discarded</a>, under resource pressure (eg. low memory). Specific example:</p>
+   <p class="note" role="note"><span>NOTE:</span> <a data-link-type="dfn" href="#discarded" id="ref-for-discarded⑤">Discard</a> is typically done to reclaim system memory, when memory and other resources are running low. On the other hand destroying a browser context is the normal teardown due to user leaving the page etc.</p>
+   <p>Browsing contexts -- that are in the background and have their documents in <a href="https://www.w3.org/TR/page-visibility-2/#visibility-states-and-the-visibilitystate-enum">VisibilityState hidden</a> -- can be <a data-link-type="dfn" href="#discarded" id="ref-for-discarded⑥">discarded</a>, under resource pressure (eg. low memory). Specific example:</p>
    <ul>
     <li data-md>
-     <p>In desktop Chrome, background tabs that are not important to the user (not used in some time) may be <a data-link-type="dfn" href="#discarded" id="ref-for-discarded⑥">discarded</a>, to conserve memory</p>
-     <p class="note" role="note"><span>NOTE:</span> background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not <a data-link-type="dfn" href="#discarded" id="ref-for-discarded⑦">discarded</a>.</p>
+     <p>In desktop Chrome, background tabs that are not important to the user (not used in some time) may be <a data-link-type="dfn" href="#discarded" id="ref-for-discarded⑦">discarded</a>, to conserve memory</p>
+     <p class="note" role="note"><span>NOTE:</span> background tabs that are actively doing work on behalf of the user (eg. playing audio) are generally not <a data-link-type="dfn" href="#discarded" id="ref-for-discarded⑧">discarded</a>.</p>
      <p class="note" role="note"><span>NOTE:</span> For a detailed list of heuristics &amp; exclusions used by Chrome, see <a href="https://docs.google.com/document/d/1QJpuBTdllLVflMJSov0tlFX3e3yfSfd_-al2IBavbQM/edit">this doc</a>.</p>
    </ul>
-   <p>When a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context①">top-level browsing context</a> (tab in the browser) is <a data-link-type="dfn" href="#discarded" id="ref-for-discarded⑧">discarded</a> due to resource pressure (or unexpected events eg. process crash), and later the user revisits the tab in the browser, then the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①③">Document</a></code>'s <a data-link-type="dfn" href="#document-discarded" id="ref-for-document-discarded②">discarded</a> boolean will be true due to <a href="#html-initialize-doc">§ 5.2.5 Initialize the document</a>.</p>
+   <p>When a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context①">top-level browsing context</a> (tab in the browser) is <a data-link-type="dfn" href="#discarded" id="ref-for-discarded⑨">discarded</a> due to resource pressure (or unexpected events eg. process crash), and later the user revisits the tab in the browser, then the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①③">Document</a></code>'s <a data-link-type="dfn" href="#document-discarded" id="ref-for-document-discarded②">discarded</a> boolean will be true due to <a href="#html-initialize-doc">§ 5.2.5 Initialize the document</a>.</p>
    <h2 class="heading settled" data-level="6" id="acknowledgements"><span class="secno">6. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
    <p>Special thanks to
 Dave Tapuska,
@@ -2294,7 +2298,8 @@ for their technical input and suggestions that led to improvements to this speci
    <a href="https://html.spec.whatwg.org/multipage/window-object.html#window">https://html.spec.whatwg.org/multipage/window-object.html#window</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-window">3. API</a> <a href="#ref-for-window①">(2)</a>
-    <li><a href="#ref-for-window②">5.3.2.2. openWindow(url)</a>
+    <li><a href="#ref-for-window②">5.2.8. Posting messages</a> <a href="#ref-for-window③">(2)</a> <a href="#ref-for-window④">(3)</a>
+    <li><a href="#ref-for-window⑤">5.3.2.2. openWindow(url)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-active-document">
@@ -2413,6 +2418,12 @@ for their technical input and suggestions that led to improvements to this speci
    <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#dom-pagetransitionevent-persisted">https://html.spec.whatwg.org/multipage/browsing-the-web.html#dom-pagetransitionevent-persisted</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-pagetransitionevent-persisted">5.2.1. Unloading documents and history traversal</a> <a href="#ref-for-dom-pagetransitionevent-persisted①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-posted-message-task-source">
+   <a href="https://html.spec.whatwg.org/multipage/web-messaging.html#posted-message-task-source">https://html.spec.whatwg.org/multipage/web-messaging.html#posted-message-task-source</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-posted-message-task-source">5.2.8. Posting messages</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-current-document-readiness">
@@ -2587,6 +2598,7 @@ for their technical input and suggestions that led to improvements to this speci
      <li><span class="dfn-paneled" id="term-for-concept-WorkerGlobalScope-owner-set" style="color:initial">owner set</span>
      <li><span class="dfn-paneled" id="term-for-dom-media-paused" style="color:initial">paused</span>
      <li><span class="dfn-paneled" id="term-for-dom-pagetransitionevent-persisted" style="color:initial">persisted</span>
+     <li><span class="dfn-paneled" id="term-for-posted-message-task-source" style="color:initial">posted message task source</span>
      <li><span class="dfn-paneled" id="term-for-current-document-readiness" style="color:initial">readiness</span>
      <li><span class="dfn-paneled" id="term-for-concept-task" style="color:initial">task</span>
      <li><span class="dfn-paneled" id="term-for-top-level-browsing-context" style="color:initial">top-level browsing context</span>
@@ -2802,8 +2814,9 @@ for their technical input and suggestions that led to improvements to this speci
     <li><a href="#ref-for-frozen">2. Page Lifecycle States</a> <a href="#ref-for-frozen①">(2)</a>
     <li><a href="#ref-for-frozen②">4. Feature Policies</a>
     <li><a href="#ref-for-frozen③">5.1. Modifications to worklet and worker behavior</a> <a href="#ref-for-frozen④">(2)</a>
-    <li><a href="#ref-for-frozen⑤">5.3.3.1. Get Client Lifecycle State</a>
-    <li><a href="#ref-for-frozen⑥">5.4.1. FROZENNESS state</a> <a href="#ref-for-frozen⑦">(2)</a>
+    <li><a href="#ref-for-frozen⑤">5.2.8. Posting messages</a>
+    <li><a href="#ref-for-frozen⑥">5.3.3.1. Get Client Lifecycle State</a>
+    <li><a href="#ref-for-frozen⑦">5.4.1. FROZENNESS state</a> <a href="#ref-for-frozen⑧">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="unfrozen">
@@ -2811,6 +2824,7 @@ for their technical input and suggestions that led to improvements to this speci
    <ul>
     <li><a href="#ref-for-unfrozen">4. Feature Policies</a>
     <li><a href="#ref-for-unfrozen①">5.2.2. Event loop: definitions</a>
+    <li><a href="#ref-for-unfrozen②">5.2.8. Posting messages</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="change-the-frozenness-of-a-top-level-document">
@@ -2853,8 +2867,9 @@ for their technical input and suggestions that led to improvements to this speci
    <ul>
     <li><a href="#ref-for-discarded">2. Page Lifecycle States</a>
     <li><a href="#ref-for-discarded①">5.2.5. Initialize the document</a>
-    <li><a href="#ref-for-discarded②">5.4.1. FROZENNESS state</a> <a href="#ref-for-discarded③">(2)</a>
-    <li><a href="#ref-for-discarded④">5.4.3. Discarding</a> <a href="#ref-for-discarded⑤">(2)</a> <a href="#ref-for-discarded⑥">(3)</a> <a href="#ref-for-discarded⑦">(4)</a> <a href="#ref-for-discarded⑧">(5)</a>
+    <li><a href="#ref-for-discarded②">5.2.8. Posting messages</a>
+    <li><a href="#ref-for-discarded③">5.4.1. FROZENNESS state</a> <a href="#ref-for-discarded④">(2)</a>
+    <li><a href="#ref-for-discarded⑤">5.4.3. Discarding</a> <a href="#ref-for-discarded⑥">(2)</a> <a href="#ref-for-discarded⑦">(3)</a> <a href="#ref-for-discarded⑧">(4)</a> <a href="#ref-for-discarded⑨">(5)</a>
    </ul>
   </aside>
 <script>/* script-var-click-highlighting */
