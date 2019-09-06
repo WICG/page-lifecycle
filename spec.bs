@@ -259,7 +259,7 @@ Each {{HTMLMediaElement}} has a <dfn for="HTMLMediaElement">resume frozen flag</
 Add a note:
 
 NOTE: When posting a message to a {{Window}} that is [=/frozen=], events that are queued on the [=posted message task source=] will not run until the {{Window}} is [=unfrozen=]. If too many
-events are queued the user agent may move the {{Window}} to [=/discarded=] state.
+events are queued the user agent might [=discard=] the {{Window}}'s browsing context (as part of the general allowance for discarding under resource pressure).
 
 Modifications to the Service Worker Standard {#serviceworker-mod}
 --------------------------------------------
