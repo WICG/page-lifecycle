@@ -282,20 +282,6 @@ A {{Client}} object has an associated <dfn id="dfn-service-worker-client-lifecyc
 
 The <dfn attribute for="ServiceWorkerClient">lifecycleState</dfn> attribute <em>must</em> return the [=context object=]'s [=Client/lifecycle state=].
 
-### <a href="https://w3c.github.io/ServiceWorker/#clients-interface">`Clients`</a> ### {#serviceworker-clients-dfn}
-
-<pre class="idl">
-    partial dictionary ClientQueryOptions {
-        ClientLifecycleStateQuery lifecycleState = "active";
-    };
-
-    enum ClientLifecycleStateQuery {
-        "active",
-        "frozen",
-        "all"
-    };
-</pre>
-
 #### <a href="https://w3c.github.io/ServiceWorker/#clients-matchall">`matchAll(options)`</a> #### {#serviceworker-matchall-dfn}
 
 Rename variable in Step #4.
@@ -304,7 +290,6 @@ Rename variable in Step #4.
 Before Step #2.5.1 insert
 
 1. Let <var ignore>lifecycleState</var> be the result of running [=Get Client Lifecycle State=] with <var ignore>client</var>.
-1. If <var ignore>options</var>["{{ClientQueryOptions/lifecycleState}}"] is not {{ClientLifecycleStateQuery/"all"}} and does not equal <var ignore>lifecycleState</var>, then [=continue=].
 
 Append lifecycleState to list in Step #5.3.1
 1. Let |windowData| be «[ "client" → |client|, "ancestorOriginsList" → a new [=list=], "lifecycleState" → |lifecycleState| ]».
