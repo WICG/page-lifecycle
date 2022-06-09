@@ -18,13 +18,6 @@ spec.html: spec.bs
 
 remote: spec.html
 
-ci: spec.bs
-	mkdir -p out
-	make remote
-	mv spec.html out/index.html
-	cp *.png out/
-	echo '<!DOCTYPE html><meta charset="utf-8"><title>Redirecting</title><meta http-equiv="refresh" content="0; URL=./"><link rel="canonical" href="./">' > out/spec.html
-
 clean:
 	rm spec.html
 	rm -rf out
