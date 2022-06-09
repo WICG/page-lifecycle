@@ -5,8 +5,9 @@ Status: CG-DRAFT
 Shortname: page-lifecycle
 Level: 1
 URL: https://wicg.github.io/page-lifecycle/
-Editor: Shubhie Panicker, Google https://google.com, panicker@google.com
-Editor: Domenic Denicola, Google https://google.com, d@domenic.me
+Editor: Scott Haseley, Google https://google.com, shaseley@google.com
+Former Editor: Shubhie Panicker, Google https://google.com, panicker@google.com
+Former Editor: Domenic Denicola, Google https://google.com, d@domenic.me
 Repository: wicg/page-lifecycle
 Abstract: This document defines an API that supports browsers' ability to manage lifecycle of web pages.
 Default Biblio Status: current
